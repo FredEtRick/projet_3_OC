@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="gantt projet 3" company="" webLink="http://" view-date="2017-10-02" view-index="0" gantt-divider-location="385" resource-divider-location="300" version="2.7.1" locale="fr">
+<?xml version="1.0" encoding="UTF-8"?><project name="gantt projet 3" company="" webLink="http://" view-date="2017-08-28" view-index="0" gantt-divider-location="385" resource-divider-location="300" version="2.7.1" locale="fr">
     <description/>
     <view zooming-state="default:7" id="gantt-chart">
         <field id="tpd3" name="Nom" width="55" order="0"/>
@@ -9,8 +9,8 @@
         <option id="color.recent"><![CDATA[#ff6666 #ff0000]]></option>
     </view>
     <view id="resource-table">
-        <field id="0" name="Nom" width="57" order="0"/>
-        <field id="1" name="Rôle par défaut" width="42" order="1"/>
+        <field id="0" name="Nom" width="52" order="0"/>
+        <field id="1" name="Rôle par défaut" width="47" order="1"/>
     </view>
     <!-- -->
     <calendars>

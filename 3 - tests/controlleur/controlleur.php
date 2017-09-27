@@ -17,7 +17,7 @@
 
     echo 'testee';
 
-    $billetManager = new BilletManager();
+    $billetManager = new BilletManager;
     $billet = $billetManager->recuperer('chapitre 1');
     echo $billet->getTitre() . '<br />' . $billet.getContenu();
 

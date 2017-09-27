@@ -4,7 +4,7 @@
     // manager de la classe billet
     class BilletManager
     {
-        const BDD = new PDO('mysql:host=localhost:8888;dbname=ecrivain;charset=utf8', 'root', 'root', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        private $_BDD;
         
         const TABLE = "Billet";
         
@@ -15,20 +15,17 @@
         
         /*public function setBDD($BDD)
         {
-            $this->BDD = $BDD;
+            $this->_BDD = $BDD;
         }*/
         
-        /*public function __construct()
+        public function __construct()
         {
-            $nombre = func_num_args();
-            $args = func_get_args();
-            if ($nombre > 0)
-                $this->setBDD($args[0]);
-        }*/
+            $this->_BDD = new PDO('mysql:host=localhost:8888;dbname=ecrivain;charset=utf8', 'root', 'root', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        }
         
-        public static function inserer(Billet $billet)
+        public function inserer(Billet $billet)
         {
-            $requete = (self::BDD)->prepare('INSERT INTO :table (:titreBDD, :dateHeurePubBDD, :dateHeureExpBDD, :contenuBDD) VALUES (:titreObj, :dateHeurePubObj, :dateHeureExpObj, :contenuObj)');
+            $requete = $this->_BDD->prepare('INSERT INTO :table (:titreBDD, :dateHeurePubBDD, :dateHeureExpBDD, :contenuBDD) VALUES (:titreObj, :dateHeurePubObj, :dateHeureExpObj, :contenuObj)');
             $requete->bindValue(':table', TABLE);
             $requete->bindValue(':titreBDD', TITRE);
             $requete->bindValue(':dateHeurePubBDD', DATE_HEURE_PUB);
@@ -42,16 +39,16 @@
             $requete->execute();
         }
         
-        public static function recuperer($titre)
+        public function recuperer($titre)
         {
-            $requete = (self::BDD)->query('SELECT * FROM Billet WHERE titre = "' . $titre . '"');
+            $requete = $this->_BDD->query('SELECT * FROM Billet WHERE titre = "' . $titre . '"');
             return new Billet($requete->fetch(PDO::FETCH_ASSOC));
         }
         
-        public static function recupererTous()
+        public function recupererTous()
         {
             $billets = [];
-            $requete = (self::BDD)->query('SELECT * FROM Billets');
+            $requete = $this->_BDD->query('SELECT * FROM Billets');
             while($donnees = $requete->fetch(PDO::FETCH_ASSOC))
             {
                 $billets[] = new Billet($donnees);
@@ -59,9 +56,9 @@
             return Billets;
         }
         
-        public static function modifier(Billet $billet)
+        public function modifier(Billet $billet)
         {
-            $requete = (self::BDD)->prepare('UPDATE Billet SET :titreBDD = :titreObj, :dateHeurePubBDD = :dateHeurePubObj, :dateHeureExpBDD = :dateHeureExpObj, :contenuBDD = :contenuObj WHERE :titreBDD = :titreObj');
+            $requete = $this->_BDD->prepare('UPDATE Billet SET :titreBDD = :titreObj, :dateHeurePubBDD = :dateHeurePubObj, :dateHeureExpBDD = :dateHeureExpObj, :contenuBDD = :contenuObj WHERE :titreBDD = :titreObj');
 
             $requete->bindValue(':table', TABLE);
             $requete->bindValue(':titreBDD', TITRE);
@@ -76,9 +73,9 @@
             $requete->execute();
         }
         
-        public static function supprimer($titre)
+        public function supprimer($titre)
         {
-            (self::BDD)->exec('DELETE FROM Billet WHERE titre = "' . $titre . '"');
+            $this->_BDD->exec('DELETE FROM Billet WHERE titre = "' . $titre . '"');
         }
     }
 
@@ -156,7 +153,7 @@
                 return;
             }
 
-            $this->_titre = 'billet numéro ' . self::$_total . '. ' . self::DEBUT_TITRES . $titre; // juste pour m'entrainer avec self:: etc
+            $this->_titre = $titre; // juste pour m'entrainer avec self:: etc
         }
         
         public function setDateHeurePub(DateTime $dateHeurePub)

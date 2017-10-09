@@ -1,14 +1,16 @@
 <?php
     function afficherBillet($billet)
     {
-        // if () comparer la date d'exp a la date actuelle et afficher que si c'est bon
-        echo '<p>' . $billet->getTitre() . ' - ' . $billet->getDateHeurePub() . '</p>';
-        echo '<p>' . $billet->getContenu() . '</p>';
+        if (date('d/m/Y H:i:s') < $billet->getDateHeureExp() || $billet->getDateHeureExp() == NULL)
+        {
+            echo '<p>' . $billet->getTitre() . ' - ' . $billet->getDateHeurePub() . '</p>';
+            echo '<p>' . $billet->getContenu() . '</p>';
+        }
     }
 
     function afficherTousBillets($billets)
     {
-        echo '<p>Voici la liste complète des billets :</p>';
+        echo '<p>Voici la liste complète des billets non expirés :</p>';
         foreach($billets as $billet)
         {
             afficherBillet($billet);

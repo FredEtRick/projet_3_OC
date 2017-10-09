@@ -1,10 +1,5 @@
 <?php
-    echo $_SERVER["PHP_SELF"];
-
-    echo '<br />' . $_SERVER['DOCUMENT_ROOT'] . '/modele/Billet.php';
-
-    if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/modele/Billet.php'))
-        echo '<br />existe';
+    $bdd = new PDO('mysql:host=localhost:8889;dbname=ecrivain;charset=utf8', 'root', 'root', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 
     try
     {
@@ -15,12 +10,24 @@
         echo '<br />erreur : ' . $e->getMessage() ; '<br />';
     }
 
-    echo 'testee';
+    try
+    {
+        require $_SERVER['DOCUMENT_ROOT'] . '/vue/test.php';
+    }
+    catch (Exception $e)
+    {
+        echo '<br />erreur : ' . $e->getMessage() ; '<br />';
+    }
 
-    $billetManager = new BilletManager;
-    $billet = $billetManager->recuperer('chapitre 1');
-    echo $billet->getTitre() . '<br />' . $billet.getContenu();
+    $billetManager = new BilletManager($bdd);
 
-    /*$billet = new Billet('un titre !', , , 'un contenu');
-    echo $billet2->getTitre() . '<br />' . $billet2.getContenu();*/
+    /*$ch1 = $billetManager->recuperer('chapitre 1');
+    $ch2 = $billetManager->recuperer('Second chapitre.');
+
+    afficherBillet($ch1);
+    afficherBillet($ch2);*/
+
+    $lesBillets = $billetManager->recupererTous();
+
+    afficherTousBillets($lesBillets);
 ?>

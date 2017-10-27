@@ -1,6 +1,4 @@
 <?php
-    echo 'entré dans Billet.php'; // ce message n'est jamais affiché !!!
-
     // manager de la classe billet
     class BilletManager
     {
@@ -38,7 +36,7 @@
         public function recupererTous()
         {
             $billets = [];
-            $requete = $this->_BDD->query('SELECT titre, dateHeurePub, dateHeureExp, contenu FROM Billet');
+            $requete = $this->_BDD->query('SELECT titre, dateHeurePub, dateHeureExp, contenu FROM Billet ORDER BY dateHeurePub');
             while($donnees = $requete->fetch(PDO::FETCH_ASSOC))
             {
                 $billets[] = new Billet($donnees);

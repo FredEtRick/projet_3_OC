@@ -1,3 +1,3 @@
 <?php
-    require 'controlleur/controlleur.php';
+    require 'controleur/histoireC.php';
 ?>

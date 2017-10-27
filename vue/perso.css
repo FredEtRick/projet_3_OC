@@ -1,0 +1,194 @@
+body
+{
+    font-family : "Times New Roman";
+    background : url("../imagesSelection/My_Public_Lands_Roadtrip-_Dalton_Highway_in_Alaska_(19305161532).jpg") center fixed repeat;
+    background-size : 110%;
+}
+.fondBleu
+{
+    background : rgba(80, 80, 200, 0.5);
+}
+footer
+{
+    margin : 30px !impotant; /* marche pas !!! */
+    padding-top : 10px;
+}
+.container
+{
+    /*background : rgba(20, 20, 100, 0.5);*/
+}
+[class*="col-"]
+{
+    background : #adadff;
+    border : 1px solid black;
+}
+.enTete
+{
+    font-size : 30px;
+    color : #adadff;
+    text-align : center !important;
+    background : #1a1aaa;
+    font-weight : bold;
+    padding : 20px;
+}
+.centrer
+{
+    text-align : center;
+}
+@media (min-width : 16in) /* 2 fois 8in */
+{
+    .container
+    {
+        max-width : 16in;
+    }
+    
+    /* création dimension xxl, dépendant elle de la taille en pouces. Elle permettra nottament de dédoubler la zone de lecture sur très grand écran pour le confort de lecture. */
+    
+    .col-xxl
+    {
+        -ms-flex-preferred-size: 0;
+            flex-basis: 0;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
+        max-width: 100%;
+    }
+    .col-xxl-auto
+    {
+        -ms-flex: 0 0 auto;
+            flex: 0 0 auto;
+        width: auto;
+        max-width: none;
+    }
+    .col-xxl-1
+    {
+        -ms-flex: 0 0 8.333333%;
+            flex: 0 0 8.333333%;
+        max-width: 8.333333%;
+    }
+    .col-xxl-2
+    {
+        -ms-flex: 0 0 16.666667%;
+            flex: 0 0 16.666667%;
+        max-width: 16.666667%;
+    }
+    .col-xxl-3
+    {
+        -ms-flex: 0 0 25%;
+            flex: 0 0 25%;
+        max-width: 25%;
+    }
+    .col-xxl-4
+    {
+        -ms-flex: 0 0 33.333333%;
+            flex: 0 0 33.333333%;
+        max-width: 33.333333%;
+    }
+    .col-xxl-5
+    {
+        -ms-flex: 0 0 41.666667%;
+            flex: 0 0 41.666667%;
+        max-width: 41.666667%;
+    }
+    .col-xxl-6
+    {
+        -ms-flex: 0 0 50%;
+            flex: 0 0 50%;
+        max-width: 50%;
+    }
+    .col-xxl-7
+    {
+        -ms-flex: 0 0 58.333333%;
+            flex: 0 0 58.333333%;
+        max-width: 58.333333%;
+    }
+    .col-xxl-8
+    {
+        -ms-flex: 0 0 66.666667%;
+            flex: 0 0 66.666667%;
+        max-width: 66.666667%;
+    }
+    .col-xxl-9
+    {
+        -ms-flex: 0 0 75%;
+            flex: 0 0 75%;
+        max-width: 75%;
+    }
+    .col-xxl-10
+    {
+        -ms-flex: 0 0 83.333333%;
+            flex: 0 0 83.333333%;
+        max-width: 83.333333%;
+    }
+    .col-xxl-11
+    {
+        -ms-flex: 0 0 91.666667%;
+            flex: 0 0 91.666667%;
+        max-width: 91.666667%;
+    }
+    .col-xxl-12
+    {
+        -ms-flex: 0 0 100%;
+            flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .order-xxl-1
+    {
+        -ms-flex-order: 1;
+            order: 1;
+    }
+    .order-xxl-2
+    {
+        -ms-flex-order: 2;
+            order: 2;
+    }
+    .order-xxl-3
+    {
+        -ms-flex-order: 3;
+            order: 3;
+    }
+    .order-xxl-4
+    {
+        -ms-flex-order: 4;
+            order: 4;
+    }
+    .order-xxl-5
+    {
+        -ms-flex-order: 5;
+            order: 5;
+    }
+    .order-xxl-6
+    {
+        -ms-flex-order: 6;
+            order: 6;
+    }
+    .order-xxl-7
+    {
+        -ms-flex-order: 7;
+            order: 7;
+    }
+    .order-xxl-8
+    {
+        -ms-flex-order: 8;
+            order: 8;
+    }
+    .order-xxl-9
+    {
+        -ms-flex-order: 9;
+            order: 9;
+    }
+    .order-xxl-10
+    {
+        -ms-flex-order: 10;
+            order: 10;
+    }
+    .order-xxl-11
+    {
+        -ms-flex-order: 11;
+            order: 11;
+    }
+    .order-xxl-12
+    {
+        -ms-flex-order: 12;
+            order: 12;
+    }
+}

@@ -10,6 +10,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" href="../bootstrap/css/bootstrap.css" />
         <link rel="stylesheet" href="../vue/perso.css" />
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
         <!--[if lt IE 9]>
         <![endif]-->
         <title><?php echo $titre; ?></title>

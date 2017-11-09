@@ -12,6 +12,8 @@
 
     function afficherBillets($billets, $i, $n)
     {
+        $idep = $i;
+        $ndep = $n;
         echo '<section class="row">';
         //echo '<p class="col-xxl-12 col-xl-12 col-sm-12">Les billets :</p>';
         while ($n>0 AND $i<count($billets))
@@ -20,6 +22,47 @@
             $n--;
             $i++;
         }
+        echo '<article class="col-xxl-12 col-xl-12 col-sm-12 navPages">';
+        echo '<p>';
+        $page = 1+ceil($idep / $ndep);
+        if ($page > 1)
+        {
+            echo '<a class="fa fa-chevron-left" href="index.php?page=' . ($page-1) . '"></a>';
+        }
+        if ($page > 3)
+        {
+            echo '<a href="index.php?page=1">1</a>';
+        }
+        if ($page > 4)
+        {
+            echo '... ';
+        }
+        for ($j=($page-2) ; $j<($page+3) ; $j++)
+        {
+            if ($j>0 AND $j==$page)
+            {
+                echo '<span class="pageActuelle">' . $j . '</span>';
+            }
+            elseif ($j>0 AND ($ndep*($j-1))<count($billets))
+            {
+                echo '<a href="index.php?page=' . $j . '">' . $j . '</a>';
+            }
+        }
+        $pageMax = ceil(count($billets)/$ndep);
+        if ($page < $pageMax-3)
+        {
+            echo '... ';
+        }
+        if ($page < $pageMax-2)
+        {
+            echo '<span>' . $pageMax . '</span>';
+        }
+        if ($i < count($billets))
+        {
+            echo '<a href="index.php?page=' . ($page+1) . '" class="fa fa-chevron-right"></a>';
+        }
+        echo '</p>';
+        echo '</article>';
         echo '</section>';
     }
 ?>

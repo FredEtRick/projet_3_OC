@@ -1,17 +1,64 @@
+.dernier
+{
+    margin-bottom : 25px;
+    color : #6a6a6a;
+}
+.discret
+{
+    font-variant : small-caps;
+    padding-right : 10px;
+    color : #dbb850;
+}
+.bulle
+{
+    display : block;
+    margin :5px;
+    margin-top : 0px;
+    margin-bottom : 20px;
+    border-radius : 20px;
+    padding : 10px;
+    background : #fffcbb;
+    color : black;
+}
+bulle:focus, bulle:hover, a.bulle:focus, a.bulle:hover
+{
+    color : black !important;
+    text-decoration : none;
+    background : #e3dea0;
+    font-style : italic;
+}
+article
+{
+    /*border-bottom : 1px solid #cdcded;*/
+}
+section
+{
+    padding-top : 20px;
+    background : white;
+}
+h1
+{
+    margin-bottom : 0px;
+}
 body
 {
     font-family : "Times New Roman";
-    background : url("../imagesSelection/My_Public_Lands_Roadtrip-_Dalton_Highway_in_Alaska_(19305161532).jpg") center fixed repeat;
-    background-size : 110%;
+    background : #101040;
 }
 .fondBleu
 {
-    background : rgba(80, 80, 200, 0.5);
+    /*background : rgba(80, 80, 200, 0.5);*/
 }
 footer
 {
-    margin : 30px !impotant; /* marche pas !!! */
-    padding-top : 10px;
+    background : #cdcded;
+    color : #7777c0;
+    /*margin-top : 10px;*/
+}
+.ulfooter
+{
+    padding : 30px !important;
+    padding-bottom : 15px !important;
 }
 .container
 {
@@ -19,17 +66,25 @@ footer
 }
 [class*="col-"]
 {
-    background : #adadff;
-    border : 1px solid black;
+    /*border : 1px solid black;*/
 }
 .enTete
 {
     font-size : 30px;
-    color : #adadff;
+    color : #8888d0;
     text-align : center !important;
-    background : #1a1aaa;
+    background : #cdcded;
     font-weight : bold;
     padding : 20px;
+}
+.enTete > a
+{
+    color : #8888d0;
+}
+.enTete > a:focus, .enTete > a:hover
+{
+    color : #8888d0 !important;
+    text-decoration : none;
 }
 .centrer
 {

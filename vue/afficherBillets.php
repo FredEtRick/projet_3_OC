@@ -1,15 +1,13 @@
 <?php
     function afficherBillet($billet)
     {
-        if (date('d/m/Y H:i:s') < $billet->getDateHeureExp() || $billet->getDateHeureExp() == NULL)
-        {
-            echo '<article class="col-xxl-6 col-xl-12 col-sm-12">';
-            echo '<p>' . $billet->getTitre() . ' - ' . $billet->getDateHeurePub() . '</p>';
-            echo '<p>' . mb_substr($billet->getContenu(), 0, 250) . ' [...]</p>';
-            echo '</article>';
-            return true;
-        }
-        return false;
+        echo '<article class="col-xxl-6 col-xl-12 col-sm-12">';
+        echo '<a class="bulle" href="../index.php?titre=' . str_replace(' ', '_', $billet->getTitre()) . '">';
+        echo '<p>' . $billet->getTitre() . '<span class="float-right">Le ' . str_replace(' ', ', à ', $billet->getDateHeurePub()) . '</span></p>';
+        echo '<p class="dernier">' . mb_substr($billet->getContenu(), 0, 300) . ' [...]' . '<br /><span class="float-right discret">cliquez pour afficher</span>' . '</p>';
+        echo '</a>';
+        echo '</article>';
+        //echo '<hr class="col-xxl-6 col-xl-12 col-sm-12" />';
     }
 
     function afficherBillets($billets, $i, $n)
@@ -18,8 +16,8 @@
         //echo '<p class="col-xxl-12 col-xl-12 col-sm-12">Les billets :</p>';
         while ($n>0 AND $i<count($billets))
         {
-            if (afficherBillet($billets[$i]))
-                $n--;
+            afficherBillet($billets[$i]);
+            $n--;
             $i++;
         }
         echo '</section>';

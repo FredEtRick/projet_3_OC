@@ -18,7 +18,7 @@
         <div class="fondBleu">
             <div class="container">
                 <header class="row">
-                    <h1 class="enTete col-xxl-12 col-xl-12 col-sm-12">BILLET SIMPLE POUR L'ALASKA</h1>
+                    <h1 class="enTete col-xxl-12 col-xl-12 col-sm-12"><a href="index.php">BILLET SIMPLE POUR L'ALASKA</a></h1>
                 </header>
 <?php
     }

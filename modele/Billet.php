@@ -33,13 +33,15 @@
             return new Billet($requete->fetch(PDO::FETCH_ASSOC));
         }
         
-        public function recupererTous()
+        public function recupererTousSaufExp()
         {
             $billets = [];
             $requete = $this->_BDD->query('SELECT titre, dateHeurePub, dateHeureExp, contenu FROM Billet ORDER BY dateHeurePub');
             while($donnees = $requete->fetch(PDO::FETCH_ASSOC))
             {
-                $billets[] = new Billet($donnees);
+                $billet = new Billet($donnees);
+                if (date('d/m/Y H:i:s') < $billet->getDateHeureExp() || $billet->getDateHeureExp() == NULL)
+                    $billets[] = $billet;
             }
             return $billets;
         }

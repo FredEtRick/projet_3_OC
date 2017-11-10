@@ -1,6 +1,7 @@
 .navPages
 {
     text-align : right;
+    color : #da0;
 }
 .navPages > p > *
 {
@@ -112,11 +113,11 @@ footer
 {
     text-align : center;
 }
-@media (min-width : 16in) /* 2 fois 8in */
+@media (min-width : 1500px) /* 2 fois 8in */
 {
     .container
     {
-        max-width : 16in;
+        max-width : 1500px;
     }
     
     /* création dimension xxl, dépendant elle de la taille en pouces. Elle permettra nottament de dédoubler la zone de lecture sur très grand écran pour le confort de lecture. */

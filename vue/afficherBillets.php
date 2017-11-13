@@ -55,7 +55,7 @@
         }
         if ($page < $pageMax-2)
         {
-            echo '<span>' . $pageMax . '</span>';
+            echo '<a href="index.php/page=' . $pageMax . '">' . $pageMax . '</a>';
         }
         if ($i < count($billets))
         {

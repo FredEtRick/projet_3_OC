@@ -44,6 +44,7 @@
         try
         {
             require $_SERVER['DOCUMENT_ROOT'] . '/vue/billetVue.php';
+            initialiser($leBillet);
         }
         catch (Exception $e)
         {

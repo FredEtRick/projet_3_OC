@@ -1,11 +1,14 @@
 <?php
+    function initialiser($var)
+    {
+        $billet = $var;
+    }
     $avecSauts = htmlspecialchars($billet->getContenu());
     $avecSauts = nl2br($avecSauts);
     $avecSauts = str_replace(array("\r", "\n"), array('', ''), $avecSauts);
+    echo 'ici';
 ?>
 <script type="text/javascript">
-    
-    console.log('ICI');
     /* TODO : 
         - séparer en fonction
         - bien commenter

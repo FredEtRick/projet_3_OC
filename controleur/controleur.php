@@ -1,8 +1,6 @@
 <?php
     $bdd = new PDO('mysql:host=localhost:8889;dbname=ecrivain;charset=utf8', 'root', 'root', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 
-    $js = ''; // sert a insérer du "js" (fichier php en vrai) en pied de page
-
     try
     {
         require $_SERVER['DOCUMENT_ROOT'] . '/vue/enTete.php';
@@ -40,11 +38,9 @@
 
     if(isset($_GET['titre']) AND ($leBillet != null))
     {
-        $js = 'adaptationFenetre';
         try
         {
             require $_SERVER['DOCUMENT_ROOT'] . '/vue/billetVue.php';
-            initialiser($leBillet);
         }
         catch (Exception $e)
         {
@@ -82,7 +78,6 @@
     try
     {
         require $_SERVER['DOCUMENT_ROOT'] . '/vue/pied.php';
-        pied($js);
     }
     catch (Exception $e)
     {

@@ -24,7 +24,18 @@
             echo '</article>';
         }
         echo '</section>';
+        $avecSauts = htmlspecialchars($billet->getContenu());
+        $avecSauts = nl2br($avecSauts);
+        $avecSauts = str_replace(array("\r", "\n"), array('', ''), $avecSauts);
         //afficherCommentaires($billet);
+        try
+        {
+            require $_SERVER['DOCUMENT_ROOT'] . '/vue/adaptationFenetre.php';
+        }
+        catch (Exception $e)
+        {
+            echo '<p>erreur : ' . $e->getMessage() ; '</p>';
+        }
     }
     /*function afficherCommentaires($billet)
     {

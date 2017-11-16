@@ -8,7 +8,7 @@
             //$pages = array(); // TODO : créer des blocs de (3000 ?) caractères par pages puis afficher les pages avec les classes ci dessous !!! créer un système de pages comme a la page d'accueil ? Ou mettre les pages les unes sous les autres ? Autre idée : ajouter <span> au debut, </span><span class="mobile"> tous les 750, </span>. ou alors js
             echo '<article class="col-xxl-12 col-xl-12 col-sm-12">';
             echo '<p>' . $billet->getTitre() . ' - ' . $billet->getDateHeurePub() . '</p>';
-            echo '<div class="row parent">';
+            echo '<div class="row" id="parent">';
             echo '<div class="col-xxl-6 col-xl-12 col-sm-12">';
             echo '<p id="contenu"></p>';
             // pagination

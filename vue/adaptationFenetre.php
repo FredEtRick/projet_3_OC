@@ -31,7 +31,7 @@
     // préparation des variables
     var texte = '<?php echo str_replace('"', '\"', str_replace("'", "\'", json_encode($avecSauts))); ?>';
     var caractereDeb = 0; // indice du premier caractère qui doit apparaitre dans la page
-    var caractereFin = texte.length; // indice du dernier
+    var caractereFin = texte.length-1; // indice du dernier
     // TODO : ou alors remplacer tout ce qui suit par qqch qui calcul en temps réel hauteur et largeur dispo, qui calcul le nombre de caractères max qu'on peut y mettre et fait en fonction
     var contenuPageElt = document.getElementById('contenu'); // La balise paragraphe <p> qui contiendra le texte a afficher (le corps du billet)
     var contenuPage = contenuPageElt.innerHTML; // Le texte a afficher. Pour le moment, la variable contient tout le billet. Après manipulation, contiendra une page.
@@ -101,9 +101,12 @@
         positionReduireElt = getPositionTop(reduireElt);
     }
     
-    function supprLignes()
+    function supprLignes(tab)
     {
-        while (getPositionTop(reduireElt) > window.innerHeight)
+        var reduire = tab[0];
+        var cp = tab[1];
+        var cpe = tab[2];
+        while (reduire > window.innerHeight)
         {
             if (texte.substr(caractereFin-Math.ceil(nbCharsLigneApprox*1,25), Math.ceil(nbCharsLigneApprox*1,25)).indexOf('<br') != -1)
             {
@@ -113,13 +116,42 @@
             {
                 caractereFin -= nbCharsLigneApprox;
             }
-            contenuPage = texte.substr(caractereDeb, caractereFin-caractereDeb+1);
-            contenuPageElt.innerHTML = contenuPage;
+            cp = texte.substr(caractereDeb, caractereFin-caractereDeb+1);
+            cpe.innerHTML = cp;
             debuger('supprLignes');
         }
         caractereFin += nbCharsLigneApprox; // au cas où on ait un peu trop retiré
-        contenuPage = texte.substr(caractereDeb, caractereFin-caractereDeb+1);
-        contenuPageElt.innerHTML = contenuPage;
+        cp = texte.substr(caractereDeb, caractereFin-caractereDeb+1);
+        cpe.innerHTML = cp;
+        positionReduireElt = getPositionTop(reduireElt);
+    }
+    
+    function ajoutLignes(tab)
+    {
+        var rallonger = tab[0];
+        var cp = tab[1];
+        var cpe = tab[2];
+        while (getPositionTop(rallonger) < window.innerHeight)
+        {
+            if (caractereFin + Math.ceil(nbCharsLigneApprox*1,25) <= texte.length)
+            {
+                caractereFin = texte.length;
+            }
+            if (texte.substr(caractereFin+3, Math.ceil(nbCharsLigneApprox*1,25)).indexOf('<br') != -1)
+            {
+                caractereFin = caractereDeb + caractereFin - Math.ceil(nbCharsLigneApprox*1,25) + texte.substr(caractereFin-Math.ceil(nbCharsLigneApprox*1,25), Math.ceil(nbCharsLigneApprox*1,25)).indexOf('<br') - 1; // S'il y a un saut de ligne après, placer le "curseur" de fin juste avant. On balaie un peu plus que nbCharsLigneApprox au cas ou la ligne compte plus de caractères que nbCharsLigneApprox
+            }
+            else
+            {
+                caractereFin += nbCharsLigneApprox;
+            }
+            cp = texte.substr(caractereDeb, caractereFin-caractereDeb+1);
+            cpe.innerHTML = cp;
+            debuger('ajoutLignes');
+        }
+        //caractereFin += nbCharsLigneApprox; // au cas où on ait un peu trop retiré. a réadapter pour cette fonction plus tard !!!
+        cp = texte.substr(caractereDeb, caractereFin-caractereDeb+1);
+        cpe.innerHTML = cp;
         positionReduireElt = getPositionTop(reduireElt);
     }
     
@@ -174,7 +206,7 @@
         compterCharsLigne();
         
         // suppr des lignes jusqu'à ce que ce soit suffisant. Vérifie aussi les <br />. Rajoute ensuite une ligne au cas où trop enlevé.
-        supprLignes();
+        supprLignes([reduireElt, contenuPage, contenuPageElt]);
         
         // réduction 10 par 10 jusqu'arrivé à la taille voulue
         reduction10par10();
@@ -182,7 +214,7 @@
         // stop la page à la fin d'un mot, ou juste avant un saut de ligne s'il y en a un proche (à la fin d'un paragraphe par exemple)
         decoupagePropre();
         
-        if (window.innerWidth > 1500)
+        if (window.innerWidth > 1500 && caractereFin < texte.length)
         {
             var parent = document.getElementById('parent');
             var secondVolet = document.createElement('div');
@@ -194,13 +226,30 @@
             secondVolet.appendChild(reduire2);
             secondVolet.appendChild(rallonger2);
             secondVolet.setAttribute('class', 'col-xxl-6');
-            contenu2.setAttribute('class', 'contenu2');
-            reduire2.setAttribute('class', 'reduire2');
-            rallonger2.setAttribute('class', 'rallonger2');
-            contenu2.textContent = 'estse ';
-            for (var i=0 ; i<10 ; i++)
+            contenu2.setAttribute('id', 'contenu2');
+            reduire2.setAttribute('id', 'reduire2');
+            rallonger2.setAttribute('id', 'rallonger2');
+            difference = caractereFin - caractereDeb;
+            while (texte.charAt(caractereFin + 1) == '<')
+                caractereFin += texte.substr(caractereFin+1, 6).indexOf('>') + 1;
+            caractereDeb = caractereFin + 1;
+            if (caractereDeb + difference >= texte.length)
             {
-                contenu2.textContent += contenu2.textContent;
+                caractereFin = texte.length-1;
+            }
+            else
+            {
+                caractereFin = caractereDeb + difference;
+                contenu2.textContent = texte.substr(caractereDeb, difference);
+                if (getPositionTop(reduire2) > window.innerHeight) // on a été trop loin en terme de lignes
+                {
+                    supprLignes([reduire2, contenu2.innerHTML, contenu2]);
+                }
+                else if (getPositionTop(rallonger2) < window.innerHeight) // pas assez loin
+                {
+                    ajoutLignes([rallonger2, contenu2.innerHTML, contenu2]);
+                }
+                // vérifie découpage mot
             }
         }
     }

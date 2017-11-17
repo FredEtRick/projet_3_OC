@@ -171,7 +171,7 @@
             contenuPage = texte.substr(caractereDeb, caractereFin-caractereDeb+1);
             contenuPageElt.innerHTML = contenuPage;
             positionReduireElt = getPositionTop(reduireElt);
-            debuger('reduction10');
+            //debuger('reduction10');
         }
     }
     

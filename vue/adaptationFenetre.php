@@ -49,6 +49,18 @@
     var rallongerElt_2;
     var positionReduireElt_2;
     var positionRallongerElt_2;
+    var difference;
+    var parent;
+    var secondVolet;
+    
+    var contenuPageElt_generique;
+    var contenuPage_generique;
+    var reduireElt_generique;
+    var rallongerElt_generique;
+    var positionReduireElt_generique;
+    var positionRallongerElt_generique;
+    var deb_generique;
+    var fin_generique;
     
     var deuxiemePage = false; // vaut true si (largeur > 1500 + on est en train de s'occuper de la seconde page) sert a déterminer s'il faut utiliser (deb et mil) ou (mil et fin) et s'il faut utiliser le premier set de variables ou le second
     
@@ -65,7 +77,53 @@
     
     function debuger(fonction)
     {
-        console.log('fonction : ' + fonction + ' caractereDeb : ' + caractereDeb + ' caractereFin : ' + caractereFin + ' positionReduireElt : ' + positionReduireElt + ' nbCharsLigneApprox : ' + nbCharsLigneApprox + ' hauteurLigne : ' + hauteurLigne);
+        console.log('fonction : ' + fonction + ' caractereDeb : ' + caractereDeb + ' caractereFin : ' + caractereFin + ' positionReduireElt : ' + positionReduireElt + ' nbCharsLigneApprox : ' + nbCharsLigneApprox + ' hauteurLigne : ' + hauteurLigne + ' window.innerHeight : ' + window.innerHeight + ' positionRallongerElt_2 : ' + positionRallongerElt_2 + ' positionReduireElt_2 : ' + positionReduireElt_2);
+    }
+    
+    function initialisationVars()
+    {
+        if (deuxiemePage)
+        {
+            contenuPageElt_generique = contenuPageElt_2;
+            contenuPage_generique = contenuPage_2;
+            reduireElt_generique = reduireElt_2;
+            rallongerElt_generique = rallongerElt_2;
+            positionReduireElt_generique = positionReduireElt_2;
+            positionRallongerElt_generique = positionRallongerElt_2;
+            deb_generique = caractereMilieu;
+            fin_generique = caractereFin;
+        }
+        else
+        {
+            contenuPageElt_generique = contenuPageElt;
+            contenuPage_generique = contenuPage;
+            reduireElt_generique = reduireElt;
+            rallongerElt_generique = rallongerElt;
+            positionReduireElt_generique = positionReduireElt;
+            positionRallongerElt_generique = positionRallongerElt;
+            deb_generique = caractereDeb;
+            fin_generique = caractereMilieu;
+        }
+    }
+    
+    function actualisationVars()
+    {
+        if (deuxiemePage)
+        {
+            caractereMilieu = deb_generique;
+            caractereFin = fin_generique;
+            contenuPage_2 = contenuPage_generique;
+            positionReduireElt_2 = positionReduireElt_generique;
+            positionRallongerElt_2 = positionRallongerElt_generique;
+        }
+        else
+        {
+            caractereDeb = deb_generique;
+            caractereMilieu = fin_generique;
+            contenuPage = contenuPage_generique;
+            positionReduireElt = positionReduireElt_generique;
+            positionRallongerElt = positionRallongerElt_generique;
+        }
     }
     
     adapter();
@@ -142,54 +200,59 @@
     
     function supprLignes()
     {
-        while (getPositionTop(reduireElt) > window.innerHeight)
+        initialisationVars();
+        console.log(deb_generique + ' ' + fin_generique);
+        while (getPositionTop(reduireElt_generique) > window.innerHeight)
         {
-            if (texte.substr(caractereMilieu-Math.ceil(nbCharsLigneApprox*1,25), Math.ceil(nbCharsLigneApprox*1,25)).indexOf('<br') != -1)
+            if (texte.substr(fin_generique-Math.ceil(nbCharsLigneApprox*1,25), Math.ceil(nbCharsLigneApprox*1,25)).indexOf('<br') != -1)
             {
-                caractereMilieu -= Math.ceil(nbCharsLigneApprox*1,25) + texte.substr(caractereMilieu-Math.ceil(nbCharsLigneApprox*1,25), Math.ceil(nbCharsLigneApprox*1,25)).lastIndexOf('<br') - 1; // S'il y a un saut de ligne, placer le "curseur" de fin juste avant. On balaie un peu plus que nbCharsLigneApprox au cas ou la ligne compte plus de caractères que nbCharsLigneApprox
+                fin_generique -= Math.ceil(nbCharsLigneApprox*1,25) + texte.substr(fin_generique-Math.ceil(nbCharsLigneApprox*1,25), Math.ceil(nbCharsLigneApprox*1,25)).lastIndexOf('<br') - 1; // S'il y a un saut de ligne, placer le "curseur" de fin juste avant. On balaie un peu plus que nbCharsLigneApprox au cas ou la ligne compte plus de caractères que nbCharsLigneApprox
             }
             else
             {
-                caractereMilieu -= nbCharsLigneApprox;
+                fin_generique -= nbCharsLigneApprox;
             }
-            contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
-            contenuPageElt.innerHTML = contenuPage;
+            contenuPage_generique = texte.substr(deb_generique, fin_generique-deb_generique+1);
+            contenuPageElt_generique.innerHTML = contenuPage_generique;
             debuger('supprLignes');
         }
-        caractereMilieu += nbCharsLigneApprox; // au cas où on ait un peu trop retiré
-        contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
-        contenuPageElt.innerHTML = contenuPage;
-        positionReduireElt = getPositionTop(reduireElt);
-        positionRallongerElt = getPositionTop(rallongerElt);
+        fin_generique += nbCharsLigneApprox; // au cas où on ait un peu trop retiré
+        contenuPage_generique = texte.substr(deb_generique, fin_generique-deb_generique+1);
+        contenuPageElt_generique.innerHTML = contenuPage_generique;
+        positionReduireElt_generique = getPositionTop(reduireElt_generique);
+        positionRallongerElt_generique = getPositionTop(rallongerElt_generique);
+        actualisationVars();
     }
     
     function ajoutLignes()
     {
-        while (getPositionTop(rallongerElt) < window.innerHeight)
+        initialisationVars();
+        while (getPositionTop(rallongerElt_generique) < window.innerHeight)
         {
-            if (caractereMilieu + Math.ceil(nbCharsLigneApprox*1,25) >= texte.length)
+            if (fin_generique + Math.ceil(nbCharsLigneApprox*1,25) >= texte.length)
             {
-                caractereMilieu = texte.length;
+                fin_generique = texte.length;
             }
-            if (texte.substr(caractereMilieu+3, Math.ceil(nbCharsLigneApprox*1,25)).indexOf('<br') != -1)
+            if (texte.substr(fin_generique+3, Math.ceil(nbCharsLigneApprox*1,25)).indexOf('<br') != -1)
             {
                 console.log('ICI');
-                caractereMilieu += 3 + texte.substr(caractereMilieu+3, Math.ceil(nbCharsLigneApprox*1,25)).indexOf('<br') - 1; // S'il y a un saut de ligne après, placer le "curseur" de fin juste avant. On balaie un peu plus que nbCharsLigneApprox au cas ou la ligne compte plus de caractères que nbCharsLigneApprox
+                fin_generique += 3 + texte.substr(fin_generique+3, Math.ceil(nbCharsLigneApprox*1,25)).indexOf('<br') - 1; // S'il y a un saut de ligne après, placer le "curseur" de fin juste avant. On balaie un peu plus que nbCharsLigneApprox au cas ou la ligne compte plus de caractères que nbCharsLigneApprox
             }
             else
             {
                 console.log('LA');
-                caractereMilieu += nbCharsLigneApprox;
+                fin_generique += nbCharsLigneApprox;
             }
-            contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
-            contenuPageElt.innerHTML = contenuPage;
+            contenuPage_generique = texte.substr(deb_generique, fin_generique-deb_generique+1);
+            contenuPageElt_generique.innerHTML = contenuPage_generique;
             debuger('ajoutLignes');
         }
-        //caractereMilieu += nbCharsLigneApprox; // au cas où on ait un peu trop retiré. a réadapter pour cette fonction plus tard !!!
-        contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
-        contenuPageElt.innerHTML = contenuPage;
-        positionReduireElt = getPositionTop(reduireElt);
-        positionRallongerElt = getPositionTop(rallongerElt);
+        //fin_generique += nbCharsLigneApprox; // au cas où on ait un peu trop retiré. a réadapter pour cette fonction plus tard !!!
+        contenuPage_generique = texte.substr(deb_generique, fin_generique-deb_generique+1);
+        contenuPageElt_generique.innerHTML = contenuPage_generique;
+        positionReduireElt_generique = getPositionTop(reduireElt_generique);
+        positionRallongerElt_generique = getPositionTop(rallongerElt_generique);
+        actualisationVars();
     }
     
     function supprPleinLignes()
@@ -216,6 +279,7 @@
         {
             console.log('DANS AJOUT PLEIN LIGNES');
             contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
+            console.log(contenuPage);
             contenuPageElt.innerHTML = contenuPage;
             positionReduireElt = getPositionTop(reduireElt);
             positionRallongerElt = getPositionTop(rallongerElt);
@@ -233,60 +297,55 @@
     
     function reduction10par10()
     {
-        while ((caractereMilieu > (caractereDeb + 150)) && (window.innerHeight < positionReduireElt)) // si id reduire n'est pas visible, réduire le texte.
+        initialisationVars();
+        while ((fin_generique > (deb_generique + 150)) && (window.innerHeight < positionReduireElt_generique)) // si id reduire n'est pas visible, réduire le texte.
         {
-            caractereMilieu -= 10; // par 10 pour aller plus vite sans que ce soit génant
-            while (texte.substr(caractereMilieu-6, 6).indexOf('<') != -1)
+            fin_generique -= 10; // par 10 pour aller plus vite sans que ce soit génant
+            while (texte.substr(fin_generique-6, 6).indexOf('<') != -1)
             {
-                caractereMilieu = caractereMilieu - 6 + texte.substr(caractereMilieu-6, 6).indexOf('<') - 1;
+                fin_generique = fin_generique - 6 + texte.substr(fin_generique-6, 6).indexOf('<') - 1;
             }
-            while (texte.substr(caractereMilieu-2, 2).indexOf('\\') != -1)
+            while (texte.substr(fin_generique-2, 2).indexOf('\\') != -1)
             {
-                caractereMilieu = caractereMilieu - 2 + texte.substr(caractereMilieu-2, 2).indexOf('\\') - 1;
+                fin_generique = fin_generique - 2 + texte.substr(fin_generique-2, 2).indexOf('\\') - 1;
             }
-            contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
-            contenuPageElt.innerHTML = contenuPage;
-            positionReduireElt = getPositionTop(reduireElt);
+            contenuPage_generique = texte.substr(deb_generique, fin_generique-deb_generique+1);
+            contenuPageElt_generique.innerHTML = contenuPage_generique;
+            positionReduireElt_generique = getPositionTop(reduireElt_generique);
             debuger('reduction10');
         }
+        actualisationVars();
     }
     
     function decoupagePropre()
     {
-        if (texte.substr(caractereMilieu-16, 32).indexOf('<br') != -1) // si il y a des sauts de lignes autour non détectés, se mettre juste avant le premier d'entre eux
+        initialisationVars();
+        if (texte.substr(fin_generique-16, 32).indexOf('<br') != -1) // si il y a des sauts de lignes autour non détectés, se mettre juste avant le premier d'entre eux
         {
-            caractereMilieu = caractereMilieu - 16 + texte.substr(caractereMilieu-16, 32).indexOf('<br') - 1;
+            fin_generique = fin_generique - 16 + texte.substr(fin_generique-16, 32).indexOf('<br') - 1;
             debuger('decoupagePropreBr');
         }
         else
         {
             do
             {
-                caractereMilieu--;
+                fin_generique--;
                 debuger('decoupagePropreChars');
-            } while ((caractereMilieu > caractereDeb + 150) && (texte.charAt(caractereDeb + caractereMilieu) != ' ')); // jusqu'à tomber sur un espace. Evite de trop réduire aussi. TODO : Vérifier accents aussi
+            } while ((fin_generique > deb_generique + 150) && (texte.charAt(deb_generique + fin_generique) != ' ')); // jusqu'à tomber sur un espace. Evite de trop réduire aussi. TODO : Vérifier accents aussi
         }
-        contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
-        contenuPageElt.innerHTML = contenuPage;
-        positionReduireElt = getPositionTop(reduireElt);
+        contenuPage_generique = texte.substr(deb_generique, fin_generique-deb_generique+1);
+        contenuPageElt_generique.innerHTML = contenuPage_generique;
+        positionReduireElt_generique = getPositionTop(reduireElt_generique);
+        actualisationVars();
     }
     
     function adapter() // adapte le texte a la place dispo dans la fenêtre, présente une page
     {
         // note : code divisé pour plus de clarté
         
-        // vider ligne peut être incomplète pour compter chars ligne précédente (qui elle est complète)
-        //viderLigne();
-        
-        // vérif si réduc suffit (premiere partie du if), sinon calcul nb chars dans une ligne
         compterCharsLigne();
         
-        // suppr des lignes jusqu'à ce que ce soit suffisant. Vérifie aussi les <br />. Rajoute ensuite une ligne au cas où trop enlevé.
-        //supprLignes([reduireElt, contenuPage, contenuPageElt]);
-        
-        //ajoutPleinLignes();
-        
-        ajoutLignes();
+        ajoutPleinLignes();
         
         // réduction 10 par 10 jusqu'arrivé à la taille voulue
         reduction10par10();
@@ -294,21 +353,29 @@
         // stop la page à la fin d'un mot, ou juste avant un saut de ligne s'il y en a un proche (à la fin d'un paragraphe par exemple)
         decoupagePropre();
         
+        /*var contenuPageElt_2;
+        var contenuPage_2;
+        var reduireElt_2;
+        var rallongerElt_2;
+        var positionReduireElt_2;
+        var positionRallongerElt_2;*/
+        
         if (window.innerWidth > 1500 && caractereMilieu < texte.length)
         {
-            var parent = document.getElementById('parent');
-            var secondVolet = document.createElement('div');
+            deuxiemePage = true;
+            parent = document.getElementById('parent');
+            secondVolet = document.createElement('div');
             parent.appendChild(secondVolet);
-            var contenu2 = document.createElement('p');
-            var reduire2 = document.createElement('p');
-            var rallonger2 = document.createElement('p');
-            secondVolet.appendChild(contenu2);
-            secondVolet.appendChild(reduire2);
-            secondVolet.appendChild(rallonger2);
+            contenuPageElt_2 = document.createElement('p');
+            reduireElt_2 = document.createElement('p');
+            rallongerElt_2 = document.createElement('p');
+            secondVolet.appendChild(contenuPageElt_2);
+            secondVolet.appendChild(reduireElt_2);
+            secondVolet.appendChild(rallongerElt_2);
             secondVolet.setAttribute('class', 'col-xxl-6');
-            contenu2.setAttribute('id', 'contenu2');
-            reduire2.setAttribute('id', 'reduire2');
-            rallonger2.setAttribute('id', 'rallonger2');
+            contenuPageElt_2.setAttribute('id', 'contenu2');
+            reduireElt_2.setAttribute('id', 'reduire2');
+            rallongerElt_2.setAttribute('id', 'rallonger2');
             difference = caractereMilieu - caractereDeb;
             while (texte.charAt(caractereMilieu + 1) == '<')
                 caractereMilieu += texte.substr(caractereMilieu+1, 6).indexOf('>') + 2;
@@ -319,14 +386,19 @@
             else
             {
                 caractereFin = caractereMilieu + difference;
-                contenu2.textContent = texte.substr(caractereDeb, difference);
-                if (getPositionTop(reduire2) > window.innerHeight) // on a été trop loin en terme de lignes
+                contenuPage_2 = texte.substr(caractereDeb, difference);
+                contenuPageElt_2.textContent = contenuPage_2;
+                if (getPositionTop(reduireElt_2) > window.innerHeight) // on a été trop loin en terme de lignes
                 {
-                    supprLignes([reduire2, contenu2.innerHTML, contenu2]);
+                    supprLignes(); // reste a ajouter decoupage propre etc
+                    reduction10par10();
+                    decoupagePropre();
                 }
-                else if (getPositionTop(rallonger2) < window.innerHeight) // pas assez loin
+                else if (getPositionTop(rallongerElt_2) < window.innerHeight) // pas assez loin
                 {
-                    ajoutLignes([rallonger2, contenu2.innerHTML, contenu2]);
+                    ajoutLignes();
+                    reduction10par10();
+                    decoupagePropre();
                 }
                 // vérifie découpage mot
             }

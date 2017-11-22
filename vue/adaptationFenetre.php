@@ -31,40 +31,55 @@
     // préparation des variables
     var texte = '<?php echo str_replace('"', '\"', str_replace("'", "\'", json_encode($avecSauts))); ?>';
     var caractereDeb = 0; // indice du premier caractère qui doit apparaitre dans la page
-    var caractereFin = texte.length-1; // indice du dernier
+    var caractereMilieu = 0; // indice du dernier
     // TODO : ou alors remplacer tout ce qui suit par qqch qui calcul en temps réel hauteur et largeur dispo, qui calcul le nombre de caractères max qu'on peut y mettre et fait en fonction
+    var caractereFin;
+    
     var contenuPageElt = document.getElementById('contenu'); // La balise paragraphe <p> qui contiendra le texte a afficher (le corps du billet)
-    var contenuPage = contenuPageElt.innerHTML; // Le texte a afficher. Pour le moment, la variable contient tout le billet. Après manipulation, contiendra une page.
+    var contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1); // Le texte a afficher. Pour le moment, la variable contient tout le billet. Après manipulation, contiendra une page.
     var reduireElt = document.getElementById('reduire');
-    contenuPage = texte.substr(caractereDeb, caractereFin-caractereDeb+1);
+    var rallongerElt = document.getElementById('rallonger');
     contenuPageElt.innerHTML = contenuPage;
     var positionReduireElt = getPositionTop(reduireElt);
+    var positionRallongerElt = getPositionTop(rallongerElt);
+    
+    var contenuPageElt_2;
+    var contenuPage_2;
+    var reduireElt_2;
+    var rallongerElt_2;
+    var positionReduireElt_2;
+    var positionRallongerElt_2;
+    
+    var deuxiemePage = false; // vaut true si (largeur > 1500 + on est en train de s'occuper de la seconde page) sert a déterminer s'il faut utiliser (deb et mil) ou (mil et fin) et s'il faut utiliser le premier set de variables ou le second
+    
     // TODO : modifier, estimer le nombre de caractères en trop
     var nbCharsLigneApprox = 0; // nombre approximatif de cars dans une ligne, approximatif car a plus large que i par ex
-    var hauteurLigne = 0; // hauteur d'une ligne en px
-    var sautLigne = false;
+    var hauteurLigne; // hauteur d'une ligne en px
+    var hauteurManquante;
+    var nbLignesManquantes;
+    var nbCaracteresManquants;
+    
+    var hauteurExcedente;
+    var nbLignesExcedentes;
+    var nbCaracteresExcedents;
     
     function debuger(fonction)
     {
-        console.log('fonction : ' + fonction + ' caractereDeb : ' + caractereDeb + ' caractereFin : ' + caractereFin + ' positionReduireElt : ' + positionReduireElt + ' nbCharsLigneApprox : ' + nbCharsLigneApprox + ' hauteurLigne : ' + hauteurLigne + ' sautLigne : ' + sautLigne);
+        console.log('fonction : ' + fonction + ' caractereDeb : ' + caractereDeb + ' caractereFin : ' + caractereFin + ' positionReduireElt : ' + positionReduireElt + ' nbCharsLigneApprox : ' + nbCharsLigneApprox + ' hauteurLigne : ' + hauteurLigne);
     }
     
-    // regarde si le texte "déborde" de la fenêtre, et adapte le texte a la fenêtre si besoin
-    if ((caractereFin > (caractereDeb + 150)) && (window.innerHeight < positionReduireElt))
-    {
-        adapter();
-    }
+    adapter();
     
-    function viderLigne() // vider la dernière ligne avant de calculer la longueur d'une ligne
+    /*function remplirLigne() // remplir la première ligne pour calculer la longueur d'une ligne
     {
-        while ((caractereFin > (caractereDeb + 150)) && (window.innerHeight < positionReduireElt) && (positionReduireElt == getPositionTop(reduireElt)))
+        while ((caractereMilieu > (caractereDeb + 150)) && (window.innerHeight < positionReduireElt) && (positionReduireElt == getPositionTop(reduireElt)))
         {
-            caractereFin--;
-            while (texte.substr(caractereFin-2, 2).indexOf('\\') != -1)
+            caractereMilieu--;
+            while (texte.substr(caractereMilieu-2, 2).indexOf('\\') != -1)
             {
-                caractereFin -= 2;
+                caractereMilieu -= 2;
             }
-            contenuPage = texte.substr(caractereDeb, caractereFin-caractereDeb+1);
+            contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
             contenuPageElt.innerHTML = contenuPage;
             if (positionReduireElt > getPositionTop(reduireElt))
             {
@@ -73,124 +88,185 @@
             debuger('viderLigne');
         }
         positionReduireElt = getPositionTop(reduireElt);
-    }
+    }*/
     
     function compterCharsLigne() // Compte le nombre de chars dans une ligne (varie d'une ligne a l'autre mais permet de s'en rapprocher avec un exemple d'une ligne pleine)
     {
-        while ((caractereFin > (caractereDeb + 150)) && (window.innerHeight < positionReduireElt) && (positionReduireElt == getPositionTop(reduireElt)) && !sautLigne) 
+        while ((window.innerHeight > positionRallongerElt) && (positionRallongerElt == getPositionTop(rallongerElt)) && (caractereMilieu < texte.length-1)) 
         {
-            if (texte.substr(caractereFin-6, 6).indexOf('<') != -1)
+            if (texte.substr(caractereMilieu, 16).indexOf('<') != -1)
             {
-                caractereFin -= 6;
-                sautLigne = true;
+                caractereMilieu += texte.substr(caractereMilieu, 22).lastIndexOf('>')+1;
+                nbCharsLigneApprox = 0;
+                contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
+                contenuPageElt.innerHTML = contenuPage;
+                positionRallongerElt = getPositionTop(rallongerElt);
             }
             else
             {
-                caractereFin--;
-                while (texte.substr(caractereFin-2, 2).indexOf('\\') != -1)
+                caractereMilieu += 10;
+                while (texte.substr(caractereMilieu-1, 2).indexOf('\\') != -1)
                 {
-                    caractereFin -= 2; // modif pour appostrophes, retire 6 et compte juste un là
+                    caractereMilieu += 2; // modif pour appostrophes, retire 6 et compte juste un là
                     nbCharsLigneApprox++;
                 }
-                nbCharsLigneApprox++;
+                nbCharsLigneApprox += 10;
             }
-            contenuPage = texte.substr(caractereDeb, caractereFin-caractereDeb+1);
+            contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
             contenuPageElt.innerHTML = contenuPage;
             debuger('compterCharsLigne');
         }
+        if (positionRallongerElt < getPositionTop(rallongerElt))
+        {
+            hauteurLigne = getPositionTop(rallongerElt) - positionRallongerElt;
+        }
+        while (positionRallongerElt != getPositionTop(rallongerElt))
+        {
+            caractereMilieu--;
+            if (texte.substr(caractereMilieu-1, 2).indexOf('\\'))
+            {
+                caractereMilieu -= 2;
+                nbCharsLigneApprox--;
+            }
+            nbCharsLigneApprox--;
+            contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
+            contenuPageElt.innerHTML = contenuPage;
+        }
+        caractereMilieu++;
+        nbCharsLigneApprox++;
+        contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
+        contenuPageElt.innerHTML = contenuPage;
         positionReduireElt = getPositionTop(reduireElt);
+        positionRallongerElt = getPositionTop(rallongerElt);
     }
     
-    function supprLignes(tab)
+    function supprLignes()
     {
-        var reduire = tab[0];
-        var cp = tab[1];
-        var cpe = tab[2];
-        while (reduire > window.innerHeight)
+        while (getPositionTop(reduireElt) > window.innerHeight)
         {
-            if (texte.substr(caractereFin-Math.ceil(nbCharsLigneApprox*1,25), Math.ceil(nbCharsLigneApprox*1,25)).indexOf('<br') != -1)
+            if (texte.substr(caractereMilieu-Math.ceil(nbCharsLigneApprox*1,25), Math.ceil(nbCharsLigneApprox*1,25)).indexOf('<br') != -1)
             {
-                caractereFin = caractereDeb + caractereFin - Math.ceil(nbCharsLigneApprox*1,25) + texte.substr(caractereFin-Math.ceil(nbCharsLigneApprox*1,25), Math.ceil(nbCharsLigneApprox*1,25)).lastIndexOf('<br') - 1; // S'il y a un saut de ligne, placer le "curseur" de fin juste avant. On balaie un peu plus que nbCharsLigneApprox au cas ou la ligne compte plus de caractères que nbCharsLigneApprox
+                caractereMilieu -= Math.ceil(nbCharsLigneApprox*1,25) + texte.substr(caractereMilieu-Math.ceil(nbCharsLigneApprox*1,25), Math.ceil(nbCharsLigneApprox*1,25)).lastIndexOf('<br') - 1; // S'il y a un saut de ligne, placer le "curseur" de fin juste avant. On balaie un peu plus que nbCharsLigneApprox au cas ou la ligne compte plus de caractères que nbCharsLigneApprox
             }
             else
             {
-                caractereFin -= nbCharsLigneApprox;
+                caractereMilieu -= nbCharsLigneApprox;
             }
-            cp = texte.substr(caractereDeb, caractereFin-caractereDeb+1);
-            cpe.innerHTML = cp;
+            contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
+            contenuPageElt.innerHTML = contenuPage;
             debuger('supprLignes');
         }
-        caractereFin += nbCharsLigneApprox; // au cas où on ait un peu trop retiré
-        cp = texte.substr(caractereDeb, caractereFin-caractereDeb+1);
-        cpe.innerHTML = cp;
+        caractereMilieu += nbCharsLigneApprox; // au cas où on ait un peu trop retiré
+        contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
+        contenuPageElt.innerHTML = contenuPage;
         positionReduireElt = getPositionTop(reduireElt);
+        positionRallongerElt = getPositionTop(rallongerElt);
     }
     
-    function ajoutLignes(tab)
+    function ajoutLignes()
     {
-        var rallonger = tab[0];
-        var cp = tab[1];
-        var cpe = tab[2];
-        while (getPositionTop(rallonger) < window.innerHeight)
+        while (getPositionTop(rallongerElt) < window.innerHeight)
         {
-            if (caractereFin + Math.ceil(nbCharsLigneApprox*1,25) <= texte.length)
+            if (caractereMilieu + Math.ceil(nbCharsLigneApprox*1,25) >= texte.length)
             {
-                caractereFin = texte.length;
+                caractereMilieu = texte.length;
             }
-            if (texte.substr(caractereFin+3, Math.ceil(nbCharsLigneApprox*1,25)).indexOf('<br') != -1)
+            if (texte.substr(caractereMilieu+3, Math.ceil(nbCharsLigneApprox*1,25)).indexOf('<br') != -1)
             {
-                caractereFin = caractereDeb + caractereFin - Math.ceil(nbCharsLigneApprox*1,25) + texte.substr(caractereFin-Math.ceil(nbCharsLigneApprox*1,25), Math.ceil(nbCharsLigneApprox*1,25)).indexOf('<br') - 1; // S'il y a un saut de ligne après, placer le "curseur" de fin juste avant. On balaie un peu plus que nbCharsLigneApprox au cas ou la ligne compte plus de caractères que nbCharsLigneApprox
+                console.log('ICI');
+                caractereMilieu += 3 + texte.substr(caractereMilieu+3, Math.ceil(nbCharsLigneApprox*1,25)).indexOf('<br') - 1; // S'il y a un saut de ligne après, placer le "curseur" de fin juste avant. On balaie un peu plus que nbCharsLigneApprox au cas ou la ligne compte plus de caractères que nbCharsLigneApprox
             }
             else
             {
-                caractereFin += nbCharsLigneApprox;
+                console.log('LA');
+                caractereMilieu += nbCharsLigneApprox;
             }
-            cp = texte.substr(caractereDeb, caractereFin-caractereDeb+1);
-            cpe.innerHTML = cp;
+            contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
+            contenuPageElt.innerHTML = contenuPage;
             debuger('ajoutLignes');
         }
-        //caractereFin += nbCharsLigneApprox; // au cas où on ait un peu trop retiré. a réadapter pour cette fonction plus tard !!!
-        cp = texte.substr(caractereDeb, caractereFin-caractereDeb+1);
-        cpe.innerHTML = cp;
+        //caractereMilieu += nbCharsLigneApprox; // au cas où on ait un peu trop retiré. a réadapter pour cette fonction plus tard !!!
+        contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
+        contenuPageElt.innerHTML = contenuPage;
         positionReduireElt = getPositionTop(reduireElt);
+        positionRallongerElt = getPositionTop(rallongerElt);
+    }
+    
+    function supprPleinLignes()
+    {
+        
+    }
+    
+    function ajoutPleinLignes()
+    {
+        hauteurManquante = window.innerHeight - positionRallongerElt;
+        nbLignesManquantes = Math.floor(hauteurManquante / hauteurLigne);
+        nbCaracteresManquants = nbCharsLigneApprox * nbLignesManquantes;
+        caractereMilieu += nbCaracteresManquants;
+        console.log(positionRallongerElt + ' ' + window.innerHeight + ' ' + hauteurManquante + ' ' + hauteurLigne + ' ' + nbLignesManquantes + ' ' + nbCaracteresManquants + ' ' + caractereMilieu);
+        if (caractereMilieu+50 > texte.length) // si on est a peu près a la fin
+        {
+            caractereMilieu = texte.length-1;
+            contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
+            contenuPageElt.innerHTML = contenuPage;
+            positionReduireElt = getPositionTop(reduireElt);
+            positionRallongerElt = getPositionTop(rallongerElt);
+        }
+        else
+        {
+            console.log('DANS AJOUT PLEIN LIGNES');
+            contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
+            contenuPageElt.innerHTML = contenuPage;
+            positionReduireElt = getPositionTop(reduireElt);
+            positionRallongerElt = getPositionTop(rallongerElt);
+            if (window.innerHeight < positionReduireElt) // si on a trop ajouté, retirer ligne par ligne
+            {
+                supprLignes();
+            }
+            if (window.innerHeight > positionRallongerElt) // si on a pas assez ajouté, ajouter ligne par ligne
+            {
+                ajoutLignes();
+            }
+            // sinon c'est bon*/
+        }
     }
     
     function reduction10par10()
     {
-        while ((caractereFin > (caractereDeb + 150)) && (window.innerHeight < positionReduireElt)) // si id reduire n'est pas visible, réduire le texte.
+        while ((caractereMilieu > (caractereDeb + 150)) && (window.innerHeight < positionReduireElt)) // si id reduire n'est pas visible, réduire le texte.
         {
-            caractereFin -= 10; // par 10 pour aller plus vite sans que ce soit génant
-            while (texte.substr(caractereFin-6, 6).indexOf('<') != -1)
+            caractereMilieu -= 10; // par 10 pour aller plus vite sans que ce soit génant
+            while (texte.substr(caractereMilieu-6, 6).indexOf('<') != -1)
             {
-                caractereFin = caractereFin - 6 + texte.substr(caractereFin-6, 6).indexOf('<') - 1;
+                caractereMilieu = caractereMilieu - 6 + texte.substr(caractereMilieu-6, 6).indexOf('<') - 1;
             }
-            while (texte.substr(caractereFin-2, 2).indexOf('\\') != -1)
+            while (texte.substr(caractereMilieu-2, 2).indexOf('\\') != -1)
             {
-                caractereFin = caractereFin - 2 + texte.substr(caractereFin-2, 2).indexOf('\\') - 1;
+                caractereMilieu = caractereMilieu - 2 + texte.substr(caractereMilieu-2, 2).indexOf('\\') - 1;
             }
-            contenuPage = texte.substr(caractereDeb, caractereFin-caractereDeb+1);
+            contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
             contenuPageElt.innerHTML = contenuPage;
             positionReduireElt = getPositionTop(reduireElt);
-            //debuger('reduction10');
+            debuger('reduction10');
         }
     }
     
     function decoupagePropre()
     {
-        if (texte.substr(caractereFin-16, 32).indexOf('<br') != -1) // si il y a des sauts de lignes autour non détectés, se mettre juste avant le premier d'entre eux
+        if (texte.substr(caractereMilieu-16, 32).indexOf('<br') != -1) // si il y a des sauts de lignes autour non détectés, se mettre juste avant le premier d'entre eux
         {
-            caractereFin = caractereFin - 16 + texte.substr(caractereFin-16, 32).indexOf('<br') - 1;
+            caractereMilieu = caractereMilieu - 16 + texte.substr(caractereMilieu-16, 32).indexOf('<br') - 1;
             debuger('decoupagePropreBr');
         }
         else
         {
             do
             {
-                caractereFin--;
+                caractereMilieu--;
                 debuger('decoupagePropreChars');
-            } while ((caractereFin > caractereDeb + 150) && (texte.charAt(caractereDeb + caractereFin) != ' ')); // jusqu'à tomber sur un espace. Evite de trop réduire aussi. TODO : Vérifier accents aussi
+            } while ((caractereMilieu > caractereDeb + 150) && (texte.charAt(caractereDeb + caractereMilieu) != ' ')); // jusqu'à tomber sur un espace. Evite de trop réduire aussi. TODO : Vérifier accents aussi
         }
-        contenuPage = texte.substr(caractereDeb, caractereFin-caractereDeb+1);
+        contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
         contenuPageElt.innerHTML = contenuPage;
         positionReduireElt = getPositionTop(reduireElt);
     }
@@ -200,13 +276,17 @@
         // note : code divisé pour plus de clarté
         
         // vider ligne peut être incomplète pour compter chars ligne précédente (qui elle est complète)
-        viderLigne();
+        //viderLigne();
         
         // vérif si réduc suffit (premiere partie du if), sinon calcul nb chars dans une ligne
         compterCharsLigne();
         
         // suppr des lignes jusqu'à ce que ce soit suffisant. Vérifie aussi les <br />. Rajoute ensuite une ligne au cas où trop enlevé.
-        supprLignes([reduireElt, contenuPage, contenuPageElt]);
+        //supprLignes([reduireElt, contenuPage, contenuPageElt]);
+        
+        //ajoutPleinLignes();
+        
+        ajoutLignes();
         
         // réduction 10 par 10 jusqu'arrivé à la taille voulue
         reduction10par10();
@@ -214,7 +294,7 @@
         // stop la page à la fin d'un mot, ou juste avant un saut de ligne s'il y en a un proche (à la fin d'un paragraphe par exemple)
         decoupagePropre();
         
-        if (window.innerWidth > 1500 && caractereFin < texte.length)
+        if (window.innerWidth > 1500 && caractereMilieu < texte.length)
         {
             var parent = document.getElementById('parent');
             var secondVolet = document.createElement('div');
@@ -229,17 +309,16 @@
             contenu2.setAttribute('id', 'contenu2');
             reduire2.setAttribute('id', 'reduire2');
             rallonger2.setAttribute('id', 'rallonger2');
-            difference = caractereFin - caractereDeb;
-            while (texte.charAt(caractereFin + 1) == '<')
-                caractereFin += texte.substr(caractereFin+1, 6).indexOf('>') + 1;
-            caractereDeb = caractereFin + 1;
-            if (caractereDeb + difference >= texte.length)
+            difference = caractereMilieu - caractereDeb;
+            while (texte.charAt(caractereMilieu + 1) == '<')
+                caractereMilieu += texte.substr(caractereMilieu+1, 6).indexOf('>') + 2;
+            if (caractereMilieu + difference >= texte.length)
             {
                 caractereFin = texte.length-1;
             }
             else
             {
-                caractereFin = caractereDeb + difference;
+                caractereFin = caractereMilieu + difference;
                 contenu2.textContent = texte.substr(caractereDeb, difference);
                 if (getPositionTop(reduire2) > window.innerHeight) // on a été trop loin en terme de lignes
                 {
@@ -267,7 +346,7 @@
     {
         while (caractere < texte.length)
         {
-            caractereFin = caractereDeb + 750; // modif ? fin texte avant ?
+            caractereMilieu = caractereDeb + 750; // modif ? fin texte avant ?
             while ()
             {
                 // TODO : vérif espaces et fin de texte

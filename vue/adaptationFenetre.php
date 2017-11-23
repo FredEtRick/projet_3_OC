@@ -77,7 +77,7 @@
     
     function debuger(fonction)
     {
-        console.log('fonction : ' + fonction + ' caractereDeb : ' + caractereDeb + ' caractereFin : ' + caractereFin + ' positionReduireElt : ' + positionReduireElt + ' nbCharsLigneApprox : ' + nbCharsLigneApprox + ' hauteurLigne : ' + hauteurLigne + ' window.innerHeight : ' + window.innerHeight + ' positionRallongerElt_2 : ' + positionRallongerElt_2 + ' positionReduireElt_2 : ' + positionReduireElt_2);
+        console.log('fonction : ' + fonction + ' caractereDeb : ' + caractereDeb + ' caractereMilieu : ' + caractereMilieu + ' caractereFin : ' + caractereFin + ' positionReduireElt : ' + positionReduireElt + ' nbCharsLigneApprox : ' + nbCharsLigneApprox + ' hauteurLigne : ' + hauteurLigne + ' window.innerHeight : ' + window.innerHeight + ' positionRallongerElt_2 : ' + positionRallongerElt_2 + ' positionReduireElt_2 : ' + positionReduireElt_2 + ' contenu ' + contenuPage);
     }
     
     function initialisationVars()
@@ -206,7 +206,7 @@
         {
             if (texte.substr(fin_generique-Math.ceil(nbCharsLigneApprox*1,25), Math.ceil(nbCharsLigneApprox*1,25)).indexOf('<br') != -1)
             {
-                fin_generique -= Math.ceil(nbCharsLigneApprox*1,25) + texte.substr(fin_generique-Math.ceil(nbCharsLigneApprox*1,25), Math.ceil(nbCharsLigneApprox*1,25)).lastIndexOf('<br') - 1; // S'il y a un saut de ligne, placer le "curseur" de fin juste avant. On balaie un peu plus que nbCharsLigneApprox au cas ou la ligne compte plus de caractères que nbCharsLigneApprox
+                fin_generique += -Math.ceil(nbCharsLigneApprox*1,25) + texte.substr(fin_generique-Math.ceil(nbCharsLigneApprox*1,25), Math.ceil(nbCharsLigneApprox*1,25)).lastIndexOf('<br') - 1; // S'il y a un saut de ligne, placer le "curseur" de fin juste avant. On balaie un peu plus que nbCharsLigneApprox au cas ou la ligne compte plus de caractères que nbCharsLigneApprox
             }
             else
             {
@@ -233,7 +233,7 @@
             {
                 fin_generique = texte.length;
             }
-            if (texte.substr(fin_generique+3, Math.ceil(nbCharsLigneApprox*1,25)).indexOf('<br') != -1)
+            else if (texte.substr(fin_generique+3, Math.ceil(nbCharsLigneApprox*1,25)).indexOf('<br') != -1)
             {
                 console.log('ICI');
                 fin_generique += 3 + texte.substr(fin_generique+3, Math.ceil(nbCharsLigneApprox*1,25)).indexOf('<br') - 1; // S'il y a un saut de ligne après, placer le "curseur" de fin juste avant. On balaie un peu plus que nbCharsLigneApprox au cas ou la ligne compte plus de caractères que nbCharsLigneApprox
@@ -242,6 +242,63 @@
             {
                 console.log('LA');
                 fin_generique += nbCharsLigneApprox;
+            }
+            contenuPage_generique = texte.substr(deb_generique, fin_generique-deb_generique+1);
+            contenuPageElt_generique.innerHTML = contenuPage_generique;
+            debuger('ajoutLignes');
+        }
+        //fin_generique += nbCharsLigneApprox; // au cas où on ait un peu trop retiré. a réadapter pour cette fonction plus tard !!!
+        contenuPage_generique = texte.substr(deb_generique, fin_generique-deb_generique+1);
+        contenuPageElt_generique.innerHTML = contenuPage_generique;
+        positionReduireElt_generique = getPositionTop(reduireElt_generique);
+        positionRallongerElt_generique = getPositionTop(rallongerElt_generique);
+        actualisationVars();
+    }
+    
+    function supprLignesDeb()
+    {
+        initialisationVars();
+        console.log(deb_generique + ' ' + fin_generique);
+        while (getPositionTop(reduireElt_generique) > window.innerHeight)
+        {
+            if (texte.substr(deb_generique-Math.ceil(nbCharsLigneApprox*1,25), Math.ceil(nbCharsLigneApprox*1,25)).indexOf('<br') != -1)
+            {
+                deb_generique += -Math.ceil(nbCharsLigneApprox*1,25) + texte.substr(deb_generique-Math.ceil(nbCharsLigneApprox*1,25), Math.ceil(nbCharsLigneApprox*1,25)).lastIndexOf('<br') - 1; // S'il y a un saut de ligne, placer le "curseur" de fin juste avant. On balaie un peu plus que nbCharsLigneApprox au cas ou la ligne compte plus de caractères que nbCharsLigneApprox
+            }
+            else
+            {
+                deb_generique -= nbCharsLigneApprox;
+            }
+            contenuPage_generique = texte.substr(deb_generique, fin_generique-deb_generique+1);
+            contenuPageElt_generique.innerHTML = contenuPage_generique;
+            debuger('supprLignes');
+        }
+        deb_generique += nbCharsLigneApprox; // au cas où on ait un peu trop retiré
+        contenuPage_generique = texte.substr(deb_generique, fin_generique-deb_generique+1);
+        contenuPageElt_generique.innerHTML = contenuPage_generique;
+        positionReduireElt_generique = getPositionTop(reduireElt_generique);
+        positionRallongerElt_generique = getPositionTop(rallongerElt_generique);
+        actualisationVars();
+    }
+    
+    function ajoutLignesDeb()
+    {
+        initialisationVars();
+        while (getPositionTop(rallongerElt_generique) < window.innerHeight && deb_generique != 0)
+        {
+            if (deb_generique - Math.ceil(nbCharsLigneApprox*1,25) <= 0)
+            {
+                deb_generique = 0;
+            }
+            else if (texte.substr(deb_generique - 12 - Math.ceil(nbCharsLigneApprox*1,25), Math.ceil(nbCharsLigneApprox*1,25)).indexOf('<br') != -1)
+            {
+                console.log('ICI');
+                deb_generique += -12 - Math.ceil(nbCharsLigneApprox*1,25) + texte.substr(deb_generique - 12 - Math.ceil(nbCharsLigneApprox*1,25), Math.ceil(nbCharsLigneApprox*1,25)).lastIndexOf('>') + 1; // S'il y a un saut de ligne avant, placer le "curseur" de fin juste après le dernier saut. On balaie un peu plus que nbCharsLigneApprox au cas ou la ligne compte plus de caractères que nbCharsLigneApprox
+            }
+            else
+            {
+                console.log('LA');
+                deb_generique -= nbCharsLigneApprox;
             }
             contenuPage_generique = texte.substr(deb_generique, fin_generique-deb_generique+1);
             contenuPageElt_generique.innerHTML = contenuPage_generique;
@@ -305,9 +362,9 @@
             {
                 fin_generique = fin_generique - 6 + texte.substr(fin_generique-6, 6).indexOf('<') - 1;
             }
-            while (texte.substr(fin_generique-2, 2).indexOf('\\') != -1)
+            while (texte.substr(fin_generique-1, 2).indexOf('\\') != -1)
             {
-                fin_generique = fin_generique - 2 + texte.substr(fin_generique-2, 2).indexOf('\\') - 1;
+                fin_generique = fin_generique - 1 + texte.substr(fin_generique-1, 2).indexOf('\\') - 1;
             }
             contenuPage_generique = texte.substr(deb_generique, fin_generique-deb_generique+1);
             contenuPageElt_generique.innerHTML = contenuPage_generique;
@@ -325,14 +382,76 @@
             fin_generique = fin_generique - 16 + texte.substr(fin_generique-16, 32).indexOf('<br') - 1;
             debuger('decoupagePropreBr');
         }
+        else if (fin_generique + nbCharsLigneApprox > texte.length-1)
+        {
+            fin_generique = texte.length-1;
+        }
         else
         {
             do
             {
                 fin_generique--;
                 debuger('decoupagePropreChars');
-            } while ((fin_generique > deb_generique + 150) && (texte.charAt(deb_generique + fin_generique) != ' ')); // jusqu'à tomber sur un espace. Evite de trop réduire aussi. TODO : Vérifier accents aussi
+            } while ((fin_generique > deb_generique + 150) && (texte.charAt(fin_generique) != ' ')); // jusqu'à tomber sur un espace. Evite de trop réduire aussi. TODO : Vérifier accents aussi
         }
+        var apresSaut = deb_generique;
+        while (texte.substr(apresSaut, 4).indexOf('<br') != -1)
+        {
+            apresSaut += texte.substr(apresSaut, 7).lastIndexOf('>') + 1;
+        }
+        contenuPage_generique = texte.substr(apresSaut, fin_generique-apresSaut+1);
+        contenuPageElt_generique.innerHTML = contenuPage_generique;
+        positionReduireElt_generique = getPositionTop(reduireElt_generique);
+        actualisationVars();
+    }
+    
+    function reduction10par10Deb()
+    {
+        initialisationVars();
+        while ((fin_generique > (deb_generique + 150)) && (window.innerHeight < positionReduireElt_generique)) // si id reduire n'est pas visible, réduire le texte.
+        {
+            deb_generique += 10; // par 10 pour aller plus vite sans que ce soit génant
+            while (texte.substr(deb_generique, 6).indexOf('<') != -1)
+            {
+                deb_generique += texte.substr(deb_generique, 12).lastIndexOf('>') + 1;
+            }
+            while (texte.substr(fin_generique-1, 2).indexOf('\\') != -1)
+            {
+                fin_generique += -1 + texte.substr(fin_generique-2, 2).indexOf('\\') + 2;
+            }
+            contenuPage_generique = texte.substr(deb_generique, fin_generique-deb_generique+1);
+            contenuPageElt_generique.innerHTML = contenuPage_generique;
+            positionReduireElt_generique = getPositionTop(reduireElt_generique);
+            debuger('reduction10');
+        }
+        actualisationVars();
+    }
+    
+    function decoupagePropreDeb()
+    {
+        initialisationVars();
+        if (texte.substr(deb_generique-16, 32).indexOf('<br') != -1) // si il y a des sauts de lignes autour non détectés, se mettre juste après le dernier d'entre eux
+        {
+            deb_generique = deb_generique - 16 + texte.substr(fin_generique-16, 35).indexOf('>') + 1;
+            debuger('decoupagePropreBr');
+        }
+        else if (deb_generique - nbCharsLigneApprox < 0)
+        {
+            deb_generique = 0;
+        }
+        else
+        {
+            do
+            {
+                deb_generique++;
+                debuger('decoupagePropreChars');
+            } while ((fin_generique > deb_generique + 150) && (texte.charAt(deb_generique) != ' ')); // jusqu'à tomber sur un espace. Evite de trop réduire aussi. TODO : Vérifier accents aussi
+        }
+        /*var apresSaut = deb_generique;
+        while (texte.substr(apresSaut, 4).indexOf('<br') != -1)
+        {
+            apresSaut += texte.substr(apresSaut, 7).lastIndexOf('>') + 1;
+        }*/
         contenuPage_generique = texte.substr(deb_generique, fin_generique-deb_generique+1);
         contenuPageElt_generique.innerHTML = contenuPage_generique;
         positionReduireElt_generique = getPositionTop(reduireElt_generique);
@@ -434,28 +553,34 @@
             if (caractereDeb-Math.floor(0.75*difference) <= 0) // 0.75 pour éviter les cas où il y aurait des caractères ni englobés avant "pagePrecedente", ni après
             {
                 caractereDeb = 0;
+                deuxiemePage = false;
+                contenuPage_2 = contenuPage;
+                contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
+                contenuPageElt.innerHTML = contenuPage;
+                positionReduireElt = getPositionTop(reduireElt);
+                positionRallongerElt = getPositionTop(rallongerElt);
             }
             else
             {
                 caractereDeb -= Math.floor(0.75*difference);
-            }
-            deuxiemePage = false;
-            contenuPage_2 = contenuPage;
-            contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
-            contenuPageElt.innerHTML = contenuPage;
-            positionReduireElt = getPositionTop(reduireElt);
-            positionRallongerElt = getPositionTop(rallongerElt);
-            if (positionReduireElt > window.innerHeight)
-            {
-                supprLignes();
-                reduction10par10();
-                decoupagePropre();
-            }
-            if (positionRallongerElt < window.innerHeight)
-            {
-                ajoutLignes();
-                reduction10par10();
-                decoupagePropre();
+                deuxiemePage = false;
+                contenuPage_2 = contenuPage;
+                contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
+                contenuPageElt.innerHTML = contenuPage;
+                positionReduireElt = getPositionTop(reduireElt);
+                positionRallongerElt = getPositionTop(rallongerElt);
+                if (positionReduireElt > window.innerHeight)
+                {
+                    supprLignesDeb();
+                    reduction10par10Deb();
+                    decoupagePropreDeb();
+                }
+                if (positionRallongerElt < window.innerHeight)
+                {
+                    ajoutLignesDeb();
+                    reduction10par10Deb();
+                    decoupagePropreDeb();
+                }
             }
             if (window.innerWidth > 1500)
             {
@@ -465,15 +590,15 @@
                 positionRallongerElt_2 = getPositionTop(rallongerElt_2);
                 if (positionReduireElt_2 > window.innerHeight)
                 {
-                    supprLignes();
-                    reduction10par10();
-                    decoupagePropre();
+                    supprLignesDeb();
+                    reduction10par10Deb();
+                    decoupagePropreDeb();
                 }
                 if (positionRallongerElt_2 < window.innerHeight)
                 {
-                    ajoutLignes();
-                    reduction10par10();
-                    decoupagePropre();
+                    ajoutLignesDeb();
+                    reduction10par10Deb();
+                    decoupagePropreDeb();
                 }
             }
         }
@@ -556,13 +681,12 @@
             {
                 if (caractereMilieu+Math.floor(0.75*difference) >= texte.length-1)
                 {
-                    var avancement = texte.length-1 - caractereMilieu;
+                    caractereDeb = caractereMilieu;
                     caractereMilieu = texte.length-1;
-                    caractereDeb += avancement;
-                    while (texte.substr(caractereDeb-5, 6).indexOf('<') != -1)
+                    /*while (texte.substr(caractereDeb-5, 6).indexOf('<') != -1)
                     {
                         caractereMilieu += (texte.substr(caractereMilieu-5, 6).indexOf('<') - 6);
-                    }
+                    }*/
                     contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
                     contenuPageElt.innerHTML = contenuPage;
                     positionReduireElt = getPositionTop(reduireElt);
@@ -570,7 +694,7 @@
                 }
                 else
                 {
-                    caractereDeb += Math.floor(0.75*difference);
+                    caractereDeb = caractereMilieu;
                     caractereMilieu += Math.floor(0.75*difference);
                     deuxiemePage = false;
                     contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);

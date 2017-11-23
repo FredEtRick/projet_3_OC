@@ -422,7 +422,7 @@
     precedenteElt.setAttribute('onclick', 'pagePrecedente()');
     suivanteElt.classList.add('fa');
     suivanteElt.classList.add('fa-chevron-right');
-    precedenteElt.setAttribute('onclick', 'pageSuivante()');
+    suivanteElt.setAttribute('onclick', 'pageSuivante()');
     
     function pagePrecedente()
     {
@@ -481,50 +481,112 @@
     
     function pageSuivante()
     {
-        initialisationVars();
-        if (fin_generique < texte.length-1)
+        console.log('PAGE SUIVANTE');
+        difference = caractereMilieu - caractereDeb;
+        if (window.innerWidth > 1500)
         {
-            difference = caractereMilieu - caractereDeb;
-            caractereDeb = caractereMilieu;
-            if (window.innerWidth > 1500)
-                caractereMilieu = caractereFin;
-            else
-                caractereMilieu += difference;
-            if (caractereFin + Math.floor(0.75*difference) < texte.length-1)
-                caractereFin += difference;
-            else
-                caractereFin += Math.floor(0.75*difference);
-            deuxiemePage = false;
-            contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
-            if (positionReduireElt > window.innerHeight)
+            if (caractereFin < texte.length-1)
             {
-                supprLignes();
-                reduction10par10();
-                decoupagePropre();
-            }
-            if (positionRallongerElt < window.innerHeight)
-            {
-                ajoutLignes();
-                reduction10par10();
-                decoupagePropre();
-            }
-            if (window.innerWidth > 1500)
-            {
-                deuxiemePage = true;
-                contenuPage_2 = texte.substr(caractereMilieu, caractereFin-caractereMilieu+1);
-                contenuPageElt_2.innerHTML = contenuPage_2;
-                positionReduireElt_2 = getPositionTop(reduireElt_2);
-                positionRallongerElt_2 = getPositionTop(rallongerElt_2);
-                if (positionReduireElt_2 > window.innerHeight)
+                if (caractereFin+Math.floor(0.75*difference) >= texte.length-1)
                 {
-                    supprLignes();
-                    reduction10par10();
+                    var avancement = texte.length-1 - caractereFin;
+                    caractereFin = texte.length-1;
+                    caractereMilieu += avancement;
+                    caractereDeb += avancement;
+                    while (texte.substr(caractereMilieu-5, 6).indexOf('<') != -1)
+                    {
+                        caractereMilieu += (texte.substr(caractereMilieu-5, 6).indexOf('<') - 6); // on se place juste avant le saut a la ligne
+                    }
+                    while (texte.substr(caractereDeb-5, 6).indexOf('<') != -1)
+                    {
+                        caractereMilieu += (texte.substr(caractereMilieu-5, 6).indexOf('<') - 6);
+                    }
+                    contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
+                    contenuPage_2 = texte.substr(caractereMilieu, caractereFin-caractereMilieu+1);
+                    contenuPageElt.innerHTML = contenuPage;
+                    contenuPageElt_2.innerHTML = contenuPage_2;
+                    positionReduireElt = getPositionTop(reduireElt);
+                    positionReduireElt_2 = getPositionTop(reduireElt_2);
+                    positionRallongerElt = getPositionTop(rallongerElt);
+                    positionRallongerElt_2 = getPositionTop(rallongerElt_2);
+                }
+                else
+                {
+                    caractereDeb += Math.floor(0.75*difference);
+                    caractereMilieu += Math.floor(0.75*difference);
+                    caractereFin += Math.floor(0.75*difference);
+                    deuxiemePage = false;
+                    contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
+                    contenuPage_2 = texte.substr(caractereMilieu, caractereFin-caractereMilieu+1);
+                    contenuPageElt.innerHTML = contenuPage;
+                    contenuPageElt_2.innerHTML = contenuPage_2;
+                    positionReduireElt = getPositionTop(reduireElt);
+                    positionReduireElt_2 = getPositionTop(reduireElt_2);
+                    positionRallongerElt = getPositionTop(rallongerElt);
+                    positionRallongerElt_2 = getPositionTop(rallongerElt_2);
+                    if (positionReduireElt > window.innerHeight)
+                    {
+                        supprLignes();
+                        reduction10par10();
+                    }
+                    if (positionRallongerElt < window.innerHeight)
+                    {
+                        ajoutLignes();
+                        reduction10par10();
+                    }
+                    decoupagePropre();
+                    deuxiemePage = true;
+                    if (positionReduireElt_2 > window.innerHeight)
+                    {
+                        supprLignes();
+                        reduction10par10();
+                    }
+                    if (positionRallongerElt_2 < window.innerHeight)
+                    {
+                        ajoutLignes();
+                        reduction10par10();
+                    }
                     decoupagePropre();
                 }
-                if (positionRallongerElt_2 < window.innerHeight)
+            }
+        }
+        else
+        {
+            if (caractereMilieu < texte.length-1)
+            {
+                if (caractereMilieu+Math.floor(0.75*difference) >= texte.length-1)
                 {
-                    ajoutLignes();
-                    reduction10par10();
+                    var avancement = texte.length-1 - caractereMilieu;
+                    caractereMilieu = texte.length-1;
+                    caractereDeb += avancement;
+                    while (texte.substr(caractereDeb-5, 6).indexOf('<') != -1)
+                    {
+                        caractereMilieu += (texte.substr(caractereMilieu-5, 6).indexOf('<') - 6);
+                    }
+                    contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
+                    contenuPageElt.innerHTML = contenuPage;
+                    positionReduireElt = getPositionTop(reduireElt);
+                    positionRallongerElt = getPositionTop(rallongerElt);
+                }
+                else
+                {
+                    caractereDeb += Math.floor(0.75*difference);
+                    caractereMilieu += Math.floor(0.75*difference);
+                    deuxiemePage = false;
+                    contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
+                    contenuPageElt.innerHTML = contenuPage;
+                    positionReduireElt = getPositionTop(reduireElt);
+                    positionRallongerElt = getPositionTop(rallongerElt);
+                    if (positionReduireElt > window.innerHeight)
+                    {
+                        supprLignes();
+                        reduction10par10();
+                    }
+                    if (positionRallongerElt < window.innerHeight)
+                    {
+                        ajoutLignes();
+                        reduction10par10();
+                    }
                     decoupagePropre();
                 }
             }

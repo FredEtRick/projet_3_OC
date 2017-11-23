@@ -50,7 +50,7 @@
     var positionReduireElt_2;
     var positionRallongerElt_2;
     var difference;
-    var parent;
+    var parent = document.getElementById('parent');
     var secondVolet;
     
     var contenuPageElt_generique;
@@ -401,6 +401,132 @@
                     decoupagePropre();
                 }
                 // vérifie découpage mot
+            }
+        }
+    }
+    
+    // pageSuivante pagePrecedente
+    
+    var boutonsPagesElt = document.createElement('p');
+    var precedenteElt = document.createElement('button');
+    var suivanteElt = document.createElement('button');
+    parent.appendChild(boutonsPagesElt);
+    boutonsPagesElt.appendChild(precedenteElt);
+    boutonsPagesElt.appendChild(suivanteElt);
+    boutonsPagesElt.classList.add('navPages');
+    boutonsPagesElt.classList.add('col-xxl-12');
+    boutonsPagesElt.classList.add('col-xl-12');
+    boutonsPagesElt.classList.add('col-sm-12');
+    precedenteElt.classList.add('fa');
+    precedenteElt.classList.add('fa-chevron-left');
+    precedenteElt.setAttribute('onclick', 'pagePrecedente()');
+    suivanteElt.classList.add('fa');
+    suivanteElt.classList.add('fa-chevron-right');
+    precedenteElt.setAttribute('onclick', 'pageSuivante()');
+    
+    function pagePrecedente()
+    {
+        if (caractereDeb > 0)
+        {
+            difference = caractereMilieu - caractereDeb;
+            caractereFin = caractereMilieu;
+            caractereMilieu = caractereDeb;
+            if (caractereDeb-Math.floor(0.75*difference) <= 0) // 0.75 pour éviter les cas où il y aurait des caractères ni englobés avant "pagePrecedente", ni après
+            {
+                caractereDeb = 0;
+            }
+            else
+            {
+                caractereDeb -= Math.floor(0.75*difference);
+            }
+            deuxiemePage = false;
+            contenuPage_2 = contenuPage;
+            contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
+            contenuPageElt.innerHTML = contenuPage;
+            positionReduireElt = getPositionTop(reduireElt);
+            positionRallongerElt = getPositionTop(rallongerElt);
+            if (positionReduireElt > window.innerHeight)
+            {
+                supprLignes();
+                reduction10par10();
+                decoupagePropre();
+            }
+            if (positionRallongerElt < window.innerHeight)
+            {
+                ajoutLignes();
+                reduction10par10();
+                decoupagePropre();
+            }
+            if (window.innerWidth > 1500)
+            {
+                deuxiemePage = true;
+                contenuPageElt_2.innerHTML = contenuPage_2;
+                positionReduireElt_2 = getPositionTop(reduireElt_2);
+                positionRallongerElt_2 = getPositionTop(rallongerElt_2);
+                if (positionReduireElt_2 > window.innerHeight)
+                {
+                    supprLignes();
+                    reduction10par10();
+                    decoupagePropre();
+                }
+                if (positionRallongerElt_2 < window.innerHeight)
+                {
+                    ajoutLignes();
+                    reduction10par10();
+                    decoupagePropre();
+                }
+            }
+        }
+    }
+    
+    function pageSuivante()
+    {
+        initialisationVars();
+        if (fin_generique < texte.length-1)
+        {
+            difference = caractereMilieu - caractereDeb;
+            caractereDeb = caractereMilieu;
+            if (window.innerWidth > 1500)
+                caractereMilieu = caractereFin;
+            else
+                caractereMilieu += difference;
+            if (caractereFin + Math.floor(0.75*difference) < texte.length-1)
+                caractereFin += difference;
+            else
+                caractereFin += Math.floor(0.75*difference);
+            deuxiemePage = false;
+            contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
+            if (positionReduireElt > window.innerHeight)
+            {
+                supprLignes();
+                reduction10par10();
+                decoupagePropre();
+            }
+            if (positionRallongerElt < window.innerHeight)
+            {
+                ajoutLignes();
+                reduction10par10();
+                decoupagePropre();
+            }
+            if (window.innerWidth > 1500)
+            {
+                deuxiemePage = true;
+                contenuPage_2 = texte.substr(caractereMilieu, caractereFin-caractereMilieu+1);
+                contenuPageElt_2.innerHTML = contenuPage_2;
+                positionReduireElt_2 = getPositionTop(reduireElt_2);
+                positionRallongerElt_2 = getPositionTop(rallongerElt_2);
+                if (positionReduireElt_2 > window.innerHeight)
+                {
+                    supprLignes();
+                    reduction10par10();
+                    decoupagePropre();
+                }
+                if (positionRallongerElt_2 < window.innerHeight)
+                {
+                    ajoutLignes();
+                    reduction10par10();
+                    decoupagePropre();
+                }
             }
         }
     }

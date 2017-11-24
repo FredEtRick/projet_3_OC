@@ -1,4 +1,10 @@
 <script type="text/javascript">    
+    
+    /* TODO instantané :
+        - corriger problème scinde entre "rapport" et "8". note : du au "après saut" qui laisse des lignes en trop tout le processus et ne les supprime que dans decoupagePropre
+        - corriger page précédente écran large
+    */
+    
     /* TODO : 
         - séparer en fonction
         - bien commenter
@@ -77,7 +83,7 @@
     
     function debuger(fonction)
     {
-        console.log('fonction : ' + fonction + ' caractereDeb : ' + caractereDeb + ' caractereMilieu : ' + caractereMilieu + ' caractereFin : ' + caractereFin + ' positionReduireElt : ' + positionReduireElt + ' nbCharsLigneApprox : ' + nbCharsLigneApprox + ' hauteurLigne : ' + hauteurLigne + ' window.innerHeight : ' + window.innerHeight + ' positionRallongerElt_2 : ' + positionRallongerElt_2 + ' positionReduireElt_2 : ' + positionReduireElt_2 + ' contenu ' + contenuPage);
+        console.log('fonction : ' + fonction + ' deuxiemePage : ' + deuxiemePage + ' ; ' + ' caractereDeb : ' + caractereDeb + ' caractereMilieu : ' + caractereMilieu + ' caractereFin : ' + caractereFin + ' positionReduireElt : ' + positionReduireElt + ' positionRallongerElt : ' + positionRallongerElt + ' nbCharsLigneApprox : ' + nbCharsLigneApprox + ' hauteurLigne : ' + hauteurLigne + ' window.innerHeight : ' + window.innerHeight + ' positionRallongerElt_2 : ' + positionRallongerElt_2 + ' positionReduireElt_2 : ' + positionReduireElt_2 + ' contenu ' + contenuPage + ' contenuGenerique : ' + contenuPage_generique);
     }
     
     function initialisationVars()
@@ -104,6 +110,7 @@
             deb_generique = caractereDeb;
             fin_generique = caractereMilieu;
         }
+        replacerDebut();
     }
     
     function actualisationVars()
@@ -123,6 +130,14 @@
             contenuPage = contenuPage_generique;
             positionReduireElt = positionReduireElt_generique;
             positionRallongerElt = positionRallongerElt_generique;
+        }
+    }
+    
+    function replacerDebut()
+    {
+        while (texte.substr(deb_generique, 4).indexOf('<br') != -1)
+        {
+            deb_generique += texte.substr(deb_generique, 7).lastIndexOf('>') + 1;
         }
     }
     
@@ -229,9 +244,9 @@
         initialisationVars();
         while (getPositionTop(rallongerElt_generique) < window.innerHeight)
         {
-            if (fin_generique + Math.ceil(nbCharsLigneApprox*1,25) >= texte.length)
+            if (fin_generique + Math.ceil(nbCharsLigneApprox*1,25) >= texte.length-1)
             {
-                fin_generique = texte.length;
+                fin_generique = texte.length-1;
             }
             else if (texte.substr(fin_generique+3, Math.ceil(nbCharsLigneApprox*1,25)).indexOf('<br') != -1)
             {
@@ -253,6 +268,7 @@
         positionReduireElt_generique = getPositionTop(reduireElt_generique);
         positionRallongerElt_generique = getPositionTop(rallongerElt_generique);
         actualisationVars();
+            debuger('ajoutLignes');
     }
     
     function supprLignesDeb()
@@ -271,7 +287,7 @@
             }
             contenuPage_generique = texte.substr(deb_generique, fin_generique-deb_generique+1);
             contenuPageElt_generique.innerHTML = contenuPage_generique;
-            debuger('supprLignes');
+            debuger('supprLignesDeb');
         }
         deb_generique += nbCharsLigneApprox; // au cas où on ait un peu trop retiré
         contenuPage_generique = texte.substr(deb_generique, fin_generique-deb_generique+1);
@@ -302,7 +318,7 @@
             }
             contenuPage_generique = texte.substr(deb_generique, fin_generique-deb_generique+1);
             contenuPageElt_generique.innerHTML = contenuPage_generique;
-            debuger('ajoutLignes');
+            debuger('ajoutLignesDeb');
         }
         //fin_generique += nbCharsLigneApprox; // au cas où on ait un peu trop retiré. a réadapter pour cette fonction plus tard !!!
         contenuPage_generique = texte.substr(deb_generique, fin_generique-deb_generique+1);
@@ -394,12 +410,7 @@
                 debuger('decoupagePropreChars');
             } while ((fin_generique > deb_generique + 150) && (texte.charAt(fin_generique) != ' ')); // jusqu'à tomber sur un espace. Evite de trop réduire aussi. TODO : Vérifier accents aussi
         }
-        var apresSaut = deb_generique;
-        while (texte.substr(apresSaut, 4).indexOf('<br') != -1)
-        {
-            apresSaut += texte.substr(apresSaut, 7).lastIndexOf('>') + 1;
-        }
-        contenuPage_generique = texte.substr(apresSaut, fin_generique-apresSaut+1);
+        contenuPage_generique = texte.substr(deb_generique, fin_generique-deb_generique+1);
         contenuPageElt_generique.innerHTML = contenuPage_generique;
         positionReduireElt_generique = getPositionTop(reduireElt_generique);
         actualisationVars();
@@ -422,7 +433,7 @@
             contenuPage_generique = texte.substr(deb_generique, fin_generique-deb_generique+1);
             contenuPageElt_generique.innerHTML = contenuPage_generique;
             positionReduireElt_generique = getPositionTop(reduireElt_generique);
-            debuger('reduction10');
+            debuger('reduction10Deb');
         }
         actualisationVars();
     }
@@ -433,7 +444,7 @@
         if (texte.substr(deb_generique-16, 32).indexOf('<br') != -1) // si il y a des sauts de lignes autour non détectés, se mettre juste après le dernier d'entre eux
         {
             deb_generique = deb_generique - 16 + texte.substr(fin_generique-16, 35).indexOf('>') + 1;
-            debuger('decoupagePropreBr');
+            debuger('decoupagePropreBrDeb');
         }
         else if (deb_generique - nbCharsLigneApprox < 0)
         {
@@ -444,7 +455,7 @@
             do
             {
                 deb_generique++;
-                debuger('decoupagePropreChars');
+                debuger('decoupagePropreCharsDeb');
             } while ((fin_generique > deb_generique + 150) && (texte.charAt(deb_generique) != ' ')); // jusqu'à tomber sur un espace. Evite de trop réduire aussi. TODO : Vérifier accents aussi
         }
         /*var apresSaut = deb_generique;
@@ -612,22 +623,13 @@
         {
             if (caractereFin < texte.length-1)
             {
-                if (caractereFin+Math.floor(0.75*difference) >= texte.length-1)
+                caractereDeb = caractereFin;
+                if (caractereDeb+Math.floor(0.75*difference) >= texte.length-1)
                 {
-                    var avancement = texte.length-1 - caractereFin;
+                    caractereMilieu = texte.length-1;
                     caractereFin = texte.length-1;
-                    caractereMilieu += avancement;
-                    caractereDeb += avancement;
-                    while (texte.substr(caractereMilieu-5, 6).indexOf('<') != -1)
-                    {
-                        caractereMilieu += (texte.substr(caractereMilieu-5, 6).indexOf('<') - 6); // on se place juste avant le saut a la ligne
-                    }
-                    while (texte.substr(caractereDeb-5, 6).indexOf('<') != -1)
-                    {
-                        caractereMilieu += (texte.substr(caractereMilieu-5, 6).indexOf('<') - 6);
-                    }
                     contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
-                    contenuPage_2 = texte.substr(caractereMilieu, caractereFin-caractereMilieu+1);
+                    contenuPage_2 = '';
                     contenuPageElt.innerHTML = contenuPage;
                     contenuPageElt_2.innerHTML = contenuPage_2;
                     positionReduireElt = getPositionTop(reduireElt);
@@ -637,12 +639,11 @@
                 }
                 else
                 {
-                    caractereDeb += Math.floor(0.75*difference);
-                    caractereMilieu += Math.floor(0.75*difference);
-                    caractereFin += Math.floor(0.75*difference);
+                    caractereMilieu = caractereDeb + Math.floor(0.75*difference);
+                    caractereFin = caractereMilieu;
                     deuxiemePage = false;
                     contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
-                    contenuPage_2 = texte.substr(caractereMilieu, caractereFin-caractereMilieu+1);
+                    contenuPage_2 = '';
                     contenuPageElt.innerHTML = contenuPage;
                     contenuPageElt_2.innerHTML = contenuPage_2;
                     positionReduireElt = getPositionTop(reduireElt);
@@ -660,18 +661,37 @@
                         reduction10par10();
                     }
                     decoupagePropre();
-                    deuxiemePage = true;
-                    if (positionReduireElt_2 > window.innerHeight)
+                    if (caractereMilieu < texte.length-1)
                     {
-                        supprLignes();
-                        reduction10par10();
+                        deuxiemePage = true;
+                        if (caractereMilieu+Math.floor(0.75*difference) >= texte.length-1)
+                        {
+                            caractereFin = texte.length-1;
+                            contenuPage_2 = texte.substr(caractereMilieu, caractereFin-caractereMilieu+1);
+                            contenuPageElt_2.innerHTML = contenuPage_2;
+                            positionReduireElt_2 = getPositionTop(reduireElt_2);
+                            positionRallongerElt_2 = getPositionTop(rallongerElt_2);
+                        }
+                        else
+                        {
+                            caractereFin = caractereDeb + Math.floor(0.75*difference);
+                            contenuPage_2 = texte.substr(caractereMilieu, caractereFin-caractereMilieu+1);
+                            contenuPageElt_2.innerHTML = contenuPage_2;
+                            positionReduireElt_2 = getPositionTop(reduireElt_2);
+                            positionRallongerElt_2 = getPositionTop(rallongerElt_2);
+                            if (positionReduireElt_2 > window.innerHeight)
+                            {
+                                supprLignes();
+                                reduction10par10();
+                            }
+                            if (positionRallongerElt_2 < window.innerHeight)
+                            {
+                                ajoutLignes();
+                                reduction10par10();
+                            }
+                            decoupagePropre();
+                        }
                     }
-                    if (positionRallongerElt_2 < window.innerHeight)
-                    {
-                        ajoutLignes();
-                        reduction10par10();
-                    }
-                    decoupagePropre();
                 }
             }
         }

@@ -595,22 +595,50 @@
             }
             if (window.innerWidth > 1500)
             {
-                deuxiemePage = true;
+                // Il faut encore tout décaler d'un cran
+                caractereFin = caractereMilieu;
+                caractereMilieu = caractereDeb;
+                contenuPage_2 = contenuPage; // Ca suffit pour s'occuper de la page de droite
+                deuxiemePage = false; // On s'occupe donc de la page de gauche
+                console.log(caractereMilieu);
+                if (caractereMilieu <= 0)
+                {
+                    contenuPage = '';
+                    contenuPageElt.innerHTML = contenuPage;
+                    positionReduireElt = getPositionTop(reduireElt);
+                    positionRallongerElt = getPositionTop(rallongerElt);
+                }
+                else if (caractereMilieu - difference <= 0)
+                {
+                    caractereDeb = 0;
+                    contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
+                    contenuPageElt.innerHTML = contenuPage;
+                    positionReduireElt = getPositionTop(reduireElt);
+                    positionRallongerElt = getPositionTop(rallongerElt);
+                }
+                else
+                {
+                    caractereDeb -= difference;
+                    contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
+                    contenuPageElt.innerHTML = contenuPage;
+                    positionReduireElt = getPositionTop(reduireElt);
+                    positionRallongerElt = getPositionTop(rallongerElt);
+                    if (positionReduireElt > window.innerHeight)
+                    {
+                        supprLignesDeb();
+                        reduction10par10Deb();
+                        decoupagePropreDeb();
+                    }
+                    if (positionRallongerElt < window.innerHeight)
+                    {
+                        ajoutLignesDeb();
+                        reduction10par10Deb();
+                        decoupagePropreDeb();
+                    }
+                }
                 contenuPageElt_2.innerHTML = contenuPage_2;
                 positionReduireElt_2 = getPositionTop(reduireElt_2);
                 positionRallongerElt_2 = getPositionTop(rallongerElt_2);
-                if (positionReduireElt_2 > window.innerHeight)
-                {
-                    supprLignesDeb();
-                    reduction10par10Deb();
-                    decoupagePropreDeb();
-                }
-                if (positionRallongerElt_2 < window.innerHeight)
-                {
-                    ajoutLignesDeb();
-                    reduction10par10Deb();
-                    decoupagePropreDeb();
-                }
             }
         }
     }

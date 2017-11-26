@@ -83,7 +83,7 @@
     
     function debuger(fonction)
     {
-        console.log('fonction : ' + fonction + ' deuxiemePage : ' + deuxiemePage + ' ; ' + ' caractereDeb : ' + caractereDeb + ' caractereMilieu : ' + caractereMilieu + ' caractereFin : ' + caractereFin + ' positionReduireElt : ' + positionReduireElt + ' positionRallongerElt : ' + positionRallongerElt + ' nbCharsLigneApprox : ' + nbCharsLigneApprox + ' hauteurLigne : ' + hauteurLigne + ' window.innerHeight : ' + window.innerHeight + ' positionRallongerElt_2 : ' + positionRallongerElt_2 + ' positionReduireElt_2 : ' + positionReduireElt_2 + ' contenu ' + contenuPage + ' contenuGenerique : ' + contenuPage_generique);
+        console.log('fonction : ' + fonction + ' deuxiemePage : ' + deuxiemePage + ' ; ' + ' caractereDeb : ' + caractereDeb + ' caractereMilieu : ' + caractereMilieu + ' caractereFin : ' + caractereFin + ' positionReduireElt : ' + positionReduireElt + ' positionRallongerElt : ' + positionRallongerElt + ' nbCharsLigneApprox : ' + nbCharsLigneApprox + ' hauteurLigne : ' + hauteurLigne + ' window.innerHeight : ' + window.innerHeight + ' positionRallongerElt_2 : ' + positionRallongerElt_2 + ' positionReduireElt_2 : ' + positionReduireElt_2 + /*' contenu ' + contenuPage +*/ ' contenuGenerique : ' + contenuPage_generique);
     }
     
     function initialisationVars()
@@ -139,6 +139,24 @@
         {
             deb_generique += texte.substr(deb_generique, 7).lastIndexOf('>') + 1;
         }
+    }
+    
+    function deplacerAvantSaut(caractere)
+    {
+        while (texte.substr(caractere-7, 7).indexOf('<br') != -1)
+        {
+            caractere += -7 + texte.substr(caractere-7, 7).indexOf('<br') - 1;
+        }
+        return caractere;
+    }
+    
+    function deplacerApresSaut(caractere)
+    {
+        while (texte.substr(caractere, 4).indexOf('<br') != -1)
+        {
+            caractere += texte.substr(caractere, 7).lastIndexOf('>') + 1;
+        }
+        return caractere;
     }
     
     adapter();
@@ -443,10 +461,10 @@
         initialisationVars();
         if (texte.substr(deb_generique-16, 32).indexOf('<br') != -1) // si il y a des sauts de lignes autour non détectés, se mettre juste après le dernier d'entre eux
         {
-            deb_generique = deb_generique - 16 + texte.substr(fin_generique-16, 35).indexOf('>') + 1;
+            deb_generique += -16 + texte.substr(fin_generique-16, 35).lastIndexOf('>') + 1;
             debuger('decoupagePropreBrDeb');
         }
-        else if (deb_generique - nbCharsLigneApprox < 0)
+        else if (deb_generique - nbCharsLigneApprox <= 0)
         {
             deb_generique = 0;
         }
@@ -458,15 +476,12 @@
                 debuger('decoupagePropreCharsDeb');
             } while ((fin_generique > deb_generique + 150) && (texte.charAt(deb_generique) != ' ')); // jusqu'à tomber sur un espace. Evite de trop réduire aussi. TODO : Vérifier accents aussi
         }
-        /*var apresSaut = deb_generique;
-        while (texte.substr(apresSaut, 4).indexOf('<br') != -1)
-        {
-            apresSaut += texte.substr(apresSaut, 7).lastIndexOf('>') + 1;
-        }*/
-        contenuPage_generique = texte.substr(deb_generique, fin_generique-deb_generique+1);
+        console.log('?????????? ' + contenuPage_generique);
+        //contenuPage_generique = texte.substr(deb_generique, fin_generique-deb_generique+1);
         contenuPageElt_generique.innerHTML = contenuPage_generique;
         positionReduireElt_generique = getPositionTop(reduireElt_generique);
         actualisationVars();
+        console.log('?????????? ' + contenuPage);
     }
     
     function adapter() // adapte le texte a la place dispo dans la fenêtre, présente une page
@@ -560,7 +575,7 @@
         {
             difference = caractereMilieu - caractereDeb;
             caractereFin = caractereMilieu;
-            caractereMilieu = caractereDeb;
+            caractereMilieu = deplacerAvantSaut(caractereMilieu);
             if (caractereDeb-Math.floor(0.75*difference) <= 0) // 0.75 pour éviter les cas où il y aurait des caractères ni englobés avant "pagePrecedente", ni après
             {
                 caractereDeb = 0;
@@ -590,14 +605,16 @@
                 {
                     ajoutLignesDeb();
                     reduction10par10Deb();
+                    console.log('!!!!!!!!!!!!! ' + contenuPage);
                     decoupagePropreDeb();
+                    console.log(contenuPage);
                 }
             }
             if (window.innerWidth > 1500)
             {
                 // Il faut encore tout décaler d'un cran
                 caractereFin = caractereMilieu;
-                caractereMilieu = caractereDeb;
+                caractereMilieu = deplacerAvantSaut(caractereDeb);
                 contenuPage_2 = contenuPage; // Ca suffit pour s'occuper de la page de droite
                 deuxiemePage = false; // On s'occupe donc de la page de gauche
                 console.log(caractereMilieu);

@@ -37,11 +37,17 @@
             echo '<p>erreur : ' . $e->getMessage() ; '</p>';
         }
     }
-    /*function afficherCommentaires($billet)
+    function afficherCommentaires($lesCommentaires)
     {
-        // TODO : ramasser tous les commentaires relatif au billet dans un tableau
         echo '<section class="row">';
-        // TODO : afficher les commentaires (avec appel d'une autre fonction peut être)
+        foreach($lesCommentaires as $commentaire)
+        {
+            echo '<div class="hidden-xl-down col-xxl-3"></div>';
+            echo '<article class="col-xxl-6 col-xl-12 col-sm-12 bulle">';
+            echo '<p>' . $commentaire->getPseudoVisiteur() . '<span class="float-right">Le ' . str_replace(' ', ', à ', $commentaire->getDateHeure()) . '</span></p>';
+            echo '<p class="dernier">' . $commentaire->getContenu() . '</p>';
+            echo '</article>';
+        }
         echo '</section>';
-    }*/
+    }
 ?>

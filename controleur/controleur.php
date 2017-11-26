@@ -24,7 +24,18 @@
     $billetManager = new BilletManager($bdd);
     $lesBillets = $billetManager->recupererTousSaufExp();
 
-    $leBillet = null;
+    try
+    {
+        require $_SERVER['DOCUMENT_ROOT'] . '/modele/Commentaire.php';
+    }
+    catch (Exception $e)
+    {
+        echo '<p>erreur : ' . $e->getMessage() ; '</p>';
+    }
+
+    $commentaireManager = new CommentaireManager($bdd);
+    $lesCommentaires = [];
+
     if(isset($_GET['titre']))
     {
         foreach($lesBillets as $billet)
@@ -32,6 +43,7 @@
             if (strip_tags($_GET['titre']) == str_replace(' ', '_', $billet->getTitre()))
             {
                 $leBillet = $billet;
+                $lesCommentaires = $commentaireManager->recupererTousComsSurUnBillet($billet->getTitre());
             }
         }
     }
@@ -47,6 +59,7 @@
             echo '<p>erreur : ' . $e->getMessage() ; '</p>';
         } 
         afficherBilletComplet($leBillet);
+        afficherCommentaires($lesCommentaires);
     }
     
     elseif(isset($_GET['page']) AND is_numeric($_GET['page']) AND $_GET['page'] <= (ceil(count($lesBillets) / 5)))

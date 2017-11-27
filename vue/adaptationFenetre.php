@@ -572,7 +572,7 @@
     suivanteElt.classList.add('fa-chevron-right');
     suivanteElt.setAttribute('onclick', 'pageSuivante()');
     
-    function pagePrecedente()
+    /*function pagePrecedente()
     {
         if (caractereDeb > 0)
         {
@@ -661,6 +661,128 @@
                 positionRallongerElt_2 = getPositionTop(rallongerElt_2);
             }
         }
+    }*/
+    
+    function pagePrecedente()
+    {
+        console.log('PAGE PRECEDENTE');
+        difference = caractereMilieu - caractereDeb;
+        if (window.innerWidth > 1500)
+        {
+            if (caractereDeb > 0)
+            {
+                caractereFin = deplacerAvantSaut(caractereDeb);
+                if (caractereFin-Math.floor(0.75*difference) <= 0)
+                {
+                    caractereMilieu = 0;
+                    caractereDeb = 0;
+                    contenuPage = '';
+                    contenuPage_2 = texte.substr(caractereMilieu, caractereFin-caractereMilieu+1);
+                    contenuPageElt.innerHTML = contenuPage;
+                    contenuPageElt_2.innerHTML = contenuPage_2;
+                    positionReduireElt = getPositionTop(reduireElt);
+                    positionReduireElt_2 = getPositionTop(reduireElt_2);
+                    positionRallongerElt = getPositionTop(rallongerElt);
+                    positionRallongerElt_2 = getPositionTop(rallongerElt_2);
+                }
+                else
+                {
+                    caractereMilieu = deplacerApresSaut(caractereFin - Math.floor(0.75*difference));
+                    caractereDeb = caractereMilieu;
+                    deuxiemePage = true;
+                    contenuPage = '';
+                    contenuPage_2 = texte.substr(caractereMilieu, caractereFin-caractereMilieu+1);
+                    contenuPageElt.innerHTML = contenuPage;
+                    contenuPageElt_2.innerHTML = contenuPage_2;
+                    positionReduireElt = getPositionTop(reduireElt);
+                    positionReduireElt_2 = getPositionTop(reduireElt_2);
+                    positionRallongerElt = getPositionTop(rallongerElt);
+                    positionRallongerElt_2 = getPositionTop(rallongerElt_2);
+                    if (positionReduireElt_2 > window.innerHeight)
+                    {
+                        supprLignesDeb();
+                        reduction10par10Deb();
+                    }
+                    if (positionRallongerElt_2 < window.innerHeight)
+                    {
+                        ajoutLignesDeb();
+                        reduction10par10Deb();
+                    }
+                    decoupagePropreDeb();
+                    if (caractereMilieu > 0)
+                    {
+                        deuxiemePage = false;
+                        if (caractereMilieu-Math.floor(0.75*difference) <= 0)
+                        {
+                            caractereDeb = 0;
+                            contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
+                            contenuPageElt.innerHTML = contenuPage;
+                            positionReduireElt = getPositionTop(reduireElt);
+                            positionRallongerElt = getPositionTop(rallongerElt);
+                        }
+                        else
+                        {
+                            caractereDeb = deplacerApresSaut(caractereMilieu - Math.floor(0.75*difference));
+                            contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
+                            contenuPageElt.innerHTML = contenuPage;
+                            positionReduireElt = getPositionTop(reduireElt);
+                            positionRallongerElt = getPositionTop(rallongerElt);
+                            if (positionReduireElt > window.innerHeight)
+                            {
+                                supprLignesDeb();
+                                reduction10par10Deb();
+                            }
+                            if (positionRallongerElt < window.innerHeight)
+                            {
+                                ajoutLignesDeb();
+                                reduction10par10Deb();
+                            }
+                            decoupagePropreDeb();
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (caractereDeb > 0)
+            {
+                if (caractereMilieu-Math.floor(0.75*difference) <= 0)
+                {
+                    caractereMilieu = deplacerAvantSaut(caractereDeb);
+                    caractereDeb = 0;
+                    /*while (texte.substr(caractereDeb-5, 6).indexOf('<') != -1)
+                    {
+                        caractereMilieu += (texte.substr(caractereMilieu-5, 6).indexOf('<') - 6);
+                    }*/
+                    contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
+                    contenuPageElt.innerHTML = contenuPage;
+                    positionReduireElt = getPositionTop(reduireElt);
+                    positionRallongerElt = getPositionTop(rallongerElt);
+                }
+                else
+                {
+                    caractereMilieu = deplacerAvantSaut(caractereDeb);
+                    caractereDeb = deplacerApresSaut(caractereDeb - Math.floor(0.75*difference));
+                    deuxiemePage = false;
+                    contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
+                    contenuPageElt.innerHTML = contenuPage;
+                    positionReduireElt = getPositionTop(reduireElt);
+                    positionRallongerElt = getPositionTop(rallongerElt);
+                    if (positionReduireElt > window.innerHeight)
+                    {
+                        supprLignesDeb();
+                        reduction10par10Deb();
+                    }
+                    if (positionRallongerElt < window.innerHeight)
+                    {
+                        ajoutLignesDeb();
+                        reduction10par10Deb();
+                    }
+                    decoupagePropreDeb();
+                }
+            }
+        }
     }
     
     function pageSuivante()
@@ -722,7 +844,7 @@
                         }
                         else
                         {
-                            caractereFin = caractereDeb + Math.floor(0.75*difference);
+                            caractereFin = caractereMilieu + Math.floor(0.75*difference); // j'ai changé caractereDeb en caractereMilieu, mais ça marchait avant... Bizarre
                             contenuPage_2 = texte.substr(caractereMilieu, caractereFin-caractereMilieu+1);
                             contenuPageElt_2.innerHTML = contenuPage_2;
                             positionReduireElt_2 = getPositionTop(reduireElt_2);

@@ -473,10 +473,12 @@
             {
                 deb_generique++;
                 debuger('decoupagePropreCharsDeb');
+                console.log(fin_generique + ' ' + (deb_generique+150) + ' ' + deb_generique + ' ' + texte.charAt(deb_generique));
+                console.log((fin_generique > deb_generique + 150) + ' ' + (texte.charAt(deb_generique) != ' '));
             } while ((fin_generique > deb_generique + 150) && (texte.charAt(deb_generique) != ' ')); // jusqu'à tomber sur un espace. Evite de trop réduire aussi. TODO : Vérifier accents aussi
         }
         console.log('?????????? ' + contenuPage_generique);
-        //contenuPage_generique = texte.substr(deb_generique, fin_generique-deb_generique+1);
+        contenuPage_generique = texte.substr(deb_generique, fin_generique-deb_generique+1);
         contenuPageElt_generique.innerHTML = contenuPage_generique;
         positionReduireElt_generique = getPositionTop(reduireElt_generique);
         actualisationVars();

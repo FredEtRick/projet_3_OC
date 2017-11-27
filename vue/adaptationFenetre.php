@@ -489,8 +489,6 @@
     {
         // note : code divisé pour plus de clarté
         
-        redimensionne = false; // pour pouvoir de nouveau redimenssionner la fenêtre si on l'a déjà fait avant (en cas ou la fonction onresize est appelée)
-        
         compterCharsLigne();
         
         ajoutPleinLignes();
@@ -551,6 +549,8 @@
                 // vérifie découpage mot
             }
         }
+        
+        redimensionne = false; // pour pouvoir de nouveau redimenssionner la fenêtre si on l'a déjà fait avant (en cas ou la fonction onresize est appelée)
     }
     
     // pageSuivante pagePrecedente

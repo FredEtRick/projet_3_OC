@@ -1,9 +1,4 @@
-<script type="text/javascript">    
-    
-    /* TODO instantané :
-        - corriger problème scinde entre "rapport" et "8". note : du au "après saut" qui laisse des lignes en trop tout le processus et ne les supprime que dans decoupagePropre
-        - corriger page précédente écran large
-    */
+<script type="text/javascript">
     
     /* TODO : 
         - séparer en fonction
@@ -793,7 +788,7 @@
         {
             if (caractereFin < texte.length-1)
             {
-                caractereDeb = caractereFin;
+                caractereDeb = deplacerApresSaut(caractereFin);
                 if (caractereDeb+Math.floor(0.75*difference) >= texte.length-1)
                 {
                     caractereMilieu = texte.length-1;
@@ -809,7 +804,7 @@
                 }
                 else
                 {
-                    caractereMilieu = caractereDeb + Math.floor(0.75*difference);
+                    caractereMilieu = deplacerAvantSaut(caractereDeb + Math.floor(0.75*difference));
                     caractereFin = caractereMilieu;
                     deuxiemePage = false;
                     contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
@@ -844,7 +839,7 @@
                         }
                         else
                         {
-                            caractereFin = caractereMilieu + Math.floor(0.75*difference); // j'ai changé caractereDeb en caractereMilieu, mais ça marchait avant... Bizarre
+                            caractereFin = deplacerAvantSaut(caractereMilieu + Math.floor(0.75*difference)); // j'ai changé caractereDeb en caractereMilieu, mais ça marchait avant... Bizarre
                             contenuPage_2 = texte.substr(caractereMilieu, caractereFin-caractereMilieu+1);
                             contenuPageElt_2.innerHTML = contenuPage_2;
                             positionReduireElt_2 = getPositionTop(reduireElt_2);
@@ -871,7 +866,7 @@
             {
                 if (caractereMilieu+Math.floor(0.75*difference) >= texte.length-1)
                 {
-                    caractereDeb = caractereMilieu;
+                    caractereDeb = deplacerApresSaut(caractereMilieu);
                     caractereMilieu = texte.length-1;
                     /*while (texte.substr(caractereDeb-5, 6).indexOf('<') != -1)
                     {
@@ -884,8 +879,8 @@
                 }
                 else
                 {
-                    caractereDeb = caractereMilieu;
-                    caractereMilieu += Math.floor(0.75*difference);
+                    caractereDeb = deplacerApresSaut(caractereMilieu);
+                    caractereMilieu = deplacerAvantSaut(caractereMilieu + Math.floor(0.75*difference));
                     deuxiemePage = false;
                     contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
                     contenuPageElt.innerHTML = contenuPage;

@@ -260,7 +260,7 @@
     function ajoutLignes()
     {
         initialisationVars();
-        while (getPositionTop(rallongerElt_generique) < window.innerHeight)
+        while (getPositionTop(rallongerElt_generique) < window.innerHeight && fin_generique < texte.length-1)
         {
             if (fin_generique + Math.ceil(nbCharsLigneApprox*1,25) >= texte.length-1)
             {
@@ -353,10 +353,13 @@
     
     function ajoutPleinLignes()
     {
-        hauteurManquante = window.innerHeight - positionRallongerElt;
-        nbLignesManquantes = Math.floor(hauteurManquante / hauteurLigne);
-        nbCaracteresManquants = nbCharsLigneApprox * nbLignesManquantes;
-        caractereMilieu += nbCaracteresManquants;
+        if (hauteurLigne != null) // si la hauteur de ligne a été calculée, donc s'il existait une ligne entière a parcourir dans le texte pour mesurer la hauteur d'une ligne dans compterCharslignes, alors ajouter direct des caractères pour remplir approximativement la fenêtre en se basant sur les calculs suivants :
+        {
+            hauteurManquante = window.innerHeight - positionRallongerElt;
+            nbLignesManquantes = Math.floor(hauteurManquante / hauteurLigne);
+            nbCaracteresManquants = nbCharsLigneApprox * nbLignesManquantes;
+            caractereMilieu += nbCaracteresManquants;
+        }
         console.log(positionRallongerElt + ' ' + window.innerHeight + ' ' + hauteurManquante + ' ' + hauteurLigne + ' ' + nbLignesManquantes + ' ' + nbCaracteresManquants + ' ' + caractereMilieu);
         if (caractereMilieu+50 > texte.length) // si on est a peu près a la fin
         {

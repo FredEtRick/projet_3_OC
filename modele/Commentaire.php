@@ -19,7 +19,7 @@
             $requete = $this->_BDD->prepare('INSERT INTO Commentaire (dateHeure, contenu, titreBillet, pseudoVisiteur) VALUES (:dateHeure, :contenu, :titreBillet, :pseudoVisiteur)');
             $requete->bindValue(':titre', $commentaire->getDateHeure());
             $requete->bindValue(':contenu', $billet->getContenu());
-            $requete->bindValue(':titreBillet', $billet->getTitreBiller());
+            $requete->bindValue(':titreBillet', $billet->getTitreBillet());
             $requete->bindValue(':pseudoVisiteur', $billet->getPseudoVisiteur());
             
             $requete->execute();
@@ -163,11 +163,11 @@
                 trigger_error('le titre du billet n\'a pu être modifié, le paramètre étant une chaîne de caractères trop longue.', E_USER_WARNING);
                 return;
             }
-            $this->_titre = $titre; // juste pour m'entrainer avec self:: etc
+            $this->_titreBillet = $titre; // juste pour m'entrainer avec self:: etc
         }
         public function setPseudoVisiteur($pseudo)
         {
-            $this->_pseudo = $pseudo;
+            $this->_pseudoVisiteur= $pseudo;
         }
     }
 ?>

@@ -76,6 +76,8 @@
     var nbLignesExcedentes;
     var nbCaracteresExcedents;
     
+    var redimensionne = false;
+    
     function debuger(fonction)
     {
         console.log('fonction : ' + fonction + ' deuxiemePage : ' + deuxiemePage + ' ; ' + ' caractereDeb : ' + caractereDeb + ' caractereMilieu : ' + caractereMilieu + ' caractereFin : ' + caractereFin + ' positionReduireElt : ' + positionReduireElt + ' positionRallongerElt : ' + positionRallongerElt + ' nbCharsLigneApprox : ' + nbCharsLigneApprox + ' hauteurLigne : ' + hauteurLigne + ' window.innerHeight : ' + window.innerHeight + ' positionRallongerElt_2 : ' + positionRallongerElt_2 + ' positionReduireElt_2 : ' + positionReduireElt_2 + /*' contenu ' + contenuPage +*/ ' contenuGenerique : ' + contenuPage_generique);
@@ -178,6 +180,7 @@
     
     function compterCharsLigne() // Compte le nombre de chars dans une ligne (varie d'une ligne a l'autre mais permet de s'en rapprocher avec un exemple d'une ligne pleine)
     {
+        caractereMilieu = caractereDeb;
         while ((window.innerHeight > positionRallongerElt) && (positionRallongerElt == getPositionTop(rallongerElt)) && (caractereMilieu < texte.length-1)) 
         {
             if (texte.substr(caractereMilieu, 16).indexOf('<') != -1)
@@ -485,6 +488,8 @@
     function adapter() // adapte le texte a la place dispo dans la fenêtre, présente une page
     {
         // note : code divisé pour plus de clarté
+        
+        redimensionne = false; // pour pouvoir de nouveau redimenssionner la fenêtre si on l'a déjà fait avant (en cas ou la fonction onresize est appelée)
         
         compterCharsLigne();
         
@@ -901,6 +906,17 @@
             }
         }
     }
+    
+    function redimensionnement()
+    {
+        if (! redimensionne)
+        {
+            redimensionne = true;
+            setTimeout(adapter, 1500); // pour éviter d'exécuter en boucle, tout le long du redimensionnement, "adapter" qui est très lourd, et qui ferait bugger
+        }
+    }
+    
+    window.onresize = redimensionnement;
     
     // CODE POUBELLE
         

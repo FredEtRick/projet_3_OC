@@ -76,8 +76,6 @@
     var nbLignesExcedentes;
     var nbCaracteresExcedents;
     
-    var redimensionne = false;
-    
     function debuger(fonction)
     {
         console.log('fonction : ' + fonction + ' deuxiemePage : ' + deuxiemePage + ' ; ' + ' caractereDeb : ' + caractereDeb + ' caractereMilieu : ' + caractereMilieu + ' caractereFin : ' + caractereFin + ' positionReduireElt : ' + positionReduireElt + ' positionRallongerElt : ' + positionRallongerElt + ' nbCharsLigneApprox : ' + nbCharsLigneApprox + ' hauteurLigne : ' + hauteurLigne + ' window.innerHeight : ' + window.innerHeight + ' positionRallongerElt_2 : ' + positionRallongerElt_2 + ' positionReduireElt_2 : ' + positionReduireElt_2 + /*' contenu ' + contenuPage +*/ ' contenuGenerique : ' + contenuPage_generique);
@@ -549,8 +547,6 @@
                 // vérifie découpage mot
             }
         }
-        
-        redimensionne = false; // pour pouvoir de nouveau redimenssionner la fenêtre si on l'a déjà fait avant (en cas ou la fonction onresize est appelée)
     }
     
     // pageSuivante pagePrecedente
@@ -906,17 +902,6 @@
             }
         }
     }
-    
-    function redimensionnement()
-    {
-        if (! redimensionne)
-        {
-            redimensionne = true;
-            setTimeout(adapter, 1500); // pour éviter d'exécuter en boucle, tout le long du redimensionnement, "adapter" qui est très lourd, et qui ferait bugger
-        }
-    }
-    
-    window.onresize = redimensionnement;
     
     // CODE POUBELLE
         

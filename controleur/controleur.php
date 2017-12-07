@@ -36,56 +36,26 @@
     $commentaireManager = new CommentaireManager($bdd);
     $lesCommentaires = [];
 
-    if(isset($_GET['titre']))
+    try
     {
-        foreach($lesBillets as $billet)
-        {
-            if (strip_tags($_GET['titre']) == str_replace(' ', '_', $billet->getTitre()))
-            {
-                $leBillet = $billet;
-                $lesCommentaires = $commentaireManager->recupererTousComsSurUnBillet($billet->getTitre());
-            }
-        }
+        require $_SERVER['DOCUMENT_ROOT'] . '/modele/Utilisateur.php';
+        $utilisateurManager = new UtilisateurManager($bdd);
+        $lesBillets = $billetManager->recupererTous();
+    }
+    catch (Exception $e)
+    {
+        echo '<p>erreur : ' . $e->getMessage() ; '</p>';
     }
 
-    if(isset($_GET['titre']) AND ($leBillet != null))
+    try
     {
-        try
-        {
-            require $_SERVER['DOCUMENT_ROOT'] . '/vue/billetVue.php';
-        }
-        catch (Exception $e)
-        {
-            echo '<p>erreur : ' . $e->getMessage() ; '</p>';
-        } 
-        afficherBilletComplet($leBillet);
-        afficherCommentaires($lesCommentaires);
+        require $_SERVER['DOCUMENT_ROOT'] . '/controleur/routeur.php';
+        $routeur = new Routeur();
+        $routeur->router($lesBillets, $commentaireManager, $lesCommentaires);
     }
-    
-    elseif(isset($_GET['page']) AND is_numeric($_GET['page']) AND $_GET['page'] <= (ceil(count($lesBillets) / 5)))
+    catch (Exception $e)
     {
-        try
-        {
-            require $_SERVER['DOCUMENT_ROOT'] . '/vue/afficherBillets.php';
-        }
-        catch (Exception $e)
-        {
-            echo '<p>erreur : ' . $e->getMessage() ; '</p>';
-        }
-        afficherBillets($lesBillets, (5 * ((int) strip_tags($_GET['page']) - 1)), 5);
-    }
-
-    else
-    {
-        try
-        {
-            require $_SERVER['DOCUMENT_ROOT'] . '/vue/afficherBillets.php';
-        }
-        catch (Exception $e)
-        {
-            echo '<p>erreur : ' . $e->getMessage() ; '</p>';
-        }
-        afficherBillets($lesBillets, 0, 5);
+        echo '<p>erreur : ' . $e->getMessage() ; '</p>';
     }
 
     try

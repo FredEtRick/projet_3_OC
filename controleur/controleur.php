@@ -12,6 +12,15 @@
 
     enTete('Billet simple pour l\'Alaska');
 
+    $admin = false;
+
+    $requete = $bdd->query('SELECT mdp FROM Utilisateur WHERE login = "auteur"');
+
+    if (isset ($_SESSION['login']) && isset ($_SESSION['mdp']) && ($_SESSION['login'] == 'auteur') && ($_SESSION['mdp'] == $requete->fetch()['mdp']))
+    {
+        $admin = true;
+    }
+
     try
     {
         require $_SERVER['DOCUMENT_ROOT'] . '/modele/Billet.php';
@@ -40,7 +49,10 @@
     {
         require $_SERVER['DOCUMENT_ROOT'] . '/modele/Utilisateur.php';
         $utilisateurManager = new UtilisateurManager($bdd);
-        $lesBillets = $billetManager->recupererTous();
+        $lesUtilisateurs = $utilisateurManager->recupererTous();
+        /*création du tout premier compte, avec mdp haché
+        $utilisateur = new Utilisateur('auteur', sha1('gzOC@0603'));
+        $utilisateurManager->inserer($utilisateur);*/
     }
     catch (Exception $e)
     {
@@ -51,7 +63,7 @@
     {
         require $_SERVER['DOCUMENT_ROOT'] . '/controleur/routeur.php';
         $routeur = new Routeur();
-        $routeur->router($lesBillets, $commentaireManager, $lesCommentaires);
+        $routeur->router($lesBillets, $commentaireManager, $lesCommentaires, $lesUtilisateurs);
     }
     catch (Exception $e)
     {

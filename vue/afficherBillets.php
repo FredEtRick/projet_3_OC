@@ -5,6 +5,10 @@
         echo '<a class="bulle" href="../index.php?titre=' . str_replace(' ', '_', $billet->getTitre()) . '">';
         echo '<p>' . $billet->getTitre() . '<span class="float-right">Le ' . str_replace(' ', ', à ', $billet->getDateHeurePub()) . '</span></p>';
         echo '<p class="dernier">' . mb_substr($billet->getContenu(), 0, 300) . ' [...]' . '<br /><span class="float-right discret">cliquez pour afficher</span>' . '</p>';
+        if ($admin)
+        {
+            // proposer de modifier etc
+        }
         echo '</a>';
         echo '</article>';
         //echo '<hr class="col-xxl-6 col-xl-12 col-sm-12" />';

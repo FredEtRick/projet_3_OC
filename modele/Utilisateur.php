@@ -17,8 +17,8 @@
         public function inserer(Utilisateur $utilisateur)
         {
             $requete = $this->_BDD->prepare('INSERT INTO Utilisateur (login, mdp) VALUES (:login, :mdp)');
-            $requete->bindValue(':login', $billet->getLogin());
-            $requete->bindValue(':mdp', $billet->getMdp());
+            $requete->bindValue(':login', $utilisateur->getLogin());
+            $requete->bindValue(':mdp', $utilisateur->getMdp());
             
             $requete->execute();
         }
@@ -64,7 +64,22 @@
         private $_mdp;
 
         // constructeur
-        public function __construct(array $donnees) // hydrate direct dans construct
+        public function __construct()
+        {
+            $nombre = func_num_args();
+            $args = func_get_args();
+            //$cpt = 0;
+            //$setters = array("setLogin", "setMdp");
+            if (is_array($args[0]) && $nombre == 1)
+                $this->hydrate($args[0]);
+            else
+            {
+                $this->setLogin($args[0]);
+                $this->setMdp($args[1]);
+            }
+        }
+        
+        public function hydrate(array $donnees)
         {
             foreach($donnees as $cle => $valeur)
             {
@@ -87,7 +102,12 @@
         // mutateurs
         public function setLogin($login)
         {
-            $this->_login = $login;
+            if (! is_string($login))
+            {
+                trigger_error('le contenu du commentaire n\'a pu être modifié, le paramètre n\'est pas une chaîne de caractères.', E_USER_WARNING);
+            }
+            else
+                $this->_login = $login;
         }
         public function setMdp($mdp)
         {

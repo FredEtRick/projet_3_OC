@@ -1,3 +1,11 @@
+.connexion
+{
+    padding : 10px;
+}
+.connexion label
+{
+    margin-right : 5px;
+}
 .navPages
 {
     text-align : right;

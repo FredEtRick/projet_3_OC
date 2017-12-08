@@ -1,7 +1,7 @@
 <?php
 class Routeur
 {
-    public function router($lesBillets, $commentaireManager, $lesCommentaires)
+    public function router($lesBillets, $commentaireManager, $lesCommentaires, $lesUtilisateurs)
     {
         if(isset($_GET['titre']))
         {
@@ -42,6 +42,8 @@ class Routeur
             afficherBillets($lesBillets, (5 * ((int) strip_tags($_GET['page']) - 1)), 5);
         }
 
+        
+        
         else
         {
             try

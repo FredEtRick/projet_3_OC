@@ -63,7 +63,7 @@
     {
         require $_SERVER['DOCUMENT_ROOT'] . '/controleur/routeur.php';
         $routeur = new Routeur();
-        $routeur->router($lesBillets, $commentaireManager, $lesCommentaires, $lesUtilisateurs);
+        $routeur->router($lesBillets, $commentaireManager, $lesCommentaires, $lesUtilisateurs, $admin);
     }
     catch (Exception $e)
     {

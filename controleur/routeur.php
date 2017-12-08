@@ -1,7 +1,7 @@
 <?php
 class Routeur
 {
-    public function router($lesBillets, $commentaireManager, $lesCommentaires, $lesUtilisateurs)
+    public function router($lesBillets, $commentaireManager, $lesCommentaires, $lesUtilisateurs, $admin)
     {
         if(isset($_GET['titre']))
         {
@@ -39,7 +39,7 @@ class Routeur
             {
                 echo '<p>erreur : ' . $e->getMessage() ; '</p>';
             }
-            afficherBillets($lesBillets, (5 * ((int) strip_tags($_GET['page']) - 1)), 5);
+            afficherBillets($admin, $lesBillets, (5 * ((int) strip_tags($_GET['page']) - 1)), 5);
         }
 
         
@@ -54,7 +54,7 @@ class Routeur
             {
                 echo '<p>erreur : ' . $e->getMessage() ; '</p>';
             }
-            afficherBillets($lesBillets, 0, 5);
+            afficherBillets($admin, $lesBillets, 0, 5);
         }
     }
 }

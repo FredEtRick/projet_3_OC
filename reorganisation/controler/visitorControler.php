@@ -44,16 +44,29 @@
             {
                 try
                 {
+                    // preparing post variables
+                    $post = (new PostManager())->getOnePost($title);
+                    $postTitle = $post->getTitle();
+                    $postDateTimePub = $billet->getDateHeurePub();
+                    
+                    // preparing comments variables
+                    $commentLoginVisitor = $comment->getVisitorLogin();
+                    $commentDateTime = str_replace(' ', ', à ', $comment->getDateTime());
+                    $commentContent = $comment->getContent();
+                    
                     require_once $_SERVER['DOCUMENT_ROOT'] . '/view/onePostView.php';
+                    
+                    $textWithNewLines = htmlspecialchars($post->getContent());
+                    $textWithNewLines = nl2br($textWithNewLines);
+                    $textWithNewLines = str_replace(array("\r", "\n"), array('', ''), $textWithNewLines);
+                    $textLength = mb_strlen($post->getContent());
+                    
                     require_once $_SERVER['DOCUMENT_ROOT'] . '/controleur/resizePage.php';
                 }
                 catch (Exception $e)
                 {
                     echo '<p>erreur : ' . $e->getMessage() ; '</p>';
                 }
-                // supprimer les fonctions suivantes, utiliser uniquement des variables !
-                // showPost($activePost);
-                // showComments($comments);
             }
         }
     }

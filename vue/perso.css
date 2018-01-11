@@ -1,3 +1,7 @@
+.boutonSuppr, .boutonModif
+{
+    margin-top : -200px !important; /* marche a peine (décale de deux trois pixels) */
+}
 .connexion
 {
     padding : 10px;

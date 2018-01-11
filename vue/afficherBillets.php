@@ -11,7 +11,7 @@
             // proposer de modifier etc
 ?>
 <p>
-    <button>supprimer</button><button>modifier</button> <!-- faire les fonctions... JS ? Formulaire PHP ? Mélange ? (pour communiquer avec MySQL) -->
+    <button class="boutonSuppr">supprimer</button><button class="boutonModif">modifier</button> <!-- faire les fonctions... JS ? Formulaire PHP ? Mélange ? (pour communiquer avec MySQL) -->
 </p>
 <?php
         }

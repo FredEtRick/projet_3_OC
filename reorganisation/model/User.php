@@ -13,44 +13,44 @@
         {
             $this->_DB = $DB;
         }
-        // FINIR LA TRADUCTION ET LA CORRECTION !!!!
-        public function inserer(User $utilisateur)
+        
+        public function insert(User $user)
         {
-            $requete = $this->_DB->prepare('INSERT INTO User (login, mdp) VALUES (:login, :mdp)');
-            $requete->bindValue(':login', $utilisateur->getLogin());
-            $requete->bindValue(':mdp', $utilisateur->getMdp());
+            $query = $this->_DB->prepare('INSERT INTO User (login, password) VALUES (:login, :password)');
+            $query->bindValue(':login', $user->getLogin());
+            $query->bindValue(':password', $user->getMdp());
             
-            $requete->execute();
+            $query->execute();
         }
         
-        public function recuperer($login)
+        public function getUser($login)
         {
-            $requete = $this->_DB->query('SELECT login, mdp FROM User WHERE login = "' . $login . '"');
-            return new User($requete->fetch(PDO::FETCH_ASSOC));
+            $query = $this->_DB->query('SELECT login, password FROM User WHERE login = "' . $login . '"');
+            return new User($query->fetch(PDO::FETCH_ASSOC));
         }
         
-        public function recupererTous()
+        public function getAllUser()
         {
-            $utilisateurs = [];
-            $requete = $this->_DB->query('SELECT login, mdp FROM User');
-            while($donnees = $requete->fetch(PDO::FETCH_ASSOC))
+            $users = [];
+            $query = $this->_DB->query('SELECT login, password FROM User');
+            while($userFromSQL = $query->fetch(PDO::FETCH_ASSOC))
             {
-                $utilisateurs[] = new User($donnees);
+                $users[] = new User($userFromSQL);
             }
-            return $utilisateurs;
+            return $users;
         }
         
-        public function modifierMdp(User $utilisateur) // note : devra modifier le mdp dans l'objet avant d'appeler la fonction pour appliquer le changement à la DB
+        public function modifyPassword(User $user) // note : devra modifier le password dans l'objet avant d'appeler la fonction pour appliquer le changement à la DB
         {
-            $requete = $this->_DB->prepare('UPDATE User SET mdp = :mdp WHERE login = :login');
+            $query = $this->_DB->prepare('UPDATE User SET password = :password WHERE login = :login');
 
-            $requete->bindValue(':login', $billet->getLogin());
-            $requete->bindValue(':mdp', $billet->getMdp());
+            $query->bindValue(':login', $billet->getLogin());
+            $query->bindValue(':password', $billet->getMdp());
             
-            $requete->execute();
+            $query->execute();
         }
         
-        public function supprimer($login)
+        public function deleteUser($login)
         {
             $this->_DB->exec('DELETE FROM Billet WHERE login = "' . $login . '"');
         }
@@ -61,16 +61,16 @@
     {
         // attributs
         private $_login;
-        private $_mdp;
+        private $_password;
 
         // constructeur
         public function __construct()
         {
-            $nombre = func_num_args();
+            $argsNumber = func_num_args();
             $args = func_get_args();
             //$cpt = 0;
             //$setters = array("setLogin", "setMdp");
-            if (is_array($args[0]) && $nombre == 1)
+            if (is_array($args[0]) && $argsNumber == 1)
                 $this->hydrate($args[0]);
             else
             {
@@ -79,13 +79,13 @@
             }
         }
         
-        public function hydrate(array $donnees)
+        public function hydrate(array $userFromSQL)
         {
-            foreach($donnees as $cle => $valeur)
+            foreach($userFromSQL as $key => $value)
             {
-                $methode = 'set' . ucfirst($cle);
+                $methode = 'set' . ucfirst($key);
                 if (method_exists($this, $methode))
-                    $this->$methode($valeur);
+                    $this->$methode($value);
             }
         }
 
@@ -96,7 +96,7 @@
         }
         public function getMdp()
         {
-            return $this->_mdp;
+            return $this->_password;
         }
 
         // mutateurs
@@ -109,9 +109,9 @@
             else
                 $this->_login = $login;
         }
-        public function setMdp($mdp)
+        public function setMdp($password)
         {
-            $this->_mdp = $mdp;
+            $this->_password = $password;
         }
     }
 ?>

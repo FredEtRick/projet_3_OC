@@ -1,9 +1,9 @@
 <section class="row">
     <?php
-        while ($n>0 AND $i<count($allPosts))
+        while ($n>0 AND $i<count($allPosts)) // commenter n et i
         {
             $post = $allPosts[$i];
-            $postTitleForLink = str_replace(' ', '_', $post->getTitre());
+            $postTitleForLink = str_replace(' ', '_', $post->getTitre()); // doit pas avoir de getTitre ! (changer getAllPosts direct dans Post.php)
             $postTitle = $post->getTitle();
             $dateDisplay = str_replace(' ', ', à ', $post->getDateTimePub());
             $contentBegining = mb_substr($post->getContent(), 0, 300);

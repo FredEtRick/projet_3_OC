@@ -1,19 +1,9 @@
 <?php
+    require_once 'Model.php';
+
     // manager de la classe billet
-    class CommentManager
+    class CommentManager extends Model
     {
-        private $_DB;
-        
-        public function __construct($DB)
-        {
-            $this->setDB($DB);
-        }
-        
-        public function setDB($DB)
-        {
-            $this->_DB = $DB;
-        }
-        
         public function insert(Comment $comment)
         {
             $query = $this->_DB->prepare('INSERT INTO Comment (dateTime, content, postTitle, visitorLogin) VALUES (:dateTime, :content, :postTitle, :visitorLogin)');

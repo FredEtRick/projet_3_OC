@@ -5,6 +5,8 @@
         {
             try
             {
+                require_once('model/Post.php');
+                
                 // préparation des variables
                 $pageTitle = 'la liste des billets';
                 if (! isset($_GET['page']))
@@ -31,6 +33,10 @@
         
         public function onePost($title)
         {
+            require_once('model/Post.php');
+            require_once('model/Comment.php');
+            require_once('model/User.php');
+            
             $activePost = null;
             foreach($allPosts as $currentPost)
             {

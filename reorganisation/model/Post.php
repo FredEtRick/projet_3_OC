@@ -1,10 +1,12 @@
 <?php
+    require_once 'Model.php';
+
     // manager de la classe post
-    class PostManager
+    class PostManager extends Model
     {
         public function insert(Post $post)
         {
-            $query = $db->prepare('INSERT INTO Post (title, dateTimePub, dateTimeExp, content) VALUES (:title, :dateTimePub, :dateTimeExp, :content)');
+            $query = $this->_DB->prepare('INSERT INTO Post (title, dateTimePub, dateTimeExp, content) VALUES (:title, :dateTimePub, :dateTimeExp, :content)');
             $query->bindValue(':title', $post->getTitle());
             $query->bindValue(':dateTimePub', $post->getDateTimePub());
             $query->bindValue(':dateTimeExp', $post->getDateTimeExp());
@@ -17,14 +19,14 @@
         
         public function getOnePost($title)
         {
-            $query = $db->query('SELECT title, dateTimePub, dateTimeExp, content FROM Post WHERE title = "' . $title . '"');
+            $query = $this->_DB->query('SELECT title, dateTimePub, dateTimeExp, content FROM Post WHERE title = "' . $title . '"');
             return new Post($query->fetch(PDO::FETCH_ASSOC));
         }
         
-        public function getAllPostsExceptExpiry()
+        public function getAllPostsExceptExpiry() // modifier pour donner un tableau de valeurs plutot qu'un tableau d'objets pour éviter d'appeler les méthodes des objets dans la vue !
         {
             $allPosts = [];
-            $query = $db->query('SELECT title, dateTimePub, dateTimeExp, content FROM Post ORDER BY dateTimePub');
+            $query = $this->_DB->query('SELECT title, dateTimePub, dateTimeExp, content FROM Post ORDER BY dateTimePub');
             while($onePostFromSQL = $query->fetch(PDO::FETCH_ASSOC))
             {
                 $post = new Post($onePostFromSQL);
@@ -36,7 +38,7 @@
         
         public function modify(Post $post)
         {
-            $query = $db->prepare('UPDATE Post SET title = :title, dateTimePub = :dateTimePub, dateTimeExp = :dateTimeExp, content = :content WHERE title = :title');
+            $query = $this->_DB->prepare('UPDATE Post SET title = :title, dateTimePub = :dateTimePub, dateTimeExp = :dateTimeExp, content = :content WHERE title = :title');
 
             $query->bindValue(':title', $post->getTitle());
             $query->bindValue(':dateTimePub', $post->getDateTimePub());
@@ -48,7 +50,7 @@
         
         public function delete($title)
         {
-            $db->exec('DELETE FROM Post WHERE title = "' . $title . '"');
+            $this->_DB->exec('DELETE FROM Post WHERE title = "' . $title . '"');
         }
     }
 

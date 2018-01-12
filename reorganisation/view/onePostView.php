@@ -24,7 +24,7 @@ traduire, virer les fonction, garder les while et if, donner des noms simples au
             
 <section class="row">
 <?php
-    foreach($lesCommentaires as $commentaire)
+    foreach($lesCommentaires as $commentaire) // traduction
     {
 ?>
         <div class="hidden-xl-down col-xxl-3"></div>

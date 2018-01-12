@@ -1,19 +1,9 @@
 <?php
+    require_once 'Model.php';
+
     // manager de la classe User
-    class UserManager
+    class UserManager extends Model
     {
-        private $_DB;
-        
-        public function __construct($DB)
-        {
-            $this->setDB($DB);
-        }
-        
-        public function setDB($DB)
-        {
-            $this->_DB = $DB;
-        }
-        
         public function insert(User $user)
         {
             $query = $this->_DB->prepare('INSERT INTO User (login, password) VALUES (:login, :password)');

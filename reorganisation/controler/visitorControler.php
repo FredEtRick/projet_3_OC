@@ -11,10 +11,10 @@
                 $pageTitle = 'la liste des billets';
                 if (! isset($_GET['page']))
                     $_GET['page'] = 1;
-                $i = 5 * ((int) strip_tags($_GET['page']) - 1);
-                $n = 5;
-                $idep = $i;
-                $ndep = $n;
+                $indicePost = 5 * ((int) strip_tags($_GET['page']) - 1);
+                $postsLeft = 5;
+                $indiceBegining = $indicePost;
+                $postsPerPages = $postsLeft;
                 $allPosts = (new PostManager())->getAllPostsExceptExpiry();
                 
                 // récupération de la vue, et envoie de cette dernière au template

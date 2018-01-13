@@ -36,6 +36,13 @@
             return $allPosts;
         }
         
+        public function getAllForView()
+        {
+            $allForView = [];
+            $titles = [];
+            $dateTime
+        }
+        
         public function modify(Post $post)
         {
             $query = $this->_DB->prepare('UPDATE Post SET title = :title, dateTimePub = :dateTimePub, dateTimeExp = :dateTimeExp, content = :content WHERE title = :title');

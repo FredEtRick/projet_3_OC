@@ -1,9 +1,9 @@
 <section class="row">
     <?php
-        while ($n>0 AND $i<count($allPosts)) // commenter n et i
+        while ($postsLeft>0 AND $indicePost<count($allPosts))
         {
-            $post = $allPosts[$i];
-            $postTitleForLink = str_replace(' ', '_', $post->getTitre()); // doit pas avoir de getTitre ! (changer getAllPosts direct dans Post.php)
+            $post = $allPosts[$indicePost];
+            $postTitleForLink = str_replace(' ', '_', $post->getTitle()); // doit pas avoir de getTitre ! (changer getAllPosts direct dans Post.php)
             $postTitle = $post->getTitle();
             $dateDisplay = str_replace(' ', ', à ', $post->getDateTimePub());
             $contentBegining = mb_substr($post->getContent(), 0, 300);
@@ -14,19 +14,19 @@
                         <?= $postTitle ?><span class="float-right">Le <?= $dateDisplay ?></span>
                     </p>
                     <p class="dernier">
-                        <?= contentBegining ?> [...]<br /><span class="float-right discret">cliquez pour afficher</span>
+                        <?= $contentBegining ?> [...]<br /><span class="float-right discret">cliquez pour afficher</span>
                     </p>
                 </a>
             </article>
     <?php
-            $n--;
-            $i++;
+            $postsLeft--;
+            $indicePost++;
         }
     ?>
     <article class="col-xxl-12 col-xl-12 col-sm-12 navPages">
         <p>
         <?php
-            $page = 1+ceil($idep / $ndep);
+            $page = 1+ceil($indiceBegining / $postsPerPage);
             if ($page > 1)
             {
                 echo '<a class="fa fa-chevron-left" href="index.php?page=' . ($page-1) . '"></a>';
@@ -45,12 +45,12 @@
                 {
                     echo '<span class="pageActuelle">' . $j . '</span>';
                 }
-                elseif ($j>0 AND ($ndep*($j-1))<count($billets))
+                elseif ($j>0 AND ($postsPerPage*($j-1))<count($billets))
                 {
                     echo '<a href="index.php?page=' . $j . '">' . $j . '</a>';
                 }
             }
-            $pageMax = ceil(count($billets)/$ndep);
+            $pageMax = ceil(count($billets)/$postsPerPage);
             if ($page < $pageMax-3)
             {
                 echo '... ';
@@ -59,7 +59,7 @@
             {
                 echo '<a href="index.php?page=' . $pageMax . '">' . $pageMax . '</a>';
             }
-            if ($i < count($billets))
+            if ($indicePost < count($billets))
             {
                 echo '<a href="index.php?page=' . ($page+1) . '" class="fa fa-chevron-right"></a>';
             }

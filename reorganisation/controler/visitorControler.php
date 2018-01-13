@@ -11,11 +11,15 @@
                 $pageTitle = 'la liste des billets';
                 if (! isset($_GET['page']))
                     $_GET['page'] = 1;
-                $indicePost = 5 * ((int) strip_tags($_GET['page']) - 1);
-                $postsLeft = 5;
-                $indiceBegining = $indicePost;
-                $postsPerPages = $postsLeft;
+                $indiceBegining = 5 * ((int) strip_tags($_GET['page']) - 1);
+                $postsPerPages = 5;
+                $indicePost = $indiceBegining;
+                $postsLeft = $postsPerPages;
                 $allPosts = (new PostManager())->getAllPostsExceptExpiry();
+                $postsTitles = $allPosts['titles'];
+                $postsTitlesForLinks = $allPosts['link'];
+                $postsDatesTimes = $allPosts['datesTimes'];
+                $postsContentsBegining = $allPosts['contentsBegining'];
                 
                 // récupération de la vue, et envoie de cette dernière au template
                 ob_start();

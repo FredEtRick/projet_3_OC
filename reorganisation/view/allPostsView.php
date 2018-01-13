@@ -2,19 +2,14 @@
     <?php
         while ($postsLeft>0 AND $indicePost<count($allPosts))
         {
-            $post = $allPosts[$indicePost];
-            $postTitleForLink = str_replace(' ', '_', $post->getTitle()); // doit pas avoir de getTitre ! (changer getAllPosts direct dans Post.php)
-            $postTitle = $post->getTitle();
-            $dateDisplay = str_replace(' ', ', à ', $post->getDateTimePub());
-            $contentBegining = mb_substr($post->getContent(), 0, 300);
     ?>
             <article class="col-xxl-6 col-xl-12 col-sm-12">
-                <a class="bulle" href="../index.php?titre=<?= $postTitleForLink ?>">
+                <a class="bulle" href="../index.php?titre=<?= $postsTitlesForLinks[$indicePost] ?>">
                     <p>
-                        <?= $postTitle ?><span class="float-right">Le <?= $dateDisplay ?></span>
+                        <?= $postsTitles[$indicePost] ?><span class="float-right">Le <?= $postsDatesTimes[$indicePost] ?></span>
                     </p>
                     <p class="dernier">
-                        <?= $contentBegining ?> [...]<br /><span class="float-right discret">cliquez pour afficher</span>
+                        <?= $postsContentsBegining[$indicePost] ?> [...]<br /><span class="float-right discret">cliquez pour afficher</span>
                     </p>
                 </a>
             </article>

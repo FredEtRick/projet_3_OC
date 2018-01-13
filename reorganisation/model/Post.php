@@ -23,24 +23,24 @@
             return new Post($query->fetch(PDO::FETCH_ASSOC));
         }
         
-        public function getAllPostsExceptExpiry() // modifier pour donner un tableau de valeurs plutot qu'un tableau d'objets pour éviter d'appeler les méthodes des objets dans la vue !
+        public function getAllPostsExceptExpiry() // select all posts that aren't expiry yet, create 3 tabs for allPostsView (one contening all the titles of the posts selected, one for date and time of publication, one for content) and return a table with this 3 tabs within it.
         {
-            $allPosts = [];
+            $postsTitles = [];
+            $postsTitlesForLinks = [];
+            $postsDatesTimes = [];
+            $postsContentsBegining = [];
             $query = $this->_DB->query('SELECT title, dateTimePub, dateTimeExp, content FROM Post ORDER BY dateTimePub');
             while($onePostFromSQL = $query->fetch(PDO::FETCH_ASSOC))
             {
-                $post = new Post($onePostFromSQL);
-                if (date('d/m/Y H:i:s') < $post->getDateTimeExp() || $post->getDateTimeExp() == NULL)
-                    $allPosts[] = $post;
+                if (date('d/m/Y H:i:s') < $onePostFromSQL['dateTimeExp'] || $onePostFromSQL['dateTimeExp'] == NULL)
+                {
+                    $postsTitles[] = $onePostFromSQL['title'];
+                    $postsTitlesForLinks[] = str_replace(' ', '_', $onePostFromSQL['title']);
+                    $postsDatesTimes[] = str_replace(' ', ', à ', $onePostFromSQL['dateTimePub']); // correct display with str replace
+                    $postsContentsBegining[] = mb_substr($onePostFromSQL['content'], 0, 300); // 300 firts chars
+                }
             }
-            return $allPosts;
-        }
-        
-        public function getAllForView()
-        {
-            $allForView = [];
-            $titles = [];
-            $dateTime
+            return ['titles' => $postsTitles, 'link' => $postsTitlesForLinks, 'datesTimes' => $postsDatesTimes, 'contentsBegining' => $postsContentsBegining];
         }
         
         public function modify(Post $post)

@@ -14,7 +14,7 @@
 
 
 
-
+<script type="text/javascript" src="../model/Resizer.php"></script>
 
 <script type="text/javascript">
     

@@ -32,78 +32,78 @@
     
     function debuger(fonction)
     {
-        console.log('fonction : ' + fonction + ' deuxiemePage : ' + deuxiemePage + ' ; ' + ' caractereDeb : ' + caractereDeb + ' caractereMilieu : ' + caractereMilieu + ' caractereFin : ' + caractereFin + ' positionReduireElt : ' + positionReduireElt + ' positionRallongerElt : ' + positionRallongerElt + ' nbCharsLigneApprox : ' + nbCharsLigneApprox + ' hauteurLigne : ' + hauteurLigne + ' window.innerHeight : ' + window.innerHeight + ' positionRallongerElt_2 : ' + positionRallongerElt_2 + ' positionReduireElt_2 : ' + positionReduireElt_2 + /*' contenu ' + contenuPage +*/ ' contenuGenerique : ' + contenuPage_generique);
+        console.log('fonction : ' + fonction + ' workOnSecondPage : ' + workOnSecondPage + ' ; ' + ' firstCharOfPage1 : ' + firstCharOfPage1 + ' charBetweenBothPages : ' + charBetweenBothPages + ' lastCharOfPage2 : ' + lastCharOfPage2 + ' positionShouldAppearElt1 : ' + positionShouldAppearElt1 + ' positionShouldNotAppearElt1 : ' + positionShouldNotAppearElt1 + ' numberCharsLine : ' + numberCharsLine + ' lineHeightPx : ' + lineHeightPx + ' window.innerHeight : ' + window.innerHeight + ' positionShouldNotAppearElt2 : ' + positionShouldNotAppearElt2 + ' positionShouldAppearElt2 : ' + positionShouldAppearElt2 + /*' contenu ' + page1Content +*/ ' contenuGenerique : ' + pageContent_generic);
     }
     
     function initialisationVars()
     {
-        if (deuxiemePage)
+        if (workOnSecondPage)
         {
-            contenuPageElt_generique = contenuPageElt_2;
-            contenuPage_generique = contenuPage_2;
-            reduireElt_generique = reduireElt_2;
-            rallongerElt_generique = rallongerElt_2;
-            positionReduireElt_generique = positionReduireElt_2;
-            positionRallongerElt_generique = positionRallongerElt_2;
-            deb_generique = caractereMilieu;
-            fin_generique = caractereFin;
+            pageContentElt_generic = page2ContentElt;
+            pageContent_generic = page2Content;
+            shouldAppearElt_generic = shouldAppearElt2;
+            shouldNotAppearElt_generic = shouldNotAppearElt2;
+            positionShouldAppearElt_generic = positionShouldAppearElt2;
+            positionShouldNotAppearElt_generic = positionShouldNotAppearElt2;
+            firstCharOfPage_generic = charBetweenBothPages;
+            lastCharOfPage_generic = lastCharOfPage2;
         }
         else
         {
-            contenuPageElt_generique = contenuPageElt;
-            contenuPage_generique = contenuPage;
-            reduireElt_generique = reduireElt;
-            rallongerElt_generique = rallongerElt;
-            positionReduireElt_generique = positionReduireElt;
-            positionRallongerElt_generique = positionRallongerElt;
-            deb_generique = caractereDeb;
-            fin_generique = caractereMilieu;
+            pageContentElt_generic = page1ContentElt;
+            pageContent_generic = page1Content;
+            shouldAppearElt_generic = shouldAppearElt1;
+            shouldNotAppearElt_generic = shouldNotAppearElt1;
+            positionShouldAppearElt_generic = positionShouldAppearElt1;
+            positionShouldNotAppearElt_generic = positionShouldNotAppearElt1;
+            firstCharOfPage_generic = firstCharOfPage1;
+            lastCharOfPage_generic = charBetweenBothPages;
         }
         replacerDebut();
     }
     
     function actualisationVars()
     {
-        if (deuxiemePage)
+        if (workOnSecondPage)
         {
-            caractereMilieu = deb_generique;
-            caractereFin = fin_generique;
-            contenuPage_2 = contenuPage_generique;
-            positionReduireElt_2 = positionReduireElt_generique;
-            positionRallongerElt_2 = positionRallongerElt_generique;
+            charBetweenBothPages = firstCharOfPage_generic;
+            lastCharOfPage2 = lastCharOfPage_generic;
+            page2Content = pageContent_generic;
+            positionShouldAppearElt2 = positionShouldAppearElt_generic;
+            positionShouldNotAppearElt2 = positionShouldNotAppearElt_generic;
         }
         else
         {
-            caractereDeb = deb_generique;
-            caractereMilieu = fin_generique;
-            contenuPage = contenuPage_generique;
-            positionReduireElt = positionReduireElt_generique;
-            positionRallongerElt = positionRallongerElt_generique;
+            firstCharOfPage1 = firstCharOfPage_generic;
+            charBetweenBothPages = lastCharOfPage_generic;
+            page1Content = pageContent_generic;
+            positionShouldAppearElt1 = positionShouldAppearElt_generic;
+            positionShouldNotAppearElt1 = positionShouldNotAppearElt_generic;
         }
     }
     
     function replacerDebut()
     {
-        while (texte.substr(deb_generique, 4).indexOf('<br') != -1)
+        while (postCompleteText.substr(firstCharOfPage_generic, 4).indexOf('<br') != -1)
         {
-            deb_generique += texte.substr(deb_generique, 7).lastIndexOf('>') + 1;
+            firstCharOfPage_generic += postCompleteText.substr(firstCharOfPage_generic, 7).lastIndexOf('>') + 1;
         }
     }
     
     function deplacerAvantSaut(caractere)
     {
-        while (texte.substr(caractere-7, 7).indexOf('<br') != -1)
+        while (postCompleteText.substr(caractere-7, 7).indexOf('<br') != -1)
         {
-            caractere += -7 + texte.substr(caractere-7, 7).indexOf('<br') - 1;
+            caractere += -7 + postCompleteText.substr(caractere-7, 7).indexOf('<br') - 1;
         }
         return caractere;
     }
     
     function deplacerApresSaut(caractere)
     {
-        while (texte.substr(caractere, 4).indexOf('<br') != -1)
+        while (postCompleteText.substr(caractere, 4).indexOf('<br') != -1)
         {
-            caractere += texte.substr(caractere, 7).lastIndexOf('>') + 1;
+            caractere += postCompleteText.substr(caractere, 7).lastIndexOf('>') + 1;
         }
         return caractere;
     }
@@ -112,129 +112,129 @@
     
     /*function remplirLigne() // remplir la première ligne pour calculer la longueur d'une ligne
     {
-        while ((caractereMilieu > (caractereDeb + 150)) && (window.innerHeight < positionReduireElt) && (positionReduireElt == getPositionTop(reduireElt)))
+        while ((charBetweenBothPages > (firstCharOfPage1 + 150)) && (window.innerHeight < positionShouldAppearElt1) && (positionShouldAppearElt1 == getPositionTop(shouldAppearElt1)))
         {
-            caractereMilieu--;
-            while (texte.substr(caractereMilieu-2, 2).indexOf('\\') != -1)
+            charBetweenBothPages--;
+            while (postCompleteText.substr(charBetweenBothPages-2, 2).indexOf('\\') != -1)
             {
-                caractereMilieu -= 2;
+                charBetweenBothPages -= 2;
             }
-            contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
-            contenuPageElt.innerHTML = contenuPage;
-            if (positionReduireElt > getPositionTop(reduireElt))
+            page1Content = postCompleteText.substr(firstCharOfPage1, charBetweenBothPages-firstCharOfPage1+1);
+            page1ContentElt.innerHTML = page1Content;
+            if (positionShouldAppearElt1 > getPositionTop(shouldAppearElt1))
             {
-                hauteurLigne = positionReduireElt - getPositionTop(reduireElt);
+                lineHeightPx = positionShouldAppearElt1 - getPositionTop(shouldAppearElt1);
             }
             debuger('viderLigne');
         }
-        positionReduireElt = getPositionTop(reduireElt);
+        positionShouldAppearElt1 = getPositionTop(shouldAppearElt1);
     }*/
     
     function compterCharsLigne() // Compte le nombre de chars dans une ligne (varie d'une ligne a l'autre mais permet de s'en rapprocher avec un exemple d'une ligne pleine)
     {
-        caractereMilieu = caractereDeb;
-        while ((window.innerHeight > positionRallongerElt) && (positionRallongerElt == getPositionTop(rallongerElt)) && (caractereMilieu < texte.length-1)) 
+        charBetweenBothPages = firstCharOfPage1;
+        while ((window.innerHeight > positionShouldNotAppearElt1) && (positionShouldNotAppearElt1 == getPositionTop(rallongerElt)) && (charBetweenBothPages < postCompleteText.length-1)) 
         {
-            if (texte.substr(caractereMilieu, 16).indexOf('<') != -1)
+            if (postCompleteText.substr(charBetweenBothPages, 16).indexOf('<') != -1)
             {
-                caractereMilieu += texte.substr(caractereMilieu, 22).lastIndexOf('>')+1;
-                nbCharsLigneApprox = 0;
-                contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
-                contenuPageElt.innerHTML = contenuPage;
-                positionRallongerElt = getPositionTop(rallongerElt);
+                charBetweenBothPages += postCompleteText.substr(charBetweenBothPages, 22).lastIndexOf('>')+1;
+                numberCharsLine = 0;
+                page1Content = postCompleteText.substr(firstCharOfPage1, charBetweenBothPages-firstCharOfPage1+1);
+                page1ContentElt.innerHTML = page1Content;
+                positionShouldNotAppearElt1 = getPositionTop(shouldNotAppearElt1);
             }
             else
             {
-                caractereMilieu += 10;
-                while (texte.substr(caractereMilieu-1, 2).indexOf('\\') != -1)
+                charBetweenBothPages += 10;
+                while (postCompleteText.substr(charBetweenBothPages-1, 2).indexOf('\\') != -1)
                 {
-                    caractereMilieu += 2; // modif pour appostrophes, retire 6 et compte juste un là
-                    nbCharsLigneApprox++;
+                    charBetweenBothPages += 2; // modif pour appostrophes, retire 6 et compte juste un là
+                    numberCharsLine++;
                 }
-                nbCharsLigneApprox += 10;
+                numberCharsLine += 10;
             }
-            contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
-            contenuPageElt.innerHTML = contenuPage;
+            page1Content = postCompleteText.substr(firstCharOfPage1, charBetweenBothPages-firstCharOfPage1+1);
+            page1ContentElt.innerHTML = page1Content;
             debuger('compterCharsLigne');
         }
-        if (positionRallongerElt < getPositionTop(rallongerElt))
+        if (positionShouldNotAppearElt1 < getPositionTop(shouldNotAppearElt1))
         {
-            hauteurLigne = getPositionTop(rallongerElt) - positionRallongerElt;
+            lineHeightPx = getPositionTop(shouldNotAppearElt1) - positionShouldNotAppearElt1;
         }
-        while (positionRallongerElt != getPositionTop(rallongerElt))
+        while (positionShouldNotAppearElt1 != getPositionTop(shouldNotAppearElt1))
         {
-            caractereMilieu--;
-            if (texte.substr(caractereMilieu-1, 2).indexOf('\\'))
+            charBetweenBothPages--;
+            if (postCompleteText.substr(charBetweenBothPages-1, 2).indexOf('\\'))
             {
-                caractereMilieu -= 2;
-                nbCharsLigneApprox--;
+                charBetweenBothPages -= 2;
+                numberCharsLine--;
             }
-            nbCharsLigneApprox--;
-            contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
-            contenuPageElt.innerHTML = contenuPage;
+            numberCharsLine--;
+            page1Content = postCompleteText.substr(firstCharOfPage1, charBetweenBothPages-firstCharOfPage1+1);
+            page1ContentElt.innerHTML = page1Content;
         }
-        caractereMilieu++;
-        nbCharsLigneApprox++;
-        contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
-        contenuPageElt.innerHTML = contenuPage;
-        positionReduireElt = getPositionTop(reduireElt);
-        positionRallongerElt = getPositionTop(rallongerElt);
+        charBetweenBothPages++;
+        numberCharsLine++;
+        page1Content = postCompleteText.substr(firstCharOfPage1, charBetweenBothPages-firstCharOfPage1+1);
+        page1ContentElt.innerHTML = page1Content;
+        positionShouldAppearElt1 = getPositionTop(shouldAppearElt1);
+        positionShouldNotAppearElt1 = getPositionTop(shouldNotAppearElt1);
     }
     
     function supprLignes()
     {
         initialisationVars();
-        console.log(deb_generique + ' ' + fin_generique);
-        while (getPositionTop(reduireElt_generique) > window.innerHeight)
+        console.log(firstCharOfPage_generic + ' ' + lastCharOfPage_generic);
+        while (getPositionTop(shouldAppearElt_generic) > window.innerHeight)
         {
-            if (texte.substr(fin_generique-Math.ceil(nbCharsLigneApprox*1,25), Math.ceil(nbCharsLigneApprox*1,25)).indexOf('<br') != -1)
+            if (postCompleteText.substr(lastCharOfPage_generic-Math.ceil(numberCharsLine*1,25), Math.ceil(numberCharsLine*1,25)).indexOf('<br') != -1)
             {
-                fin_generique += -Math.ceil(nbCharsLigneApprox*1,25) + texte.substr(fin_generique-Math.ceil(nbCharsLigneApprox*1,25), Math.ceil(nbCharsLigneApprox*1,25)).lastIndexOf('<br') - 1; // S'il y a un saut de ligne, placer le "curseur" de fin juste avant. On balaie un peu plus que nbCharsLigneApprox au cas ou la ligne compte plus de caractères que nbCharsLigneApprox
+                lastCharOfPage_generic += -Math.ceil(numberCharsLine*1,25) + postCompleteText.substr(lastCharOfPage_generic-Math.ceil(numberCharsLine*1,25), Math.ceil(numberCharsLine*1,25)).lastIndexOf('<br') - 1; // S'il y a un saut de ligne, placer le "curseur" de fin juste avant. On balaie un peu plus que numberCharsLine au cas ou la ligne compte plus de caractères que numberCharsLine
             }
             else
             {
-                fin_generique -= nbCharsLigneApprox;
+                lastCharOfPage_generic -= numberCharsLine;
             }
-            contenuPage_generique = texte.substr(deb_generique, fin_generique-deb_generique+1);
-            contenuPageElt_generique.innerHTML = contenuPage_generique;
+            pageContent_generic = postCompleteText.substr(firstCharOfPage_generic, lastCharOfPage_generic-firstCharOfPage_generic+1);
+            pageContentElt_generic.innerHTML = pageContent_generic;
             debuger('supprLignes');
         }
-        fin_generique += nbCharsLigneApprox; // au cas où on ait un peu trop retiré
-        contenuPage_generique = texte.substr(deb_generique, fin_generique-deb_generique+1);
-        contenuPageElt_generique.innerHTML = contenuPage_generique;
-        positionReduireElt_generique = getPositionTop(reduireElt_generique);
-        positionRallongerElt_generique = getPositionTop(rallongerElt_generique);
+        lastCharOfPage_generic += numberCharsLine; // au cas où on ait un peu trop retiré
+        pageContent_generic = postCompleteText.substr(firstCharOfPage_generic, lastCharOfPage_generic-firstCharOfPage_generic+1);
+        pageContentElt_generic.innerHTML = pageContent_generic;
+        positionShouldAppearElt_generic = getPositionTop(shouldAppearElt_generic);
+        positionShouldNotAppearElt_generic = getPositionTop(shouldNotAppearElt_generic);
         actualisationVars();
     }
     
     function ajoutLignes()
     {
         initialisationVars();
-        while (getPositionTop(rallongerElt_generique) < window.innerHeight && fin_generique < texte.length-1)
+        while (getPositionTop(shouldNotAppearElt_generic) < window.innerHeight && lastCharOfPage_generic < postCompleteText.length-1)
         {
-            if (fin_generique + Math.ceil(nbCharsLigneApprox*1,25) >= texte.length-1)
+            if (lastCharOfPage_generic + Math.ceil(numberCharsLine*1,25) >= postCompleteText.length-1)
             {
-                fin_generique = texte.length-1;
+                lastCharOfPage_generic = postCompleteText.length-1;
             }
-            else if (texte.substr(fin_generique+3, Math.ceil(nbCharsLigneApprox*1,25)).indexOf('<br') != -1)
+            else if (postCompleteText.substr(lastCharOfPage_generic+3, Math.ceil(numberCharsLine*1,25)).indexOf('<br') != -1)
             {
                 console.log('ICI');
-                fin_generique += 3 + texte.substr(fin_generique+3, Math.ceil(nbCharsLigneApprox*1,25)).indexOf('<br') - 1; // S'il y a un saut de ligne après, placer le "curseur" de fin juste avant. On balaie un peu plus que nbCharsLigneApprox au cas ou la ligne compte plus de caractères que nbCharsLigneApprox
+                lastCharOfPage_generic += 3 + postCompleteText.substr(lastCharOfPage_generic+3, Math.ceil(numberCharsLine*1,25)).indexOf('<br') - 1; // S'il y a un saut de ligne après, placer le "curseur" de fin juste avant. On balaie un peu plus que numberCharsLine au cas ou la ligne compte plus de caractères que numberCharsLine
             }
             else
             {
                 console.log('LA');
-                fin_generique += nbCharsLigneApprox;
+                lastCharOfPage_generic += numberCharsLine;
             }
-            contenuPage_generique = texte.substr(deb_generique, fin_generique-deb_generique+1);
-            contenuPageElt_generique.innerHTML = contenuPage_generique;
+            pageContent_generic = postCompleteText.substr(firstCharOfPage_generic, lastCharOfPage_generic-firstCharOfPage_generic+1);
+            pageContentElt_generic.innerHTML = pageContent_generic;
             debuger('ajoutLignes');
         }
-        //fin_generique += nbCharsLigneApprox; // au cas où on ait un peu trop retiré. a réadapter pour cette fonction plus tard !!!
-        contenuPage_generique = texte.substr(deb_generique, fin_generique-deb_generique+1);
-        contenuPageElt_generique.innerHTML = contenuPage_generique;
-        positionReduireElt_generique = getPositionTop(reduireElt_generique);
-        positionRallongerElt_generique = getPositionTop(rallongerElt_generique);
+        //lastCharOfPage_generic += numberCharsLine; // au cas où on ait un peu trop retiré. a réadapter pour cette fonction plus tard !!!
+        pageContent_generic = postCompleteText.substr(firstCharOfPage_generic, lastCharOfPage_generic-firstCharOfPage_generic+1);
+        pageContentElt_generic.innerHTML = pageContent_generic;
+        positionShouldAppearElt_generic = getPositionTop(shouldAppearElt_generic);
+        positionShouldNotAppearElt_generic = getPositionTop(shouldNotAppearElt_generic);
         actualisationVars();
             debuger('ajoutLignes');
     }
@@ -242,57 +242,57 @@
     function supprLignesDeb()
     {
         initialisationVars();
-        console.log(deb_generique + ' ' + fin_generique);
-        while (getPositionTop(reduireElt_generique) > window.innerHeight)
+        console.log(firstCharOfPage_generic + ' ' + lastCharOfPage_generic);
+        while (getPositionTop(shouldAppearElt_generic) > window.innerHeight)
         {
-            if (texte.substr(deb_generique-Math.ceil(nbCharsLigneApprox*1,25), Math.ceil(nbCharsLigneApprox*1,25)).indexOf('<br') != -1)
+            if (postCompleteText.substr(firstCharOfPage_generic-Math.ceil(numberCharsLine*1,25), Math.ceil(numberCharsLine*1,25)).indexOf('<br') != -1)
             {
-                deb_generique += -Math.ceil(nbCharsLigneApprox*1,25) + texte.substr(deb_generique-Math.ceil(nbCharsLigneApprox*1,25), Math.ceil(nbCharsLigneApprox*1,25)).lastIndexOf('<br') - 1; // S'il y a un saut de ligne, placer le "curseur" de fin juste avant. On balaie un peu plus que nbCharsLigneApprox au cas ou la ligne compte plus de caractères que nbCharsLigneApprox
+                firstCharOfPage_generic += -Math.ceil(numberCharsLine*1,25) + postCompleteText.substr(firstCharOfPage_generic-Math.ceil(numberCharsLine*1,25), Math.ceil(numberCharsLine*1,25)).lastIndexOf('<br') - 1; // S'il y a un saut de ligne, placer le "curseur" de fin juste avant. On balaie un peu plus que numberCharsLine au cas ou la ligne compte plus de caractères que numberCharsLine
             }
             else
             {
-                deb_generique -= nbCharsLigneApprox;
+                firstCharOfPage_generic -= numberCharsLine;
             }
-            contenuPage_generique = texte.substr(deb_generique, fin_generique-deb_generique+1);
-            contenuPageElt_generique.innerHTML = contenuPage_generique;
+            pageContent_generic = postCompleteText.substr(firstCharOfPage_generic, lastCharOfPage_generic-firstCharOfPage_generic+1);
+            pageContentElt_generic.innerHTML = pageContent_generic;
             debuger('supprLignesDeb');
         }
-        deb_generique += nbCharsLigneApprox; // au cas où on ait un peu trop retiré
-        contenuPage_generique = texte.substr(deb_generique, fin_generique-deb_generique+1);
-        contenuPageElt_generique.innerHTML = contenuPage_generique;
-        positionReduireElt_generique = getPositionTop(reduireElt_generique);
-        positionRallongerElt_generique = getPositionTop(rallongerElt_generique);
+        firstCharOfPage_generic += numberCharsLine; // au cas où on ait un peu trop retiré
+        pageContent_generic = postCompleteText.substr(firstCharOfPage_generic, lastCharOfPage_generic-firstCharOfPage_generic+1);
+        pageContentElt_generic.innerHTML = pageContent_generic;
+        positionShouldAppearElt_generic = getPositionTop(shouldAppearElt_generic);
+        positionShouldNotAppearElt_generic = getPositionTop(shouldNotAppearElt_generic);
         actualisationVars();
     }
     
     function ajoutLignesDeb()
     {
         initialisationVars();
-        while (getPositionTop(rallongerElt_generique) < window.innerHeight && deb_generique != 0)
+        while (getPositionTop(shouldNotAppearElt_generic) < window.innerHeight && firstCharOfPage_generic != 0)
         {
-            if (deb_generique - Math.ceil(nbCharsLigneApprox*1,25) <= 0)
+            if (firstCharOfPage_generic - Math.ceil(numberCharsLine*1,25) <= 0)
             {
-                deb_generique = 0;
+                firstCharOfPage_generic = 0;
             }
-            else if (texte.substr(deb_generique - 12 - Math.ceil(nbCharsLigneApprox*1,25), Math.ceil(nbCharsLigneApprox*1,25)).indexOf('<br') != -1)
+            else if (postCompleteText.substr(firstCharOfPage_generic - 12 - Math.ceil(numberCharsLine*1,25), Math.ceil(numberCharsLine*1,25)).indexOf('<br') != -1)
             {
                 console.log('ICI');
-                deb_generique += -12 - Math.ceil(nbCharsLigneApprox*1,25) + texte.substr(deb_generique - 12 - Math.ceil(nbCharsLigneApprox*1,25), Math.ceil(nbCharsLigneApprox*1,25)).lastIndexOf('>') + 1; // S'il y a un saut de ligne avant, placer le "curseur" de fin juste après le dernier saut. On balaie un peu plus que nbCharsLigneApprox au cas ou la ligne compte plus de caractères que nbCharsLigneApprox
+                firstCharOfPage_generic += -12 - Math.ceil(numberCharsLine*1,25) + postCompleteText.substr(firstCharOfPage_generic - 12 - Math.ceil(numberCharsLine*1,25), Math.ceil(numberCharsLine*1,25)).lastIndexOf('>') + 1; // S'il y a un saut de ligne avant, placer le "curseur" de fin juste après le dernier saut. On balaie un peu plus que numberCharsLine au cas ou la ligne compte plus de caractères que numberCharsLine
             }
             else
             {
                 console.log('LA');
-                deb_generique -= nbCharsLigneApprox;
+                firstCharOfPage_generic -= numberCharsLine;
             }
-            contenuPage_generique = texte.substr(deb_generique, fin_generique-deb_generique+1);
-            contenuPageElt_generique.innerHTML = contenuPage_generique;
+            pageContent_generic = postCompleteText.substr(firstCharOfPage_generic, lastCharOfPage_generic-firstCharOfPage_generic+1);
+            pageContentElt_generic.innerHTML = pageContent_generic;
             debuger('ajoutLignesDeb');
         }
-        //fin_generique += nbCharsLigneApprox; // au cas où on ait un peu trop retiré. a réadapter pour cette fonction plus tard !!!
-        contenuPage_generique = texte.substr(deb_generique, fin_generique-deb_generique+1);
-        contenuPageElt_generique.innerHTML = contenuPage_generique;
-        positionReduireElt_generique = getPositionTop(reduireElt_generique);
-        positionRallongerElt_generique = getPositionTop(rallongerElt_generique);
+        //lastCharOfPage_generic += numberCharsLine; // au cas où on ait un peu trop retiré. a réadapter pour cette fonction plus tard !!!
+        pageContent_generic = postCompleteText.substr(firstCharOfPage_generic, lastCharOfPage_generic-firstCharOfPage_generic+1);
+        pageContentElt_generic.innerHTML = pageContent_generic;
+        positionShouldAppearElt_generic = getPositionTop(shouldAppearElt_generic);
+        positionShouldNotAppearElt_generic = getPositionTop(shouldNotAppearElt_generic);
         actualisationVars();
     }
     
@@ -303,35 +303,35 @@
     
     function ajoutPleinLignes()
     {
-        if (hauteurLigne != null) // si la hauteur de ligne a été calculée, donc s'il existait une ligne entière a parcourir dans le texte pour mesurer la hauteur d'une ligne dans compterCharslignes, alors ajouter direct des caractères pour remplir approximativement la fenêtre en se basant sur les calculs suivants :
+        if (lineHeightPx != null) // si la hauteur de ligne a été calculée, donc s'il existait une ligne entière a parcourir dans le texte pour mesurer la hauteur d'une ligne dans compterCharslignes, alors ajouter direct des caractères pour remplir approximativement la fenêtre en se basant sur les calculs suivants :
         {
-            hauteurManquante = window.innerHeight - positionRallongerElt;
-            nbLignesManquantes = Math.floor(hauteurManquante / hauteurLigne);
-            nbCaracteresManquants = nbCharsLigneApprox * nbLignesManquantes;
-            caractereMilieu += nbCaracteresManquants;
+            missingHeight = window.innerHeight - positionShouldNotAppearElt1;
+            missingLines = Math.floor(missingHeight / lineHeightPx);
+            missingChars = numberCharsLine * missingLines;
+            charBetweenBothPages += missingChars;
         }
-        console.log(positionRallongerElt + ' ' + window.innerHeight + ' ' + hauteurManquante + ' ' + hauteurLigne + ' ' + nbLignesManquantes + ' ' + nbCaracteresManquants + ' ' + caractereMilieu);
-        if (caractereMilieu+50 > texte.length) // si on est a peu près a la fin
+        console.log(positionShouldNotAppearElt1 + ' ' + window.innerHeight + ' ' + missingHeight + ' ' + lineHeightPx + ' ' + missingLines + ' ' + missingChars + ' ' + charBetweenBothPages);
+        if (charBetweenBothPages+50 > postCompleteText.length) // si on est a peu près a la fin
         {
-            caractereMilieu = texte.length-1;
-            contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
-            contenuPageElt.innerHTML = contenuPage;
-            positionReduireElt = getPositionTop(reduireElt);
-            positionRallongerElt = getPositionTop(rallongerElt);
+            charBetweenBothPages = postCompleteText.length-1;
+            page1Content = postCompleteText.substr(firstCharOfPage1, charBetweenBothPages-firstCharOfPage1+1);
+            page1ContentElt.innerHTML = page1Content;
+            positionShouldAppearElt1 = getPositionTop(shouldAppearElt1);
+            positionShouldNotAppearElt1 = getPositionTop(shouldNotAppearElt1);
         }
         else
         {
             console.log('DANS AJOUT PLEIN LIGNES');
-            contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
-            console.log(contenuPage);
-            contenuPageElt.innerHTML = contenuPage;
-            positionReduireElt = getPositionTop(reduireElt);
-            positionRallongerElt = getPositionTop(rallongerElt);
-            if (window.innerHeight < positionReduireElt) // si on a trop ajouté, retirer ligne par ligne
+            page1Content = postCompleteText.substr(firstCharOfPage1, charBetweenBothPages-firstCharOfPage1+1);
+            console.log(page1Content);
+            page1ContentElt.innerHTML = page1Content;
+            positionShouldAppearElt1 = getPositionTop(shouldAppearElt1);
+            positionShouldNotAppearElt1 = getPositionTop(shouldNotAppearElt1);
+            if (window.innerHeight < positionShouldAppearElt1) // si on a trop ajouté, retirer ligne par ligne
             {
                 supprLignes();
             }
-            if (window.innerHeight > positionRallongerElt) // si on a pas assez ajouté, ajouter ligne par ligne
+            if (window.innerHeight > positionShouldNotAppearElt1) // si on a pas assez ajouté, ajouter ligne par ligne
             {
                 ajoutLignes();
             }
@@ -342,20 +342,20 @@
     function reduction10par10()
     {
         initialisationVars();
-        while ((fin_generique > (deb_generique + 150)) && (window.innerHeight < positionReduireElt_generique)) // si id reduire n'est pas visible, réduire le texte.
+        while ((lastCharOfPage_generic > (firstCharOfPage_generic + 150)) && (window.innerHeight < positionShouldAppearElt_generic)) // si id reduire n'est pas visible, réduire le texte.
         {
-            fin_generique -= 10; // par 10 pour aller plus vite sans que ce soit génant
-            while (texte.substr(fin_generique-6, 6).indexOf('<') != -1)
+            lastCharOfPage_generic -= 10; // par 10 pour aller plus vite sans que ce soit génant
+            while (postCompleteText.substr(lastCharOfPage_generic-6, 6).indexOf('<') != -1)
             {
-                fin_generique = fin_generique - 6 + texte.substr(fin_generique-6, 6).indexOf('<') - 1;
+                lastCharOfPage_generic = lastCharOfPage_generic - 6 + postCompleteText.substr(lastCharOfPage_generic-6, 6).indexOf('<') - 1;
             }
-            while (texte.substr(fin_generique-1, 2).indexOf('\\') != -1)
+            while (postCompleteText.substr(lastCharOfPage_generic-1, 2).indexOf('\\') != -1)
             {
-                fin_generique = fin_generique - 1 + texte.substr(fin_generique-1, 2).indexOf('\\') - 1;
+                lastCharOfPage_generic = lastCharOfPage_generic - 1 + postCompleteText.substr(lastCharOfPage_generic-1, 2).indexOf('\\') - 1;
             }
-            contenuPage_generique = texte.substr(deb_generique, fin_generique-deb_generique+1);
-            contenuPageElt_generique.innerHTML = contenuPage_generique;
-            positionReduireElt_generique = getPositionTop(reduireElt_generique);
+            pageContent_generic = postCompleteText.substr(firstCharOfPage_generic, lastCharOfPage_generic-firstCharOfPage_generic+1);
+            pageContentElt_generic.innerHTML = pageContent_generic;
+            positionShouldAppearElt_generic = getPositionTop(shouldAppearElt_generic);
             debuger('reduction10');
         }
         actualisationVars();
@@ -364,46 +364,46 @@
     function decoupagePropre()
     {
         initialisationVars();
-        if (texte.substr(fin_generique-16, 32).indexOf('<br') != -1) // si il y a des sauts de lignes autour non détectés, se mettre juste avant le premier d'entre eux
+        if (postCompleteText.substr(lastCharOfPage_generic-16, 32).indexOf('<br') != -1) // si il y a des sauts de lignes autour non détectés, se mettre juste avant le premier d'entre eux
         {
-            fin_generique = fin_generique - 16 + texte.substr(fin_generique-16, 32).indexOf('<br') - 1;
+            lastCharOfPage_generic = lastCharOfPage_generic - 16 + postCompleteText.substr(lastCharOfPage_generic-16, 32).indexOf('<br') - 1;
             debuger('decoupagePropreBr');
         }
-        else if (fin_generique + nbCharsLigneApprox > texte.length-1)
+        else if (lastCharOfPage_generic + numberCharsLine > postCompleteText.length-1)
         {
-            fin_generique = texte.length-1;
+            lastCharOfPage_generic = postCompleteText.length-1;
         }
         else
         {
             do
             {
-                fin_generique--;
+                lastCharOfPage_generic--;
                 debuger('decoupagePropreChars');
-            } while ((fin_generique > deb_generique + 150) && (texte.charAt(fin_generique) != ' ')); // jusqu'à tomber sur un espace. Evite de trop réduire aussi. TODO : Vérifier accents aussi
+            } while ((lastCharOfPage_generic > firstCharOfPage_generic + 150) && (postCompleteText.charAt(lastCharOfPage_generic) != ' ')); // jusqu'à tomber sur un espace. Evite de trop réduire aussi. TODO : Vérifier accents aussi
         }
-        contenuPage_generique = texte.substr(deb_generique, fin_generique-deb_generique+1);
-        contenuPageElt_generique.innerHTML = contenuPage_generique;
-        positionReduireElt_generique = getPositionTop(reduireElt_generique);
+        pageContent_generic = postCompleteText.substr(firstCharOfPage_generic, lastCharOfPage_generic-firstCharOfPage_generic+1);
+        pageContentElt_generic.innerHTML = pageContent_generic;
+        positionShouldAppearElt_generic = getPositionTop(shouldAppearElt_generic);
         actualisationVars();
     }
     
     function reduction10par10Deb()
     {
         initialisationVars();
-        while ((fin_generique > (deb_generique + 150)) && (window.innerHeight < positionReduireElt_generique)) // si id reduire n'est pas visible, réduire le texte.
+        while ((lastCharOfPage_generic > (firstCharOfPage_generic + 150)) && (window.innerHeight < positionShouldAppearElt_generic)) // si id reduire n'est pas visible, réduire le texte.
         {
-            deb_generique += 10; // par 10 pour aller plus vite sans que ce soit génant
-            while (texte.substr(deb_generique, 6).indexOf('<') != -1)
+            firstCharOfPage_generic += 10; // par 10 pour aller plus vite sans que ce soit génant
+            while (postCompleteText.substr(firstCharOfPage_generic, 6).indexOf('<') != -1)
             {
-                deb_generique += texte.substr(deb_generique, 12).lastIndexOf('>') + 1;
+                firstCharOfPage_generic += postCompleteText.substr(firstCharOfPage_generic, 12).lastIndexOf('>') + 1;
             }
-            while (texte.substr(fin_generique-1, 2).indexOf('\\') != -1)
+            while (postCompleteText.substr(lastCharOfPage_generic-1, 2).indexOf('\\') != -1)
             {
-                fin_generique += -1 + texte.substr(fin_generique-2, 2).indexOf('\\') + 2;
+                lastCharOfPage_generic += -1 + postCompleteText.substr(lastCharOfPage_generic-2, 2).indexOf('\\') + 2;
             }
-            contenuPage_generique = texte.substr(deb_generique, fin_generique-deb_generique+1);
-            contenuPageElt_generique.innerHTML = contenuPage_generique;
-            positionReduireElt_generique = getPositionTop(reduireElt_generique);
+            pageContent_generic = postCompleteText.substr(firstCharOfPage_generic, lastCharOfPage_generic-firstCharOfPage_generic+1);
+            pageContentElt_generic.innerHTML = pageContent_generic;
+            positionShouldAppearElt_generic = getPositionTop(shouldAppearElt_generic);
             debuger('reduction10Deb');
         }
         actualisationVars();
@@ -412,31 +412,31 @@
     function decoupagePropreDeb()
     {
         initialisationVars();
-        if (texte.substr(deb_generique-16, 32).indexOf('<br') != -1) // si il y a des sauts de lignes autour non détectés, se mettre juste après le dernier d'entre eux
+        if (postCompleteText.substr(firstCharOfPage_generic-16, 32).indexOf('<br') != -1) // si il y a des sauts de lignes autour non détectés, se mettre juste après le dernier d'entre eux
         {
-            deb_generique += -16 + texte.substr(fin_generique-16, 35).lastIndexOf('>') + 1;
+            firstCharOfPage_generic += -16 + postCompleteText.substr(lastCharOfPage_generic-16, 35).lastIndexOf('>') + 1;
             debuger('decoupagePropreBrDeb');
         }
-        else if (deb_generique - nbCharsLigneApprox <= 0)
+        else if (firstCharOfPage_generic - numberCharsLine <= 0)
         {
-            deb_generique = 0;
+            firstCharOfPage_generic = 0;
         }
         else
         {
             do
             {
-                deb_generique++;
+                firstCharOfPage_generic++;
                 debuger('decoupagePropreCharsDeb');
-                console.log(fin_generique + ' ' + (deb_generique+150) + ' ' + deb_generique + ' ' + texte.charAt(deb_generique));
-                console.log((fin_generique > deb_generique + 150) + ' ' + (texte.charAt(deb_generique) != ' '));
-            } while ((fin_generique > deb_generique + 150) && (texte.charAt(deb_generique) != ' ')); // jusqu'à tomber sur un espace. Evite de trop réduire aussi. TODO : Vérifier accents aussi
+                console.log(lastCharOfPage_generic + ' ' + (firstCharOfPage_generic+150) + ' ' + firstCharOfPage_generic + ' ' + postCompleteText.charAt(firstCharOfPage_generic));
+                console.log((lastCharOfPage_generic > firstCharOfPage_generic + 150) + ' ' + (postCompleteText.charAt(firstCharOfPage_generic) != ' '));
+            } while ((lastCharOfPage_generic > firstCharOfPage_generic + 150) && (postCompleteText.charAt(firstCharOfPage_generic) != ' ')); // jusqu'à tomber sur un espace. Evite de trop réduire aussi. TODO : Vérifier accents aussi
         }
-        console.log('?????????? ' + contenuPage_generique);
-        contenuPage_generique = texte.substr(deb_generique, fin_generique-deb_generique+1);
-        contenuPageElt_generique.innerHTML = contenuPage_generique;
-        positionReduireElt_generique = getPositionTop(reduireElt_generique);
+        console.log('?????????? ' + pageContent_generic);
+        pageContent_generic = postCompleteText.substr(firstCharOfPage_generic, lastCharOfPage_generic-firstCharOfPage_generic+1);
+        pageContentElt_generic.innerHTML = pageContent_generic;
+        positionShouldAppearElt_generic = getPositionTop(shouldAppearElt_generic);
         actualisationVars();
-        console.log('?????????? ' + contenuPage);
+        console.log('?????????? ' + page1Content);
     }
     
     function adapter() // adapte le texte a la place dispo dans la fenêtre, présente une page
@@ -453,48 +453,48 @@
         // stop la page à la fin d'un mot, ou juste avant un saut de ligne s'il y en a un proche (à la fin d'un paragraphe par exemple)
         decoupagePropre();
         
-        /*var contenuPageElt_2;
-        var contenuPage_2;
-        var reduireElt_2;
-        var rallongerElt_2;
-        var positionReduireElt_2;
-        var positionRallongerElt_2;*/
+        /*var page2ContentElt;
+        var page2Content;
+        var shouldAppearElt2;
+        var shouldNotAppearElt2;
+        var positionShouldAppearElt2;
+        var positionShouldNotAppearElt2;*/
         
-        if (window.innerWidth > 1500 && caractereMilieu < texte.length)
+        if (window.innerWidth > 1500 && charBetweenBothPages < postCompleteText.length)
         {
-            deuxiemePage = true;
-            parent = document.getElementById('parent');
-            secondVolet = document.createElement('div');
-            parent.appendChild(secondVolet);
-            contenuPageElt_2 = document.createElement('p');
-            reduireElt_2 = document.createElement('p');
-            rallongerElt_2 = document.createElement('p');
-            secondVolet.appendChild(contenuPageElt_2);
-            secondVolet.appendChild(reduireElt_2);
-            secondVolet.appendChild(rallongerElt_2);
-            secondVolet.setAttribute('class', 'col-xxl-6');
-            contenuPageElt_2.setAttribute('id', 'contenu2');
-            reduireElt_2.setAttribute('id', 'reduire2');
-            rallongerElt_2.setAttribute('id', 'rallonger2');
-            difference = caractereMilieu - caractereDeb;
-            while (texte.charAt(caractereMilieu + 1) == '<')
-                caractereMilieu += texte.substr(caractereMilieu+1, 6).indexOf('>') + 2;
-            if (caractereMilieu + difference >= texte.length)
+            workOnSecondPage = true;
+            parentElt = document.getElementById('parent');
+            page2ContainerElt = document.createElement('div');
+            parentElt.appendChild(page2ContainerElt);
+            page2ContentElt = document.createElement('p');
+            shouldAppearElt2 = document.createElement('p');
+            shouldNotAppearElt2 = document.createElement('p');
+            page2ContainerElt.appendChild(page2ContentElt);
+            page2ContainerElt.appendChild(shouldAppearElt2);
+            page2ContainerElt.appendChild(shouldNotAppearElt2);
+            page2ContainerElt.setAttribute('class', 'col-xxl-6');
+            page2ContentElt.setAttribute('id', 'contenu2');
+            shouldAppearElt2.setAttribute('id', 'reduire2');
+            shouldNotAppearElt2.setAttribute('id', 'rallonger2');
+            numberOfCharsInPage1 = charBetweenBothPages - firstCharOfPage1;
+            while (postCompleteText.charAt(charBetweenBothPages + 1) == '<')
+                charBetweenBothPages += postCompleteText.substr(charBetweenBothPages+1, 6).indexOf('>') + 2;
+            if (charBetweenBothPages + numberOfCharsInPage1 >= postCompleteText.length)
             {
-                caractereFin = texte.length-1;
+                lastCharOfPage2 = postCompleteText.length-1;
             }
             else
             {
-                caractereFin = caractereMilieu + difference;
-                contenuPage_2 = texte.substr(caractereDeb, difference);
-                contenuPageElt_2.textContent = contenuPage_2;
-                if (getPositionTop(reduireElt_2) > window.innerHeight) // on a été trop loin en terme de lignes
+                lastCharOfPage2 = charBetweenBothPages + numberOfCharsInPage1;
+                page2Content = postCompleteText.substr(firstCharOfPage1, numberOfCharsInPage1);
+                page2ContentElt.textContent = page2Content;
+                if (getPositionTop(shouldAppearElt2) > window.innerHeight) // on a été trop loin en terme de lignes
                 {
                     supprLignes(); // reste a ajouter decoupage propre etc
                     reduction10par10();
                     decoupagePropre();
                 }
-                else if (getPositionTop(rallongerElt_2) < window.innerHeight) // pas assez loin
+                else if (getPositionTop(shouldNotAppearElt2) < window.innerHeight) // pas assez loin
                 {
                     ajoutLignes();
                     reduction10par10();
@@ -510,7 +510,7 @@
     var boutonsPagesElt = document.createElement('p');
     var precedenteElt = document.createElement('button');
     var suivanteElt = document.createElement('button');
-    parent.appendChild(boutonsPagesElt);
+    parentElt.appendChild(boutonsPagesElt);
     boutonsPagesElt.appendChild(precedenteElt);
     boutonsPagesElt.appendChild(suivanteElt);
     boutonsPagesElt.classList.add('navPages');
@@ -527,73 +527,73 @@
     function pagePrecedente()
     {
         console.log('PAGE PRECEDENTE');
-        difference = caractereMilieu - caractereDeb;
+        numberOfCharsInPage1 = charBetweenBothPages - firstCharOfPage1;
         if (window.innerWidth > 1500)
         {
-            if (caractereDeb > 0)
+            if (firstCharOfPage1 > 0)
             {
-                caractereFin = deplacerAvantSaut(caractereDeb);
-                if (caractereFin-Math.floor(0.75*difference) <= 0)
+                lastCharOfPage2 = deplacerAvantSaut(firstCharOfPage1);
+                if (lastCharOfPage2-Math.floor(0.75*numberOfCharsInPage1) <= 0)
                 {
-                    caractereMilieu = 0;
-                    caractereDeb = 0;
-                    contenuPage = '';
-                    contenuPage_2 = texte.substr(caractereMilieu, caractereFin-caractereMilieu+1);
-                    contenuPageElt.innerHTML = contenuPage;
-                    contenuPageElt_2.innerHTML = contenuPage_2;
-                    positionReduireElt = getPositionTop(reduireElt);
-                    positionReduireElt_2 = getPositionTop(reduireElt_2);
-                    positionRallongerElt = getPositionTop(rallongerElt);
-                    positionRallongerElt_2 = getPositionTop(rallongerElt_2);
+                    charBetweenBothPages = 0;
+                    firstCharOfPage1 = 0;
+                    page1Content = '';
+                    page2Content = postCompleteText.substr(charBetweenBothPages, lastCharOfPage2-charBetweenBothPages+1);
+                    page1ContentElt.innerHTML = page1Content;
+                    page2ContentElt.innerHTML = page2Content;
+                    positionShouldAppearElt1 = getPositionTop(shouldAppearElt1);
+                    positionShouldAppearElt2 = getPositionTop(shouldAppearElt2);
+                    positionShouldNotAppearElt1 = getPositionTop(shouldNotAppearElt1);
+                    positionShouldNotAppearElt2 = getPositionTop(shouldNotAppearElt2);
                 }
                 else
                 {
-                    caractereMilieu = deplacerApresSaut(caractereFin - Math.floor(0.75*difference));
-                    caractereDeb = caractereMilieu;
-                    deuxiemePage = true;
-                    contenuPage = '';
-                    contenuPage_2 = texte.substr(caractereMilieu, caractereFin-caractereMilieu+1);
-                    contenuPageElt.innerHTML = contenuPage;
-                    contenuPageElt_2.innerHTML = contenuPage_2;
-                    positionReduireElt = getPositionTop(reduireElt);
-                    positionReduireElt_2 = getPositionTop(reduireElt_2);
-                    positionRallongerElt = getPositionTop(rallongerElt);
-                    positionRallongerElt_2 = getPositionTop(rallongerElt_2);
-                    if (positionReduireElt_2 > window.innerHeight)
+                    charBetweenBothPages = deplacerApresSaut(lastCharOfPage2 - Math.floor(0.75*numberOfCharsInPage1));
+                    firstCharOfPage1 = charBetweenBothPages;
+                    workOnSecondPage = true;
+                    page1Content = '';
+                    page2Content = postCompleteText.substr(charBetweenBothPages, lastCharOfPage2-charBetweenBothPages+1);
+                    page1ContentElt.innerHTML = page1Content;
+                    page2ContentElt.innerHTML = page2Content;
+                    positionShouldAppearElt1 = getPositionTop(shouldAppearElt1);
+                    positionShouldAppearElt2 = getPositionTop(shouldAppearElt2);
+                    positionShouldNotAppearElt1 = getPositionTop(rallongerElt);
+                    positionShouldNotAppearElt2 = getPositionTop(shouldNotAppearElt2);
+                    if (positionShouldAppearElt2 > window.innerHeight)
                     {
                         supprLignesDeb();
                         reduction10par10Deb();
                     }
-                    if (positionRallongerElt_2 < window.innerHeight)
+                    if (positionShouldNotAppearElt2 < window.innerHeight)
                     {
                         ajoutLignesDeb();
                         reduction10par10Deb();
                     }
                     decoupagePropreDeb();
-                    if (caractereMilieu > 0)
+                    if (charBetweenBothPages > 0)
                     {
-                        deuxiemePage = false;
-                        if (caractereMilieu-Math.floor(0.75*difference) <= 0)
+                        workOnSecondPage = false;
+                        if (charBetweenBothPages-Math.floor(0.75*numberOfCharsInPage1) <= 0)
                         {
-                            caractereDeb = 0;
-                            contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
-                            contenuPageElt.innerHTML = contenuPage;
-                            positionReduireElt = getPositionTop(reduireElt);
-                            positionRallongerElt = getPositionTop(rallongerElt);
+                            firstCharOfPage1 = 0;
+                            page1Content = postCompleteText.substr(firstCharOfPage1, charBetweenBothPages-firstCharOfPage1+1);
+                            page1ContentElt.innerHTML = page1Content;
+                            positionShouldAppearElt1 = getPositionTop(shouldAppearElt1);
+                            positionShouldNotAppearElt1 = getPositionTop(shouldNotAppearElt1);
                         }
                         else
                         {
-                            caractereDeb = deplacerApresSaut(caractereMilieu - Math.floor(0.75*difference));
-                            contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
-                            contenuPageElt.innerHTML = contenuPage;
-                            positionReduireElt = getPositionTop(reduireElt);
-                            positionRallongerElt = getPositionTop(rallongerElt);
-                            if (positionReduireElt > window.innerHeight)
+                            firstCharOfPage1 = deplacerApresSaut(charBetweenBothPages - Math.floor(0.75*numberOfCharsInPage1));
+                            page1Content = postCompleteText.substr(firstCharOfPage1, charBetweenBothPages-firstCharOfPage1+1);
+                            page1ContentElt.innerHTML = page1Content;
+                            positionShouldAppearElt1 = getPositionTop(shouldAppearElt1);
+                            positionShouldNotAppearElt1 = getPositionTop(shouldNotAppearElt1);
+                            if (positionShouldAppearElt1 > window.innerHeight)
                             {
                                 supprLignesDeb();
                                 reduction10par10Deb();
                             }
-                            if (positionRallongerElt < window.innerHeight)
+                            if (positionShouldNotAppearElt1 < window.innerHeight)
                             {
                                 ajoutLignesDeb();
                                 reduction10par10Deb();
@@ -606,36 +606,36 @@
         }
         else
         {
-            if (caractereDeb > 0)
+            if (firstCharOfPage1 > 0)
             {
-                if (caractereMilieu-Math.floor(0.75*difference) <= 0)
+                if (charBetweenBothPages-Math.floor(0.75*numberOfCharsInPage1) <= 0)
                 {
-                    caractereMilieu = deplacerAvantSaut(caractereDeb);
-                    caractereDeb = 0;
-                    /*while (texte.substr(caractereDeb-5, 6).indexOf('<') != -1)
+                    charBetweenBothPages = deplacerAvantSaut(firstCharOfPage1);
+                    firstCharOfPage1 = 0;
+                    /*while (postCompleteText.substr(firstCharOfPage1-5, 6).indexOf('<') != -1)
                     {
-                        caractereMilieu += (texte.substr(caractereMilieu-5, 6).indexOf('<') - 6);
+                        charBetweenBothPages += (postCompleteText.substr(charBetweenBothPages-5, 6).indexOf('<') - 6);
                     }*/
-                    contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
-                    contenuPageElt.innerHTML = contenuPage;
-                    positionReduireElt = getPositionTop(reduireElt);
-                    positionRallongerElt = getPositionTop(rallongerElt);
+                    page1Content = postCompleteText.substr(firstCharOfPage1, charBetweenBothPages-firstCharOfPage1+1);
+                    page1ContentElt.innerHTML = page1Content;
+                    positionShouldAppearElt1 = getPositionTop(shouldAppearElt1);
+                    positionShouldNotAppearElt1 = getPositionTop(shouldNotAppearElt1);
                 }
                 else
                 {
-                    caractereMilieu = deplacerAvantSaut(caractereDeb);
-                    caractereDeb = deplacerApresSaut(caractereDeb - Math.floor(0.75*difference));
-                    deuxiemePage = false;
-                    contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
-                    contenuPageElt.innerHTML = contenuPage;
-                    positionReduireElt = getPositionTop(reduireElt);
-                    positionRallongerElt = getPositionTop(rallongerElt);
-                    if (positionReduireElt > window.innerHeight)
+                    charBetweenBothPages = deplacerAvantSaut(firstCharOfPage1);
+                    firstCharOfPage1 = deplacerApresSaut(firstCharOfPage1 - Math.floor(0.75*numberOfCharsInPage1));
+                    workOnSecondPage = false;
+                    page1Content = postCompleteText.substr(firstCharOfPage1, charBetweenBothPages-firstCharOfPage1+1);
+                    page1ContentElt.innerHTML = page1Content;
+                    positionShouldAppearElt1 = getPositionTop(shouldAppearElt1);
+                    positionShouldNotAppearElt1 = getPositionTop(shouldNotAppearElt1);
+                    if (positionShouldAppearElt1 > window.innerHeight)
                     {
                         supprLignesDeb();
                         reduction10par10Deb();
                     }
-                    if (positionRallongerElt < window.innerHeight)
+                    if (positionShouldNotAppearElt1 < window.innerHeight)
                     {
                         ajoutLignesDeb();
                         reduction10par10Deb();
@@ -649,73 +649,73 @@
     function pageSuivante()
     {
         console.log('PAGE SUIVANTE');
-        difference = caractereMilieu - caractereDeb;
+        numberOfCharsInPage1 = charBetweenBothPages - firstCharOfPage1;
         if (window.innerWidth > 1500)
         {
-            if (caractereFin < texte.length-1)
+            if (lastCharOfPage2 < postCompleteText.length-1)
             {
-                caractereDeb = deplacerApresSaut(caractereFin);
-                if (caractereDeb+Math.floor(0.75*difference) >= texte.length-1)
+                firstCharOfPage1 = deplacerApresSaut(lastCharOfPage2);
+                if (firstCharOfPage1+Math.floor(0.75*numberOfCharsInPage1) >= postCompleteText.length-1)
                 {
-                    caractereMilieu = texte.length-1;
-                    caractereFin = texte.length-1;
-                    contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
-                    contenuPage_2 = '';
-                    contenuPageElt.innerHTML = contenuPage;
-                    contenuPageElt_2.innerHTML = contenuPage_2;
-                    positionReduireElt = getPositionTop(reduireElt);
-                    positionReduireElt_2 = getPositionTop(reduireElt_2);
-                    positionRallongerElt = getPositionTop(rallongerElt);
-                    positionRallongerElt_2 = getPositionTop(rallongerElt_2);
+                    charBetweenBothPages = postCompleteText.length-1;
+                    lastCharOfPage2 = postCompleteText.length-1;
+                    page1Content = postCompleteText.substr(firstCharOfPage1, charBetweenBothPages-firstCharOfPage1+1);
+                    page2Content = '';
+                    page1ContentElt.innerHTML = page1Content;
+                    page2ContentElt.innerHTML = page2Content;
+                    positionShouldAppearElt1 = getPositionTop(shouldAppearElt1);
+                    positionShouldAppearElt2 = getPositionTop(shouldAppearElt2);
+                    positionShouldNotAppearElt1 = getPositionTop(shouldNotAppearElt1);
+                    positionShouldNotAppearElt2 = getPositionTop(shouldNotAppearElt2);
                 }
                 else
                 {
-                    caractereMilieu = deplacerAvantSaut(caractereDeb + Math.floor(0.75*difference));
-                    caractereFin = caractereMilieu;
-                    deuxiemePage = false;
-                    contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
-                    contenuPage_2 = '';
-                    contenuPageElt.innerHTML = contenuPage;
-                    contenuPageElt_2.innerHTML = contenuPage_2;
-                    positionReduireElt = getPositionTop(reduireElt);
-                    positionReduireElt_2 = getPositionTop(reduireElt_2);
-                    positionRallongerElt = getPositionTop(rallongerElt);
-                    positionRallongerElt_2 = getPositionTop(rallongerElt_2);
-                    if (positionReduireElt > window.innerHeight)
+                    charBetweenBothPages = deplacerAvantSaut(firstCharOfPage1 + Math.floor(0.75*numberOfCharsInPage1));
+                    lastCharOfPage2 = charBetweenBothPages;
+                    workOnSecondPage = false;
+                    page1Content = postCompleteText.substr(firstCharOfPage1, charBetweenBothPages-firstCharOfPage1+1);
+                    page2Content = '';
+                    page1ContentElt.innerHTML = page1Content;
+                    page2ContentElt.innerHTML = page2Content;
+                    positionShouldAppearElt1 = getPositionTop(shouldAppearElt1);
+                    positionShouldAppearElt2 = getPositionTop(shouldAppearElt2);
+                    positionShouldNotAppearElt1 = getPositionTop(shouldNotAppearElt1);
+                    positionShouldNotAppearElt2 = getPositionTop(shouldNotAppearElt2);
+                    if (positionShouldAppearElt1 > window.innerHeight)
                     {
                         supprLignes();
                         reduction10par10();
                     }
-                    if (positionRallongerElt < window.innerHeight)
+                    if (positionShouldNotAppearElt1 < window.innerHeight)
                     {
                         ajoutLignes();
                         reduction10par10();
                     }
                     decoupagePropre();
-                    if (caractereMilieu < texte.length-1)
+                    if (charBetweenBothPages < postCompleteText.length-1)
                     {
-                        deuxiemePage = true;
-                        if (caractereMilieu+Math.floor(0.75*difference) >= texte.length-1)
+                        workOnSecondPage = true;
+                        if (charBetweenBothPages+Math.floor(0.75*numberOfCharsInPage1) >= postCompleteText.length-1)
                         {
-                            caractereFin = texte.length-1;
-                            contenuPage_2 = texte.substr(caractereMilieu, caractereFin-caractereMilieu+1);
-                            contenuPageElt_2.innerHTML = contenuPage_2;
-                            positionReduireElt_2 = getPositionTop(reduireElt_2);
-                            positionRallongerElt_2 = getPositionTop(rallongerElt_2);
+                            lastCharOfPage2 = postCompleteText.length-1;
+                            page2Content = postCompleteText.substr(charBetweenBothPages, lastCharOfPage2-charBetweenBothPages+1);
+                            page2ContentElt.innerHTML = page2Content;
+                            positionShouldAppearElt2 = getPositionTop(shouldAppearElt2);
+                            positionShouldNotAppearElt2 = getPositionTop(shouldNotAppearElt2);
                         }
                         else
                         {
-                            caractereFin = deplacerAvantSaut(caractereMilieu + Math.floor(0.75*difference)); // j'ai changé caractereDeb en caractereMilieu, mais ça marchait avant... Bizarre
-                            contenuPage_2 = texte.substr(caractereMilieu, caractereFin-caractereMilieu+1);
-                            contenuPageElt_2.innerHTML = contenuPage_2;
-                            positionReduireElt_2 = getPositionTop(reduireElt_2);
-                            positionRallongerElt_2 = getPositionTop(rallongerElt_2);
-                            if (positionReduireElt_2 > window.innerHeight)
+                            lastCharOfPage2 = deplacerAvantSaut(charBetweenBothPages + Math.floor(0.75*numberOfCharsInPage1)); // j'ai changé firstCharOfPage1 en charBetweenBothPages, mais ça marchait avant... Bizarre
+                            page2Content = postCompleteText.substr(charBetweenBothPages, lastCharOfPage2-charBetweenBothPages+1);
+                            page2ContentElt.innerHTML = page2Content;
+                            positionShouldAppearElt2 = getPositionTop(shouldAppearElt2);
+                            positionShouldNotAppearElt2 = getPositionTop(shouldNotAppearElt2);
+                            if (positionShouldAppearElt2 > window.innerHeight)
                             {
                                 supprLignes();
                                 reduction10par10();
                             }
-                            if (positionRallongerElt_2 < window.innerHeight)
+                            if (positionShouldNotAppearElt2 < window.innerHeight)
                             {
                                 ajoutLignes();
                                 reduction10par10();
@@ -728,36 +728,36 @@
         }
         else
         {
-            if (caractereMilieu < texte.length-1)
+            if (charBetweenBothPages < postCompleteText.length-1)
             {
-                if (caractereMilieu+Math.floor(0.75*difference) >= texte.length-1)
+                if (charBetweenBothPages+Math.floor(0.75*numberOfCharsInPage1) >= postCompleteText.length-1)
                 {
-                    caractereDeb = deplacerApresSaut(caractereMilieu);
-                    caractereMilieu = texte.length-1;
-                    /*while (texte.substr(caractereDeb-5, 6).indexOf('<') != -1)
+                    firstCharOfPage1 = deplacerApresSaut(charBetweenBothPages);
+                    charBetweenBothPages = postCompleteText.length-1;
+                    /*while (postCompleteText.substr(firstCharOfPage1-5, 6).indexOf('<') != -1)
                     {
-                        caractereMilieu += (texte.substr(caractereMilieu-5, 6).indexOf('<') - 6);
+                        charBetweenBothPages += (postCompleteText.substr(charBetweenBothPages-5, 6).indexOf('<') - 6);
                     }*/
-                    contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
-                    contenuPageElt.innerHTML = contenuPage;
-                    positionReduireElt = getPositionTop(reduireElt);
-                    positionRallongerElt = getPositionTop(rallongerElt);
+                    page1Content = postCompleteText.substr(firstCharOfPage1, charBetweenBothPages-firstCharOfPage1+1);
+                    page1ContentElt.innerHTML = page1Content;
+                    positionShouldAppearElt1 = getPositionTop(shouldAppearElt1);
+                    positionShouldNotAppearElt1 = getPositionTop(shouldNotAppearElt1);
                 }
                 else
                 {
-                    caractereDeb = deplacerApresSaut(caractereMilieu);
-                    caractereMilieu = deplacerAvantSaut(caractereMilieu + Math.floor(0.75*difference));
-                    deuxiemePage = false;
-                    contenuPage = texte.substr(caractereDeb, caractereMilieu-caractereDeb+1);
-                    contenuPageElt.innerHTML = contenuPage;
-                    positionReduireElt = getPositionTop(reduireElt);
-                    positionRallongerElt = getPositionTop(rallongerElt);
-                    if (positionReduireElt > window.innerHeight)
+                    firstCharOfPage1 = deplacerApresSaut(charBetweenBothPages);
+                    charBetweenBothPages = deplacerAvantSaut(charBetweenBothPages + Math.floor(0.75*numberOfCharsInPage1));
+                    workOnSecondPage = false;
+                    page1Content = postCompleteText.substr(firstCharOfPage1, charBetweenBothPages-firstCharOfPage1+1);
+                    page1ContentElt.innerHTML = page1Content;
+                    positionShouldAppearElt1 = getPositionTop(shouldAppearElt1);
+                    positionShouldNotAppearElt1 = getPositionTop(shouldNotAppearElt1);
+                    if (positionShouldAppearElt1 > window.innerHeight)
                     {
                         supprLignes();
                         reduction10par10();
                     }
-                    if (positionRallongerElt < window.innerHeight)
+                    if (positionShouldNotAppearElt1 < window.innerHeight)
                     {
                         ajoutLignes();
                         reduction10par10();

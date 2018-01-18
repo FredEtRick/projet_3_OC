@@ -13,7 +13,7 @@
                     $_GET['page'] = 1;
                 $indiceBegining = 5 * ((int) strip_tags($_GET['page']) - 1);
                 $postsPerPages = 5;
-                $indicePost = $indiceBegining;
+                $indexPost = $indiceBegining;
                 $postsLeft = $postsPerPages;
                 $allPosts = (new PostManager())->getAllPostsExceptExpiry();
                 $postsTitles = $allPosts['titles'];

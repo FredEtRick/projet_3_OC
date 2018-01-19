@@ -1,6 +1,7 @@
-    function supprLignes()
+<script type="text/javascript">
+    function deleteSomeLines()
     {
-        initialisationVars();
+        initializationVars();
         console.log(firstCharOfPage_generic + ' ' + lastCharOfPage_generic);
         while (getPositionTop(shouldAppearElt_generic) > window.innerHeight)
         {
@@ -14,19 +15,19 @@
             }
             pageContent_generic = postCompleteText.substr(firstCharOfPage_generic, lastCharOfPage_generic-firstCharOfPage_generic+1);
             pageContentElt_generic.innerHTML = pageContent_generic;
-            debuger('supprLignes');
+            debuger('deleteSomeLines');
         }
         lastCharOfPage_generic += numberCharsLine; // au cas où on ait un peu trop retiré
         pageContent_generic = postCompleteText.substr(firstCharOfPage_generic, lastCharOfPage_generic-firstCharOfPage_generic+1);
         pageContentElt_generic.innerHTML = pageContent_generic;
         positionShouldAppearElt_generic = getPositionTop(shouldAppearElt_generic);
         positionShouldNotAppearElt_generic = getPositionTop(shouldNotAppearElt_generic);
-        actualisationVars();
+        updatingVars();
     }
     
-    function ajoutLignes()
+    function addSomeLines()
     {
-        initialisationVars();
+        initializationVars();
         while (getPositionTop(shouldNotAppearElt_generic) < window.innerHeight && lastCharOfPage_generic < postCompleteText.length-1)
         {
             if (lastCharOfPage_generic + Math.ceil(numberCharsLine*1,25) >= postCompleteText.length-1)
@@ -45,20 +46,20 @@
             }
             pageContent_generic = postCompleteText.substr(firstCharOfPage_generic, lastCharOfPage_generic-firstCharOfPage_generic+1);
             pageContentElt_generic.innerHTML = pageContent_generic;
-            debuger('ajoutLignes');
+            debuger('addSomeLines');
         }
         //lastCharOfPage_generic += numberCharsLine; // au cas où on ait un peu trop retiré. a réadapter pour cette fonction plus tard !!!
         pageContent_generic = postCompleteText.substr(firstCharOfPage_generic, lastCharOfPage_generic-firstCharOfPage_generic+1);
         pageContentElt_generic.innerHTML = pageContent_generic;
         positionShouldAppearElt_generic = getPositionTop(shouldAppearElt_generic);
         positionShouldNotAppearElt_generic = getPositionTop(shouldNotAppearElt_generic);
-        actualisationVars();
-            debuger('ajoutLignes');
+        updatingVars();
+            debuger('addSomeLines');
     }
     
-    function reduction10par10()
+    function reduct10by10()
     {
-        initialisationVars();
+        initializationVars();
         while ((lastCharOfPage_generic > (firstCharOfPage_generic + 150)) && (window.innerHeight < positionShouldAppearElt_generic)) // si id reduire n'est pas visible, réduire le texte.
         {
             lastCharOfPage_generic -= 10; // par 10 pour aller plus vite sans que ce soit génant
@@ -75,16 +76,16 @@
             positionShouldAppearElt_generic = getPositionTop(shouldAppearElt_generic);
             debuger('reduction10');
         }
-        actualisationVars();
+        updatingVars();
     }
     
-    function decoupagePropre()
+    function cleanEnding()
     {
-        initialisationVars();
+        initializationVars();
         if (postCompleteText.substr(lastCharOfPage_generic-16, 32).indexOf('<br') != -1) // si il y a des sauts de lignes autour non détectés, se mettre juste avant le premier d'entre eux
         {
             lastCharOfPage_generic = lastCharOfPage_generic - 16 + postCompleteText.substr(lastCharOfPage_generic-16, 32).indexOf('<br') - 1;
-            debuger('decoupagePropreBr');
+            debuger('cleanEndingBr');
         }
         else if (lastCharOfPage_generic + numberCharsLine > postCompleteText.length-1)
         {
@@ -95,11 +96,12 @@
             do
             {
                 lastCharOfPage_generic--;
-                debuger('decoupagePropreChars');
+                debuger('cleanEndingChars');
             } while ((lastCharOfPage_generic > firstCharOfPage_generic + 150) && (postCompleteText.charAt(lastCharOfPage_generic) != ' ')); // jusqu'à tomber sur un espace. Evite de trop réduire aussi. TODO : Vérifier accents aussi
         }
         pageContent_generic = postCompleteText.substr(firstCharOfPage_generic, lastCharOfPage_generic-firstCharOfPage_generic+1);
         pageContentElt_generic.innerHTML = pageContent_generic;
         positionShouldAppearElt_generic = getPositionTop(shouldAppearElt_generic);
-        actualisationVars();
+        updatingVars();
     }
+</script>

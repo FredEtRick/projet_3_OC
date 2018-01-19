@@ -1,6 +1,7 @@
-    function supprLignesDeb()
+<script type="text/javascript">
+    function deleteSomeLinesAtBegining()
     {
-        initialisationVars();
+        initializationVars();
         console.log(firstCharOfPage_generic + ' ' + lastCharOfPage_generic);
         while (getPositionTop(shouldAppearElt_generic) > window.innerHeight)
         {
@@ -14,19 +15,19 @@
             }
             pageContent_generic = postCompleteText.substr(firstCharOfPage_generic, lastCharOfPage_generic-firstCharOfPage_generic+1);
             pageContentElt_generic.innerHTML = pageContent_generic;
-            debuger('supprLignesDeb');
+            debuger('deleteSomeLinesAtBegining');
         }
         firstCharOfPage_generic += numberCharsLine; // au cas où on ait un peu trop retiré
         pageContent_generic = postCompleteText.substr(firstCharOfPage_generic, lastCharOfPage_generic-firstCharOfPage_generic+1);
         pageContentElt_generic.innerHTML = pageContent_generic;
         positionShouldAppearElt_generic = getPositionTop(shouldAppearElt_generic);
         positionShouldNotAppearElt_generic = getPositionTop(shouldNotAppearElt_generic);
-        actualisationVars();
+        updatingVars();
     }
     
-    function ajoutLignesDeb()
+    function addSomeLinesAtBegining()
     {
-        initialisationVars();
+        initializationVars();
         while (getPositionTop(shouldNotAppearElt_generic) < window.innerHeight && firstCharOfPage_generic != 0)
         {
             if (firstCharOfPage_generic - Math.ceil(numberCharsLine*1,25) <= 0)
@@ -45,19 +46,19 @@
             }
             pageContent_generic = postCompleteText.substr(firstCharOfPage_generic, lastCharOfPage_generic-firstCharOfPage_generic+1);
             pageContentElt_generic.innerHTML = pageContent_generic;
-            debuger('ajoutLignesDeb');
+            debuger('addSomeLinesAtBegining');
         }
         //lastCharOfPage_generic += numberCharsLine; // au cas où on ait un peu trop retiré. a réadapter pour cette fonction plus tard !!!
         pageContent_generic = postCompleteText.substr(firstCharOfPage_generic, lastCharOfPage_generic-firstCharOfPage_generic+1);
         pageContentElt_generic.innerHTML = pageContent_generic;
         positionShouldAppearElt_generic = getPositionTop(shouldAppearElt_generic);
         positionShouldNotAppearElt_generic = getPositionTop(shouldNotAppearElt_generic);
-        actualisationVars();
+        updatingVars();
     }
     
-    function reduction10par10Deb()
+    function reduct10by10AtBegining()
     {
-        initialisationVars();
+        initializationVars();
         while ((lastCharOfPage_generic > (firstCharOfPage_generic + 150)) && (window.innerHeight < positionShouldAppearElt_generic)) // si id reduire n'est pas visible, réduire le texte.
         {
             firstCharOfPage_generic += 10; // par 10 pour aller plus vite sans que ce soit génant
@@ -74,12 +75,12 @@
             positionShouldAppearElt_generic = getPositionTop(shouldAppearElt_generic);
             debuger('reduction10Deb');
         }
-        actualisationVars();
+        updatingVars();
     }
     
-    function decoupagePropreDeb()
+    function cleanStarting()
     {
-        initialisationVars();
+        initializationVars();
         if (postCompleteText.substr(firstCharOfPage_generic-16, 32).indexOf('<br') != -1) // si il y a des sauts de lignes autour non détectés, se mettre juste après le dernier d'entre eux
         {
             firstCharOfPage_generic += -16 + postCompleteText.substr(lastCharOfPage_generic-16, 35).lastIndexOf('>') + 1;
@@ -103,11 +104,11 @@
         pageContent_generic = postCompleteText.substr(firstCharOfPage_generic, lastCharOfPage_generic-firstCharOfPage_generic+1);
         pageContentElt_generic.innerHTML = pageContent_generic;
         positionShouldAppearElt_generic = getPositionTop(shouldAppearElt_generic);
-        actualisationVars();
+        updatingVars();
         console.log('?????????? ' + page1Content);
     }
     
-    function pagePrecedente()
+    function previousPage()
     {
         console.log('PAGE PRECEDENTE');
         numberOfCharsInPage1 = charBetweenBothPages - firstCharOfPage1;
@@ -115,7 +116,7 @@
         {
             if (firstCharOfPage1 > 0)
             {
-                lastCharOfPage2 = deplacerAvantSaut(firstCharOfPage1);
+                lastCharOfPage2 = moveBeforeNewLine(firstCharOfPage1);
                 if (lastCharOfPage2-Math.floor(0.75*numberOfCharsInPage1) <= 0)
                 {
                     charBetweenBothPages = 0;
@@ -131,7 +132,7 @@
                 }
                 else
                 {
-                    charBetweenBothPages = deplacerApresSaut(lastCharOfPage2 - Math.floor(0.75*numberOfCharsInPage1));
+                    charBetweenBothPages = moveAfterNewLine(lastCharOfPage2 - Math.floor(0.75*numberOfCharsInPage1));
                     firstCharOfPage1 = charBetweenBothPages;
                     workOnSecondPage = true;
                     page1Content = '';
@@ -144,15 +145,15 @@
                     positionShouldNotAppearElt2 = getPositionTop(shouldNotAppearElt2);
                     if (positionShouldAppearElt2 > window.innerHeight)
                     {
-                        supprLignesDeb();
-                        reduction10par10Deb();
+                        deleteSomeLinesAtBegining();
+                        reduct10by10AtBegining();
                     }
                     if (positionShouldNotAppearElt2 < window.innerHeight)
                     {
-                        ajoutLignesDeb();
-                        reduction10par10Deb();
+                        addSomeLinesAtBegining();
+                        reduct10by10AtBegining();
                     }
-                    decoupagePropreDeb();
+                    cleanStarting();
                     if (charBetweenBothPages > 0)
                     {
                         workOnSecondPage = false;
@@ -166,22 +167,22 @@
                         }
                         else
                         {
-                            firstCharOfPage1 = deplacerApresSaut(charBetweenBothPages - Math.floor(0.75*numberOfCharsInPage1));
+                            firstCharOfPage1 = moveAfterNewLine(charBetweenBothPages - Math.floor(0.75*numberOfCharsInPage1));
                             page1Content = postCompleteText.substr(firstCharOfPage1, charBetweenBothPages-firstCharOfPage1+1);
                             page1ContentElt.innerHTML = page1Content;
                             positionShouldAppearElt1 = getPositionTop(shouldAppearElt1);
                             positionShouldNotAppearElt1 = getPositionTop(shouldNotAppearElt1);
                             if (positionShouldAppearElt1 > window.innerHeight)
                             {
-                                supprLignesDeb();
-                                reduction10par10Deb();
+                                deleteSomeLinesAtBegining();
+                                reduct10by10AtBegining();
                             }
                             if (positionShouldNotAppearElt1 < window.innerHeight)
                             {
-                                ajoutLignesDeb();
-                                reduction10par10Deb();
+                                addSomeLinesAtBegining();
+                                reduct10by10AtBegining();
                             }
-                            decoupagePropreDeb();
+                            cleanStarting();
                         }
                     }
                 }
@@ -193,7 +194,7 @@
             {
                 if (charBetweenBothPages-Math.floor(0.75*numberOfCharsInPage1) <= 0)
                 {
-                    charBetweenBothPages = deplacerAvantSaut(firstCharOfPage1);
+                    charBetweenBothPages = moveBeforeNewLine(firstCharOfPage1);
                     firstCharOfPage1 = 0;
                     /*while (postCompleteText.substr(firstCharOfPage1-5, 6).indexOf('<') != -1)
                     {
@@ -206,8 +207,8 @@
                 }
                 else
                 {
-                    charBetweenBothPages = deplacerAvantSaut(firstCharOfPage1);
-                    firstCharOfPage1 = deplacerApresSaut(firstCharOfPage1 - Math.floor(0.75*numberOfCharsInPage1));
+                    charBetweenBothPages = moveBeforeNewLine(firstCharOfPage1);
+                    firstCharOfPage1 = moveAfterNewLine(firstCharOfPage1 - Math.floor(0.75*numberOfCharsInPage1));
                     workOnSecondPage = false;
                     page1Content = postCompleteText.substr(firstCharOfPage1, charBetweenBothPages-firstCharOfPage1+1);
                     page1ContentElt.innerHTML = page1Content;
@@ -215,16 +216,17 @@
                     positionShouldNotAppearElt1 = getPositionTop(shouldNotAppearElt1);
                     if (positionShouldAppearElt1 > window.innerHeight)
                     {
-                        supprLignesDeb();
-                        reduction10par10Deb();
+                        deleteSomeLinesAtBegining();
+                        reduct10by10AtBegining();
                     }
                     if (positionShouldNotAppearElt1 < window.innerHeight)
                     {
-                        ajoutLignesDeb();
-                        reduction10par10Deb();
+                        addSomeLinesAtBegining();
+                        reduct10by10AtBegining();
                     }
-                    decoupagePropreDeb();
+                    cleanStarting();
                 }
             }
         }
     }
+</script>

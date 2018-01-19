@@ -1,3 +1,4 @@
+<script type="text/javascript">
     // function sending back vertical position of element in the page, "getPositionTop" is the only code I didn't wrote myself. I took it here : https://forum.alsacreations.com/topic-5-38724-1-Calculer-la-position-dun-element-en-javascript.html
     function getPositionTop (obj)
     {
@@ -10,12 +11,12 @@
 		return curtop;
 	}
     
-    function debuger(fonction)
+    function debug(fonction)
     {
         console.log('fonction : ' + fonction + ' workOnSecondPage : ' + workOnSecondPage + ' ; ' + ' firstCharOfPage1 : ' + firstCharOfPage1 + ' charBetweenBothPages : ' + charBetweenBothPages + ' lastCharOfPage2 : ' + lastCharOfPage2 + ' positionShouldAppearElt1 : ' + positionShouldAppearElt1 + ' positionShouldNotAppearElt1 : ' + positionShouldNotAppearElt1 + ' numberCharsLine : ' + numberCharsLine + ' lineHeightPx : ' + lineHeightPx + ' window.innerHeight : ' + window.innerHeight + ' positionShouldNotAppearElt2 : ' + positionShouldNotAppearElt2 + ' positionShouldAppearElt2 : ' + positionShouldAppearElt2 + /*' contenu ' + page1Content +*/ ' contenuGenerique : ' + pageContent_generic);
     }
     
-    function initialisationVars()
+    function initializationVars()
     {
         if (workOnSecondPage)
         {
@@ -39,10 +40,10 @@
             firstCharOfPage_generic = firstCharOfPage1;
             lastCharOfPage_generic = charBetweenBothPages;
         }
-        replacerDebut();
+        repositioningFirstChar();
     }
     
-    function actualisationVars()
+    function updatingVars()
     {
         if (workOnSecondPage)
         {
@@ -62,7 +63,7 @@
         }
     }
     
-    function replacerDebut()
+    function repositioningFirstChar()
     {
         while (postCompleteText.substr(firstCharOfPage_generic, 4).indexOf('<br') != -1)
         {
@@ -70,7 +71,7 @@
         }
     }
     
-    function deplacerAvantSaut(caractere)
+    function moveBeforeNewLine(caractere)
     {
         while (postCompleteText.substr(caractere-7, 7).indexOf('<br') != -1)
         {
@@ -79,7 +80,7 @@
         return caractere;
     }
     
-    function deplacerApresSaut(caractere)
+    function moveAfterNewLine(caractere)
     {
         while (postCompleteText.substr(caractere, 4).indexOf('<br') != -1)
         {
@@ -87,3 +88,4 @@
         }
         return caractere;
     }
+</script>

@@ -1,4 +1,5 @@
-    function compterCharsLigne() // Compte le nombre de chars dans une ligne (varie d'une ligne a l'autre mais permet de s'en rapprocher avec un exemple d'une ligne pleine)
+<script type="text/javascript">
+    function countCharsLine() // Compte le nombre de chars dans une ligne (varie d'une ligne a l'autre mais permet de s'en rapprocher avec un exemple d'une ligne pleine)
     {
         charBetweenBothPages = firstCharOfPage1;
         while ((window.innerHeight > positionShouldNotAppearElt1) && (positionShouldNotAppearElt1 == getPositionTop(rallongerElt)) && (charBetweenBothPages < postCompleteText.length-1)) 
@@ -23,7 +24,7 @@
             }
             page1Content = postCompleteText.substr(firstCharOfPage1, charBetweenBothPages-firstCharOfPage1+1);
             page1ContentElt.innerHTML = page1Content;
-            debuger('compterCharsLigne');
+            debuger('countCharsLine');
         }
         if (positionShouldNotAppearElt1 < getPositionTop(shouldNotAppearElt1))
         {
@@ -49,7 +50,7 @@
         positionShouldNotAppearElt1 = getPositionTop(shouldNotAppearElt1);
     }
     
-    function ajoutPleinLignes()
+    function addLotOfLines()
     {
         if (lineHeightPx != null) // si la hauteur de ligne a été calculée, donc s'il existait une ligne entière a parcourir dans le texte pour mesurer la hauteur d'une ligne dans compterCharslignes, alors ajouter direct des caractères pour remplir approximativement la fenêtre en se basant sur les calculs suivants :
         {
@@ -77,11 +78,11 @@
             positionShouldNotAppearElt1 = getPositionTop(shouldNotAppearElt1);
             if (window.innerHeight < positionShouldAppearElt1) // si on a trop ajouté, retirer ligne par ligne
             {
-                supprLignes();
+                deleteSomeLines();
             }
             if (window.innerHeight > positionShouldNotAppearElt1) // si on a pas assez ajouté, ajouter ligne par ligne
             {
-                ajoutLignes();
+                addSomeLines();
             }
             // sinon c'est bon*/
         }
@@ -119,17 +120,18 @@
                 page2ContentElt.textContent = page2Content;
                 if (getPositionTop(shouldAppearElt2) > window.innerHeight) // on a été trop loin en terme de lignes
                 {
-                    supprLignes(); // reste a ajouter decoupage propre etc
-                    reduction10par10();
-                    decoupagePropre();
+                    deleteSomeLines(); // reste a ajouter decoupage propre etc
+                    reduct10by10();
+                    cleanEnding();
                 }
                 else if (getPositionTop(shouldNotAppearElt2) < window.innerHeight) // pas assez loin
                 {
-                    ajoutLignes();
-                    reduction10par10();
-                    decoupagePropre();
+                    addSomeLines();
+                    reduct10by10();
+                    cleanEnding();
                 }
                 // vérifie découpage mot
             }
         }
     }
+</script>

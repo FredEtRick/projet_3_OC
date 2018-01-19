@@ -16,9 +16,6 @@
 
 <!--
     TODO :
-    - commenter tout ça en anglais
-    - subdiviser les méthodes pageSuivante et page précédente
-    - diviser fichier resizer_nextPage en deux ?
     - écrire un read me ou autre dans ce fichier pour expliquer le fonctionnement global du resizer ?
     - ajouter un schéma qui indique l'ordre d'appel des fonctions ?
     - afficher erreurs dans localhost:8888 et corriger

@@ -1,5 +1,8 @@
 <script type="text/javascript">
     
+    // FUNCTIONS USED BY "PREVIOUS PAGE" BUTTON
+    
+    // check if there is too much lines at the begin of the page. To do so, it check if the end of the page is still visible, comparing "getPositionTop" and "window.innerHeight". Then delete those exceding lines if needed.
     function deleteSomeLinesAtBegining()
     {
         initializeGenericVars();
@@ -26,6 +29,7 @@
         updatingNonGenericVars();
     }
     
+    // Same thing as deleteSomeLinesAtBegining, but rather add lines if the page is too small.
     function addSomeLinesAtBegining()
     {
         initializeGenericVars();
@@ -57,6 +61,7 @@
         updatingNonGenericVars();
     }
     
+    // to avoid half lines at the begin of a page, delete chars 10 by 10 until there's one less line in page. 10 by 10, this way the execution doesn't last too much, and because the line doesn't need to be perfectly full.
     function reduct10by10AtBegining()
     {
         initializeGenericVars();
@@ -79,6 +84,7 @@
         updatingNonGenericVars();
     }
     
+    // To avoid pages begining with non complete words, or begining just before a <br />, this function move and of page until it's "clean".
     function cleanStarting()
     {
         initializeGenericVars();

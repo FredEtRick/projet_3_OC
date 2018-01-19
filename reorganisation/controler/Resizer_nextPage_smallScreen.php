@@ -1,5 +1,8 @@
 <script type="text/javascript">
     
+    // FUNCTIONS USED BY "NEXT PAGE" BUTTON WHEN WINDOW IS AT LESS THAN 1500 PX LARGE
+    
+    // used by nextPageSmallScreen below when EOF is near, to add the last page.
     function untilEOF()
     {
         firstCharOfPage1 = moveAfterNewLine(charBetweenBothPages);
@@ -14,6 +17,7 @@
         positionShouldNotAppearElt1 = getPositionTop(shouldNotAppearElt1);
     }
     
+    // used by nextPageSmallScreen below when EOF is not so near, to fill a new page, before adjustments.
     function fillingNewPage()
     {
         firstCharOfPage1 = moveAfterNewLine(charBetweenBothPages);
@@ -25,6 +29,7 @@
         positionShouldNotAppearElt1 = getPositionTop(shouldNotAppearElt1);
     }
     
+    // used by nextPageSmallScreen below when EOF is not so near, to adjust the new page when already filled.
     function adjustingNewPage()
     {
         if (positionShouldAppearElt1 > window.innerHeight)
@@ -40,6 +45,7 @@
         cleanEnding();
     }
     
+    // directly called by "nextPage" function when window is less than 1500 px large.
     function nextPageSmallScreen()
     {
         if (charBetweenBothPages+Math.floor(0.75*numberOfCharsInPage1) >= postCompleteText.length-1)

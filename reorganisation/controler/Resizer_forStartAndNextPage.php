@@ -2,7 +2,7 @@
     
     // THIS FILE CONTAIN FUNCTIONS USED BY OTHER FUNCTIONS, IN "Resizer_starting.php" AND "Resizer_nextPage.php" PAGES, to resize the page(s) when opening the post at first, or when clicking on "next page" button.
     
-    // check if there is too much lines at the end of the page. To do so, it check if the end of the page is still visible, comparing "getPositionTop" and "window.innerHeight". Then delete those exceding lines is needed.
+    // check if there is too much lines at the end of the page. To do so, it check if the end of the page is still visible, comparing "getPositionTop" and "window.innerHeight". Then delete those exceding lines if needed.
     function deleteSomeLines()
     {
         initializeGenericVars();
@@ -29,7 +29,7 @@
         updatingNonGenericVars();
     }
     
-    //Same thing as deleteSomeLines, but rather add lines if the page is too small.
+    // Same thing as deleteSomeLines, but rather add lines if the page is too small.
     function addSomeLines()
     {
         initializeGenericVars();

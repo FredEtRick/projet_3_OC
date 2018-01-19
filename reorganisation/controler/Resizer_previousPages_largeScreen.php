@@ -1,5 +1,8 @@
 <script type="text/javascript">
     
+    // FUNCTIONS USED BY "PREVIOUS PAGE" BUTTON WHEN WINDOW IS AT LEAST 1500 PX LARGE
+    
+    // used by previousPagesLargeScreen below when the begining of the post is near and we couldn't add more than one page.
     function justOnePageBefore()
     {
         charBetweenBothPages = 0;
@@ -14,6 +17,7 @@
         positionShouldNotAppearElt2 = getPositionTop(shouldNotAppearElt2);
     }
     
+    // when EOF is not so near, to add one more page and fill it, before adjusting it and adding another if possible.
     function fillingRightPageBefore()
     {
         charBetweenBothPages = moveAfterNewLine(lastCharOfPage2 - Math.floor(0.75*numberOfCharsInPage1));
@@ -29,6 +33,7 @@
         positionShouldNotAppearElt2 = getPositionTop(shouldNotAppearElt2);
     }
     
+    // to adjust the page, before adding another if possible.
     function adjustingRightPageBefore()
     {
         fillingRightPageBefore();
@@ -45,6 +50,7 @@
         cleanStarting();
     }
     
+    // add another page if possible
     function leftPageBefore()
     {
         workOnSecondPage = false;
@@ -78,6 +84,7 @@
         }
     }
     
+    // directly called by "previousPage" function when window is more than 1500 px large.
     function previousPagesLargeScreen()
     {
         lastCharOfPage2 = moveBeforeNewLine(firstCharOfPage1);

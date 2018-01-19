@@ -4,6 +4,8 @@
 
 <script type="text/javascript">
     
+    // function called when clicking on "previous page" button. Use functions in "Resizer_previousPages_largeScreen.php" and "Resizer_previousPage_smallScreen.php", that use themeselves functions in "Resizer_previousPage_forPrevious.php".
+    
     function previousPage()
     {
         console.log('PAGE PRECEDENTE');
@@ -23,4 +25,5 @@
             }
         }
     }
+    
 </script>

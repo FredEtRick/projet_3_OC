@@ -3,6 +3,8 @@
 
 <script type="text/javascript">
     
+    // function called when clicking on "next page" button. Use functions in "Resizer_nextPages_largeScreen.php" and "Resizer_nextPage_smallScreen.php".
+    
     function nextPage()
     {
         console.log('PAGE SUIVANTE');

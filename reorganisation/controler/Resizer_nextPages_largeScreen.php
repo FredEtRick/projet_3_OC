@@ -1,5 +1,8 @@
 <script type="text/javascript">
     
+    // FUNCTIONS USED BY "NEXT PAGE" BUTTON WHEN WINDOW IS AT LEAST 1500 PX LARGE
+    
+    // used by nextPagesLargeScreen below when EOF is near and we couldn't add more than one page.
     function justOneMorePage()
     {
         charBetweenBothPages = postCompleteText.length-1;
@@ -14,6 +17,7 @@
         positionShouldNotAppearElt2 = getPositionTop(shouldNotAppearElt2);
     }
     
+    // used by nextPagesLargeScreen below when EOF is not so near, to add one more page, before adding another if possible.
     function firstPageMore()
     {
         charBetweenBothPages = moveBeforeNewLine(firstCharOfPage1 + Math.floor(0.75*numberOfCharsInPage1));
@@ -40,6 +44,7 @@
         cleanEnding();
     }
     
+    // used by nextPagesLargeScreen below when EOF is not so near and one page is already added, to add the second one.
     function secondPageMore()
     {
         workOnSecondPage = true;
@@ -72,6 +77,7 @@
         }
     }
     
+    // directly called by "nextPage" function when window is more than 1500 px large.
     function nextPagesLargeScreen()
     {
         firstCharOfPage1 = moveAfterNewLine(lastCharOfPage2);

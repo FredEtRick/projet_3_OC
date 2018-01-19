@@ -1,5 +1,8 @@
 <script type="text/javascript">
-    function countCharsLine() // Compte le nombre de chars dans une ligne (varie d'une ligne a l'autre mais permet de s'en rapprocher avec un exemple d'une ligne pleine)
+    // FUNCTIONS USED FOR FIRST RESIZING when opening a post. Not used when changing pages. Those functions use themselves functions in the file "Resizer_forStartAndNextPage.php".
+    
+    // counting approximative number of chars by line. Use a full line this way it can approach the average.
+    function countCharsLine()
     {
         charBetweenBothPages = firstCharOfPage1;
         while ((window.innerHeight > positionShouldNotAppearElt1) && (positionShouldNotAppearElt1 == getPositionTop(rallongerElt)) && (charBetweenBothPages < postCompleteText.length-1)) 
@@ -50,6 +53,7 @@
         positionShouldNotAppearElt1 = getPositionTop(shouldNotAppearElt1);
     }
     
+    // function used when we first open the post, so we don't know yet, even approximatively, how much chars will be in each pages. Executed after countCharsLine. This way its execution doesn't last to much, it compute an estimation, base on line height and window.innerHeight, of how much lines we will need to add this way we could approximatively fit the page. It does add all those lines, then Resize_page call other functions to ajust things.
     function addLotOfLines()
     {
         if (lineHeightPx != null) // si la hauteur de ligne a été calculée, donc s'il existait une ligne entière a parcourir dans le texte pour mesurer la hauteur d'une ligne dans compterCharslignes, alors ajouter direct des caractères pour remplir approximativement la fenêtre en se basant sur les calculs suivants :
@@ -88,6 +92,7 @@
         }
     }
     
+    // called when starting to read a post. Try to know if a second page is needed (if the window is more than 1500px large) then if it is, add it and resize it.
     function startingSecondPage()
     {
         if (window.innerWidth > 1500 && charBetweenBothPages < postCompleteText.length)

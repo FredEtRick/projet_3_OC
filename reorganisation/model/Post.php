@@ -25,22 +25,21 @@
         
         public function getAllPostsExceptExpiry() // select all posts that aren't expiry yet, create 3 tabs for allPostsView (one contening all the titles of the posts selected, one for date and time of publication, one for content) and return a table with this 3 tabs within it.
         {
-            $postsTitles = [];
-            $postsTitlesForLinks = [];
-            $postsDatesTimes = [];
-            $postsContentsBegining = [];
+            $allPosts = [];
             $query = $this->_DB->query('SELECT title, dateTimePub, dateTimeExp, content FROM Post ORDER BY dateTimePub');
+            $i = 0;
             while($onePostFromSQL = $query->fetch(PDO::FETCH_ASSOC))
             {
                 if (date('d/m/Y H:i:s') < $onePostFromSQL['dateTimeExp'] || $onePostFromSQL['dateTimeExp'] == NULL)
                 {
-                    $postsTitles[] = $onePostFromSQL['title'];
-                    $postsTitlesForLinks[] = str_replace(' ', '_', $onePostFromSQL['title']);
-                    $postsDatesTimes[] = str_replace(' ', ', à ', $onePostFromSQL['dateTimePub']); // correct display with str replace
-                    $postsContentsBegining[] = mb_substr($onePostFromSQL['content'], 0, 300); // 300 firts chars
+                    $allPosts[$i]['title'] = $onePostFromSQL['title'];
+                    $allPosts[$i]['titleForLink'] = str_replace(' ', '_', $onePostFromSQL['title']);
+                    $allPosts[$i]['dateTime'] = str_replace(' ', ', à ', $onePostFromSQL['dateTimePub']); // correct display with str replace
+                    $allPost[$i]['contentBegin'] = mb_substr($onePostFromSQL['content'], 0, 300); // 300 firts chars
+                    $i++;
                 }
             }
-            return ['titles' => $postsTitles, 'link' => $postsTitlesForLinks, 'datesTimes' => $postsDatesTimes, 'contentsBegining' => $postsContentsBegining];
+            return $allPosts;
         }
         
         public function modify(Post $post)

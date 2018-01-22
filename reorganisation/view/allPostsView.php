@@ -1,21 +1,21 @@
 <section class="row">
     <?php
-        while ($postsLeft>0 AND $indicePost<count($allPosts))
+        while ($postsLeft>0 AND $indexPost<count($allPosts))
         {
     ?>
             <article class="col-xxl-6 col-xl-12 col-sm-12">
-                <a class="bulle" href="../index.php?titre=<?= $postsTitlesForLinks[$indicePost] ?>">
+                <a class="bulle" href="../index.php?title=<?= $allPosts[$indexPost]['titleForLink'] ?>&amp;action=onePost">
                     <p>
-                        <?= $postsTitles[$indicePost] ?><span class="float-right">Le <?= $postsDatesTimes[$indicePost] ?></span>
+                        <?= $allPosts[$indexPost]['title'] ?><span class="float-right">Le <?= $allPosts[$indexPost]['dateTime'] ?></span>
                     </p>
                     <p class="dernier">
-                        <?= $postsContentsBegining[$indicePost] ?> [...]<br /><span class="float-right discret">cliquez pour afficher</span>
+                        <?= $allPosts[$indexPost]['contentBegin'] ?> [...]<br /><span class="float-right discret">cliquez pour afficher</span>
                     </p>
                 </a>
             </article>
     <?php
             $postsLeft--;
-            $indicePost++;
+            $indexPost++;
         }
     ?>
     <article class="col-xxl-12 col-xl-12 col-sm-12 navPages">
@@ -54,7 +54,7 @@
             {
                 echo '<a href="index.php?page=' . $pageMax . '">' . $pageMax . '</a>';
             }
-            if ($indicePost < count($billets))
+            if ($indexPost < count($billets))
             {
                 echo '<a href="index.php?page=' . ($page+1) . '" class="fa fa-chevron-right"></a>';
             }

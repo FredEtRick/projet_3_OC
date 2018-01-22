@@ -1,12 +1,21 @@
 <?php
+    require_once('model/Post.php');
+    require_once('model/Comment.php');
+    require_once('model/User.php');
+
     class VisitorControler // faire deuxième controleur pour admin
     {
+        private $_visitorPostManager;
+        
+        public function __construct()
+        {
+            $this->_visitorPostManager = new PostManager();
+        }
+        
         public function allPosts($page)
         {
             try
             {
-                require_once('model/Post.php');
-                
                 // préparation des variables
                 $pageTitle = 'la liste des billets';
                 if (! isset($_GET['page']))
@@ -15,11 +24,7 @@
                 $postsPerPages = 5;
                 $indexPost = $indiceBegining;
                 $postsLeft = $postsPerPages;
-                $allPosts = (new PostManager())->getAllPostsExceptExpiry();
-                $postsTitles = $allPosts['titles'];
-                $postsTitlesForLinks = $allPosts['link'];
-                $postsDatesTimes = $allPosts['datesTimes'];
-                $postsContentsBegining = $allPosts['contentsBegining'];
+                $allPosts = $this->_visitorPostManager->getAllPostsExceptExpiry();
                 
                 // récupération de la vue, et envoie de cette dernière au template
                 ob_start();
@@ -37,16 +42,13 @@
         
         public function onePost($title)
         {
-            require_once('model/Post.php');
-            require_once('model/Comment.php');
-            require_once('model/User.php');
-            
             $activePost = null;
+            $allPosts = $this->_visitorPostManager->getAllPostsExceptExpiry();
             foreach($allPosts as $currentPost)
             {
-                if ($title == str_replace(' ', '_', $currentPost->getTitle()))
+                if ($title == str_replace(' ', '_', $currentPost['title']))
                 {
-                    $thePost = $currentPost;
+                    $activePost = $currentPost;
                     $comments = $commentManager->getCommentsByPost($currentPost->getTitle());
                 }
             }
@@ -55,7 +57,7 @@
                 try
                 {
                     // preparing post variables
-                    $post = (new PostManager())->getOnePost($title);
+                    $post = $this->_visitorPostManager->getOnePost($title);
                     $postTitle = $post->getTitle();
                     $postDateTimePub = $billet->getDateHeurePub();
                     

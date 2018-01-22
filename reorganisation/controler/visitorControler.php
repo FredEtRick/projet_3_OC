@@ -73,7 +73,7 @@
                     $textWithNewLines = str_replace(array("\r", "\n"), array('', ''), $textWithNewLines);
                     $textLength = mb_strlen($activePost['content']);
                     
-                    require_once $_SERVER['DOCUMENT_ROOT'] . '/controleur/resizePage.php';
+                    require_once $_SERVER['DOCUMENT_ROOT'] . '/controler/resizePage.php';
                 }
                 catch (Exception $e)
                 {

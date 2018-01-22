@@ -25,14 +25,16 @@
 
 
 
-<script type="text/javascript" src="Resizer_vars.php"></script>
-<script type="text/javascript" src="Resizer_preparing.php"></script>
-<script type="text/javascript" src="Resizer_starting.php"></script>
-<script type="text/javascript" src="Resizer_forStartAndNextPage.php"></script>
-<script type="text/javascript" src="Resizer_nextPage.php"></script>
-<script type="text/javascript" src="Resizer_previousPage.php"></script>
+<script type="text/javascript" src="controler/resizer/vars.php"></script>
+<script type="text/javascript" src="controler/resizer/preparing.php"></script>
+<script type="text/javascript" src="controler/resizer/starting.php"></script>
+<script type="text/javascript" src="controler/resizer/forStartAndNextPage.php"></script>
+<script type="text/javascript" src="controler/resizer/nextPage.php"></script>
+<script type="text/javascript" src="controler/resizer/previousPage.php"></script>
 
 <script type="text/javascript">
+    
+    console.log('ici');
     
     // FIRST RESIZING - when "opening" the post. Functions in "Resizer_starting.php" and "Resizer_forStartAndNextPage.php". Those functions themselves use functions in "Resizer_preparing.php".
     countCharsLine();

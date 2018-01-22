@@ -21,7 +21,7 @@
     <article class="col-xxl-12 col-xl-12 col-sm-12 navPages">
         <p>
         <?php
-            $page = 1+ceil($indiceBegining / $postsPerPage);
+            $page = 1+ceil($indiceBegining / $postsPerPages);
             if ($page > 1)
             {
                 echo '<a class="fa fa-chevron-left" href="index.php?page=' . ($page-1) . '"></a>';
@@ -40,12 +40,12 @@
                 {
                     echo '<span class="pageActuelle">' . $j . '</span>';
                 }
-                elseif ($j>0 AND ($postsPerPage*($j-1))<count($billets))
+                elseif ($j>0 AND ($postsPerPages*($j-1))<count($allPosts))
                 {
                     echo '<a href="index.php?page=' . $j . '">' . $j . '</a>';
                 }
             }
-            $pageMax = ceil(count($billets)/$postsPerPage);
+            $pageMax = ceil(count($allPosts)/$postsPerPages);
             if ($page < $pageMax-3)
             {
                 echo '... ';
@@ -54,7 +54,7 @@
             {
                 echo '<a href="index.php?page=' . $pageMax . '">' . $pageMax . '</a>';
             }
-            if ($indexPost < count($billets))
+            if ($indexPost < count($allPosts))
             {
                 echo '<a href="index.php?page=' . ($page+1) . '" class="fa fa-chevron-right"></a>';
             }

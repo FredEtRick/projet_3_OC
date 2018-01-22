@@ -3,7 +3,7 @@
     // ALL THE VARS USED TO RESIZE PAGE
     
     // TEXT AND INDEXES - text and indexes of chars
-    var postCompleteText = '<?php echo str_replace('"', '\"', str_replace("'", "\'", json_encode($avecSauts))); ?>'; // All the text of the Post, after beeing treated this way the "next line" and other are manipulables
+    var postCompleteText = '<?php echo str_replace('"', '\"', str_replace("'", "\'", json_encode($textWithNewLines))); ?>'; // All the text of the Post, after beeing treated this way the "next line" and other are manipulables
     var firstCharOfPage1 = 0; // index of the first char appearing in page one
     var charBetweenBothPages = 0; // index of last appearing on page one, or first on page 2 (if there's two pages on the screen, on very large screens) this var can represent the last char of page 1 or the first of page 2, beeing modify during execution to fit the needs
     var lastCharOfPage2; // index of last char appearing on page 2, if there is any. (large screen)

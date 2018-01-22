@@ -23,7 +23,12 @@
             $comments = [];
             while($postFromSQL = $query->fetch(PDO::FETCH_ASSOC))
             {
-                $comments[] = new Comment($postFromSQL);
+                $array = [];
+                $array['dateTime'] = $postFromSQL['dateTime'];
+                $array['content'] = $postFromSQL['content'];
+                $array['postTitle'] = $postFromSQL['postTitle'];
+                $array['visitorLogin'] = $postFromSQL['visitorLogin'];
+                $comments[] = $array;
             }
             return $comments;
         }

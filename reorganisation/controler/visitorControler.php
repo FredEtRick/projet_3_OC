@@ -10,6 +10,7 @@
         public function __construct()
         {
             $this->_visitorPostManager = new PostManager();
+            $this->_visitorCommentManager = new CommentManager();
         }
         
         public function allPosts($page)
@@ -43,13 +44,14 @@
         public function onePost($title)
         {
             $activePost = null;
+            $activePostTitle = null;
             $allPosts = $this->_visitorPostManager->getAllPostsExceptExpiry();
             foreach($allPosts as $currentPost)
             {
                 if ($title == str_replace(' ', '_', $currentPost['title']))
                 {
                     $activePost = $currentPost;
-                    $comments = $commentManager->getCommentsByPost($currentPost->getTitle());
+                    $comments = $this->_visitorCommentManager->getAllCommentsOnPost($currentPost['title']);
                 }
             }
             if($activePost != null)
@@ -57,21 +59,19 @@
                 try
                 {
                     // preparing post variables
-                    $post = $this->_visitorPostManager->getOnePost($title);
-                    $postTitle = $post->getTitle();
-                    $postDateTimePub = $billet->getDateHeurePub();
+                    $postTitle = $activePost['title'];
+                    $postDateTimePub = $activePost['dateTime'];
+                    $pageTitle = 'Billet simple pour l\'Alaska - ' . $postTitle;
                     
-                    // preparing comments variables
-                    $commentLoginVisitor = $comment->getVisitorLogin();
-                    $commentDateTime = str_replace(' ', ', à ', $comment->getDateTime());
-                    $commentContent = $comment->getContent();
-                    
+                    ob_start();
                     require_once $_SERVER['DOCUMENT_ROOT'] . '/view/onePostView.php';
+                    $content = ob_get_clean();
+                    require_once $_SERVER['DOCUMENT_ROOT'] . '/view/template.php';
                     
-                    $textWithNewLines = htmlspecialchars($post->getContent());
+                    $textWithNewLines = htmlspecialchars($activePost['content']);
                     $textWithNewLines = nl2br($textWithNewLines);
                     $textWithNewLines = str_replace(array("\r", "\n"), array('', ''), $textWithNewLines);
-                    $textLength = mb_strlen($post->getContent());
+                    $textLength = mb_strlen($activePost['content']);
                     
                     require_once $_SERVER['DOCUMENT_ROOT'] . '/controleur/resizePage.php';
                 }

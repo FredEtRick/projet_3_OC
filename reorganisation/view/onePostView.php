@@ -24,13 +24,13 @@ traduire, virer les fonction, garder les while et if, donner des noms simples au
             
 <section class="row">
 <?php
-    foreach($lesCommentaires as $commentaire) // traduction
+    foreach($comments as $comment) // reste à réadapter noms dessous pour tableau
     {
 ?>
         <div class="hidden-xl-down col-xxl-3"></div>
         <article class="col-xxl-6 col-xl-12 col-sm-12 bulle">
-            <p><?= $commentLoginVisitor ?><span class="float-right">Le <?= $commentDateTime ?></span></p>
-            <p class="dernier"><?= $commentContent ?></p>
+            <p><?= $comment['visitorLogin'] ?><span class="float-right">Le <?= $comment['dateTime'] ?></span></p>
+            <p class="dernier"><?= $comment['content'] ?></p>
         </article>
 <?php
     }

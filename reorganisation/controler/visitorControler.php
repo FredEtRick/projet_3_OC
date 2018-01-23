@@ -46,6 +46,7 @@
             $activePost = null;
             $activePostTitle = null;
             $allPosts = $this->_visitorPostManager->getAllPostsExceptExpiry();
+            //print_r($allPosts);
             foreach($allPosts as $currentPost)
             {
                 if ($title == str_replace(' ', '_', $currentPost['title']))
@@ -71,6 +72,7 @@
                     $textWithNewLines = htmlspecialchars($activePost['content']);
                     $textWithNewLines = nl2br($textWithNewLines);
                     $textWithNewLines = str_replace(array("\r", "\n"), array('', ''), $textWithNewLines);
+                    $textWithNewLines = str_replace('"', '\"', str_replace("'", "\'", json_encode($textWithNewLines)));
                     $textLength = mb_strlen($activePost['content']);
                     
                     require_once $_SERVER['DOCUMENT_ROOT'] . '/controler/resizePage.php';

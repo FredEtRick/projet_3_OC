@@ -5,7 +5,8 @@
     function countCharsLine()
     {
         charBetweenBothPages = firstCharOfPage1;
-        while ((window.innerHeight > positionShouldNotAppearElt1) && (positionShouldNotAppearElt1 == getPositionTop(rallongerElt)) && (charBetweenBothPages < postCompleteText.length-1)) 
+        console.log(charBetweenBothPages + ' ' + postCompleteText.length-1);
+        while ((window.innerHeight > positionShouldNotAppearElt1) && (positionShouldNotAppearElt1 == getPositionTop(shouldNotAppearElt1)) && (charBetweenBothPages < postCompleteText.length-1)) 
         {
             if (postCompleteText.substr(charBetweenBothPages, 16).indexOf('<') != -1)
             {
@@ -27,8 +28,9 @@
             }
             page1Content = postCompleteText.substr(firstCharOfPage1, charBetweenBothPages-firstCharOfPage1+1);
             page1ContentElt.innerHTML = page1Content;
-            debuger('countCharsLine');
+            debug('countCharsLine');
         }
+        console.log('countCharsLine' + positionShouldNotAppearElt1 + ' ' + getPositionTop(shouldNotAppearElt1));
         if (positionShouldNotAppearElt1 < getPositionTop(shouldNotAppearElt1))
         {
             lineHeightPx = getPositionTop(shouldNotAppearElt1) - positionShouldNotAppearElt1;
@@ -56,6 +58,7 @@
     // function used when we first open the post, so we don't know yet, even approximatively, how much chars will be in each pages. Executed after countCharsLine. This way its execution doesn't last to much, it compute an estimation, base on line height and window.innerHeight, of how much lines we will need to add this way we could approximatively fit the page. It does add all those lines, then Resize_page call other functions to ajust things.
     function addLotOfLines()
     {
+        console.log(positionShouldNotAppearElt1 + ' ' + window.innerHeight + ' ' + lineHeightPx);
         if (lineHeightPx != null) // si la hauteur de ligne a été calculée, donc s'il existait une ligne entière a parcourir dans le texte pour mesurer la hauteur d'une ligne dans compterCharslignes, alors ajouter direct des caractères pour remplir approximativement la fenêtre en se basant sur les calculs suivants :
         {
             missingHeight = window.innerHeight - positionShouldNotAppearElt1;

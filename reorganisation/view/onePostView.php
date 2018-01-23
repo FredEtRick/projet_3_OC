@@ -11,10 +11,10 @@ traduire, virer les fonction, garder les while et if, donner des noms simples au
         </p>
         <div class="row" id="parent">
             <div class="col-xxl-6 col-xl-12 col-sm-12">
-                <p id="contenu"></p>
+                <p id="content"></p>
                 <!-- pagination -->
-                <p id="reduire"></p>
-                <p id="rallonger"></p>
+                <p id="shouldAppear"></p>
+                <p id="shouldNotAppear"></p>
             </div>
         </div>
     </article>

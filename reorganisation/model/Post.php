@@ -35,6 +35,7 @@
                     $allPosts[$i]['title'] = $onePostFromSQL['title'];
                     $allPosts[$i]['titleForLink'] = str_replace(' ', '_', $onePostFromSQL['title']);
                     $allPosts[$i]['dateTime'] = str_replace(' ', ', à ', $onePostFromSQL['dateTimePub']); // correct display with str replace
+                    $allPosts[$i]['content'] = $onePostFromSQL['content'];
                     $allPosts[$i]['contentBegin'] = mb_substr($onePostFromSQL['content'], 0, 300); // 300 firts chars
                     $i++;
                 }

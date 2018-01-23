@@ -1,6 +1,8 @@
-<script type="text/javascript" src="Resizer_previousPage_forPrevious.php"></script>
-<script type="text/javascript" src="Resizer_previousPages_largeScreen.php"></script>
-<script type="text/javascript" src="Resizer_previousPage_smallScreen.php"></script>
+<?php
+    require_once "controler/resizer/previousPage_forPrevious.php";
+    require_once "controler/resizer/previousPages_largeScreen.php";
+    require_once "controler/resizer/previousPage_smallScreen.php";
+?>
 
 <script type="text/javascript">
     

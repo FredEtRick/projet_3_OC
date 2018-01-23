@@ -23,18 +23,17 @@
     - mettre les fichiers appelés dans un sous dossier "resizePage" qui se situerait dans controler
 -->
 
-
-
-<script type="text/javascript" src="controler/resizer/vars.php"></script>
-<script type="text/javascript" src="controler/resizer/preparing.php"></script>
-<script type="text/javascript" src="controler/resizer/starting.php"></script>
-<script type="text/javascript" src="controler/resizer/forStartAndNextPage.php"></script>
-<script type="text/javascript" src="controler/resizer/nextPage.php"></script>
-<script type="text/javascript" src="controler/resizer/previousPage.php"></script>
+<?php
+    require_once "controler/resizer/preparing.php";
+    require_once "controler/resizer/vars.php";
+    require_once "controler/resizer/starting.php";
+    require_once "controler/resizer/forStartAndNextPage.php";
+    require_once "controler/resizer/nextPage.php";
+    require_once "controler/resizer/previousPage.php";
+?>
 
 <script type="text/javascript">
     
-    console.log('ici');
     
     // FIRST RESIZING - when "opening" the post. Functions in "Resizer_starting.php" and "Resizer_forStartAndNextPage.php". Those functions themselves use functions in "Resizer_preparing.php".
     countCharsLine();

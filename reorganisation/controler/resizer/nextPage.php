@@ -1,5 +1,7 @@
-<script type="text/javascript" src="Resizer_nextPages_largeScreen.php"></script>
-<script type="text/javascript" src="Resizer_nextPage_smallScreen.php"></script>
+<?php
+    require_once "controler/resizer/nextPages_largeScreen.php";
+    require_once "controler/resizer/nextPage_smallScreen.php";
+?>
 
 <script type="text/javascript">
     

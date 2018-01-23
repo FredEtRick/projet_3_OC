@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" href="../bootstrap/css/bootstrap.css" />
         <link rel="stylesheet" href="../view/mychanges.css" />
-        <!--<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">-->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
         <!--[if lt IE 9]>
         <![endif]-->
         <title><?= $pageTitle ?></title>
@@ -15,7 +15,7 @@
         <div class="fondBleu">
             <div class="container">
                 <header class="row">
-                    <h1 class="enTete col-xxl-12 col-xl-12 col-sm-12"><a href="index.php">BILLET SIMPLE POUR L'ALASKA</a></h1>
+                    <h1 class="enTete col-xxl-12 col-xl-12 col-sm-12"><a href="index.php?">BILLET SIMPLE POUR L'ALASKA</a></h1>
                 </header>
                 <?= $content ?>
                 <footer class="row">

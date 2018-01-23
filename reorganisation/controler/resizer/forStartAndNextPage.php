@@ -7,7 +7,7 @@
     {
         initializeGenericVars();
         console.log(firstCharOfPage_generic + ' ' + lastCharOfPage_generic);
-        while (getPositionTop(shouldAppearElt_generic) > window.innerHeight)
+        while (getPositionTop(shouldAppearElt_generic) > window.innerHeight && lastCharOfPage_generic > firstCharOfPage_generic)
         {
             if (postCompleteText.substr(lastCharOfPage_generic-Math.ceil(numberCharsLine*1,25), Math.ceil(numberCharsLine*1,25)).indexOf('<br') != -1)
             {
@@ -19,6 +19,7 @@
             }
             pageContent_generic = postCompleteText.substr(firstCharOfPage_generic, lastCharOfPage_generic-firstCharOfPage_generic+1);
             pageContentElt_generic.innerHTML = pageContent_generic;
+            console.log('getPositionTop(shouldAppearElt_generic)' + getPositionTop(shouldAppearElt_generic) + 'window.innerHeight' + window.innerHeight);
             debug('deleteSomeLines');
         }
         lastCharOfPage_generic += numberCharsLine; // au cas où on ait un peu trop retiré

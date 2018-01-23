@@ -103,7 +103,7 @@
             workOnSecondPage = true;
             parentElt = document.getElementById('parent');
             page2ContainerElt = document.createElement('div');
-            parentElt.appendChild(page2ContainerElt);
+            parentElt.insertBefore(page2ContainerElt, pagesButtonsElt);
             page2ContentElt = document.createElement('p');
             shouldAppearElt2 = document.createElement('p');
             shouldNotAppearElt2 = document.createElement('p');
@@ -111,9 +111,11 @@
             page2ContainerElt.appendChild(shouldAppearElt2);
             page2ContainerElt.appendChild(shouldNotAppearElt2);
             page2ContainerElt.setAttribute('class', 'col-xxl-6');
-            page2ContentElt.setAttribute('id', 'contenu2');
-            shouldAppearElt2.setAttribute('id', 'reduire2');
-            shouldNotAppearElt2.setAttribute('id', 'rallonger2');
+            page2ContentElt.setAttribute('id', 'content2');
+            shouldAppearElt2.setAttribute('id', 'shouldAppear2');
+            shouldNotAppearElt2.setAttribute('id', 'shouldNotAppear2');
+            positionShouldAppearElt2 = getPositionTop(shouldAppearElt2);
+            positionShouldNotAppearElt2 = getPositionTop(shouldNotAppearElt2);
             numberOfCharsInPage1 = charBetweenBothPages - firstCharOfPage1;
             while (postCompleteText.charAt(charBetweenBothPages + 1) == '<')
                 charBetweenBothPages += postCompleteText.substr(charBetweenBothPages+1, 6).indexOf('>') + 2;
@@ -124,7 +126,7 @@
             else
             {
                 lastCharOfPage2 = charBetweenBothPages + numberOfCharsInPage1;
-                page2Content = postCompleteText.substr(firstCharOfPage1, numberOfCharsInPage1);
+                page2Content = postCompleteText.substr(charBetweenBothPages, numberOfCharsInPage1);
                 page2ContentElt.textContent = page2Content;
                 if (getPositionTop(shouldAppearElt2) > window.innerHeight) // on a été trop loin en terme de lignes
                 {

@@ -21,6 +21,7 @@
     - afficher erreurs dans localhost:8888 et corriger
     - m'occuper de l'administration
     - mettre les fichiers appelés dans un sous dossier "resizePage" qui se situerait dans controler
+    - marche pas en conception administrative sur deux pages, tout relire et corriger, vérif traduction etc !!!
 -->
 
 <?php
@@ -47,3 +48,8 @@
     nextButtonElt.setAttribute('onclick', 'nextPage()'); // Functions in "Resizer_nextPage.php" and "Resizer_forStartAndNextPage.php". Those functions themselves use functions in "Resizer_preparing.php".
 
 </script>
+
+<!--
+    How does the resizer works ?
+    - When the visitor open a post clicking on it, visitorControler
+-->

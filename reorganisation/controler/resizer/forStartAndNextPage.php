@@ -19,7 +19,7 @@
             }
             pageContent_generic = postCompleteText.substr(firstCharOfPage_generic, lastCharOfPage_generic-firstCharOfPage_generic+1);
             pageContentElt_generic.innerHTML = pageContent_generic;
-            debuger('deleteSomeLines');
+            debug('deleteSomeLines');
         }
         lastCharOfPage_generic += numberCharsLine; // au cas où on ait un peu trop retiré
         pageContent_generic = postCompleteText.substr(firstCharOfPage_generic, lastCharOfPage_generic-firstCharOfPage_generic+1);
@@ -51,7 +51,7 @@
             }
             pageContent_generic = postCompleteText.substr(firstCharOfPage_generic, lastCharOfPage_generic-firstCharOfPage_generic+1);
             pageContentElt_generic.innerHTML = pageContent_generic;
-            debuger('addSomeLines');
+            debug('addSomeLines');
         }
         //lastCharOfPage_generic += numberCharsLine; // au cas où on ait un peu trop retiré. a réadapter pour cette fonction plus tard !!!
         pageContent_generic = postCompleteText.substr(firstCharOfPage_generic, lastCharOfPage_generic-firstCharOfPage_generic+1);
@@ -59,7 +59,7 @@
         positionShouldAppearElt_generic = getPositionTop(shouldAppearElt_generic);
         positionShouldNotAppearElt_generic = getPositionTop(shouldNotAppearElt_generic);
         updatingNonGenericVars();
-            debuger('addSomeLines');
+            debug('addSomeLines');
     }
     
     // to avoid half lines at the end of a page, delete chars 10 by 10 until there's one less line in page. 10 by 10, this way the execution doesn't last too much, and because the line doesn't need to be perfectly full.
@@ -80,7 +80,7 @@
             pageContent_generic = postCompleteText.substr(firstCharOfPage_generic, lastCharOfPage_generic-firstCharOfPage_generic+1);
             pageContentElt_generic.innerHTML = pageContent_generic;
             positionShouldAppearElt_generic = getPositionTop(shouldAppearElt_generic);
-            debuger('reduction10');
+            debug('reduction10');
         }
         updatingNonGenericVars();
     }
@@ -92,7 +92,7 @@
         if (postCompleteText.substr(lastCharOfPage_generic-16, 32).indexOf('<br') != -1) // si il y a des sauts de lignes autour non détectés, se mettre juste avant le premier d'entre eux
         {
             lastCharOfPage_generic = lastCharOfPage_generic - 16 + postCompleteText.substr(lastCharOfPage_generic-16, 32).indexOf('<br') - 1;
-            debuger('cleanEndingBr');
+            debug('cleanEndingBr');
         }
         else if (lastCharOfPage_generic + numberCharsLine > postCompleteText.length-1)
         {
@@ -103,7 +103,7 @@
             do
             {
                 lastCharOfPage_generic--;
-                debuger('cleanEndingChars');
+                debug('cleanEndingChars');
             } while ((lastCharOfPage_generic > firstCharOfPage_generic + 150) && (postCompleteText.charAt(lastCharOfPage_generic) != ' ')); // jusqu'à tomber sur un espace. Evite de trop réduire aussi. TODO : Vérifier accents aussi
         }
         pageContent_generic = postCompleteText.substr(firstCharOfPage_generic, lastCharOfPage_generic-firstCharOfPage_generic+1);

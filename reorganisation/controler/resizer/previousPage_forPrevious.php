@@ -19,7 +19,7 @@
             }
             pageContent_generic = postCompleteText.substr(firstCharOfPage_generic, lastCharOfPage_generic-firstCharOfPage_generic+1);
             pageContentElt_generic.innerHTML = pageContent_generic;
-            debuger('deleteSomeLinesAtBegining');
+            debug('deleteSomeLinesAtBegining');
         }
         firstCharOfPage_generic += numberCharsLine; // au cas où on ait un peu trop retiré
         pageContent_generic = postCompleteText.substr(firstCharOfPage_generic, lastCharOfPage_generic-firstCharOfPage_generic+1);
@@ -51,7 +51,7 @@
             }
             pageContent_generic = postCompleteText.substr(firstCharOfPage_generic, lastCharOfPage_generic-firstCharOfPage_generic+1);
             pageContentElt_generic.innerHTML = pageContent_generic;
-            debuger('addSomeLinesAtBegining');
+            debug('addSomeLinesAtBegining');
         }
         //lastCharOfPage_generic += numberCharsLine; // au cas où on ait un peu trop retiré. a réadapter pour cette fonction plus tard !!!
         pageContent_generic = postCompleteText.substr(firstCharOfPage_generic, lastCharOfPage_generic-firstCharOfPage_generic+1);
@@ -79,7 +79,7 @@
             pageContent_generic = postCompleteText.substr(firstCharOfPage_generic, lastCharOfPage_generic-firstCharOfPage_generic+1);
             pageContentElt_generic.innerHTML = pageContent_generic;
             positionShouldAppearElt_generic = getPositionTop(shouldAppearElt_generic);
-            debuger('reduction10Deb');
+            debug('reduction10Deb');
         }
         updatingNonGenericVars();
     }
@@ -91,7 +91,7 @@
         if (postCompleteText.substr(firstCharOfPage_generic-16, 32).indexOf('<br') != -1) // si il y a des sauts de lignes autour non détectés, se mettre juste après le dernier d'entre eux
         {
             firstCharOfPage_generic += -16 + postCompleteText.substr(lastCharOfPage_generic-16, 35).lastIndexOf('>') + 1;
-            debuger('decoupagePropreBrDeb');
+            debug('decoupagePropreBrDeb');
         }
         else if (firstCharOfPage_generic - numberCharsLine <= 0)
         {
@@ -102,7 +102,7 @@
             do
             {
                 firstCharOfPage_generic++;
-                debuger('decoupagePropreCharsDeb');
+                debug('decoupagePropreCharsDeb');
                 console.log(lastCharOfPage_generic + ' ' + (firstCharOfPage_generic+150) + ' ' + firstCharOfPage_generic + ' ' + postCompleteText.charAt(firstCharOfPage_generic));
                 console.log((lastCharOfPage_generic > firstCharOfPage_generic + 150) + ' ' + (postCompleteText.charAt(firstCharOfPage_generic) != ' '));
             } while ((lastCharOfPage_generic > firstCharOfPage_generic + 150) && (postCompleteText.charAt(firstCharOfPage_generic) != ' ')); // jusqu'à tomber sur un espace. Evite de trop réduire aussi. TODO : Vérifier accents aussi

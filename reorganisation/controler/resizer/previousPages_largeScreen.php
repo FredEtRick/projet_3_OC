@@ -20,7 +20,9 @@
     // when EOF is not so near, to add one more page and fill it, before adjusting it and adding another if possible.
     function fillingRightPageBefore()
     {
-        charBetweenBothPages = moveAfterNewLine(lastCharOfPage2 - Math.floor(0.75*numberOfCharsInPage1));
+        charBetweenBothPages = lastCharOfPage2-numberOfCharsInPage1;
+        if (charBetweenBothPages < 0)
+            charBetweenBothPages = 0;
         firstCharOfPage1 = charBetweenBothPages;
         workOnSecondPage = true;
         page1Content = '';
@@ -29,14 +31,14 @@
         page2ContentElt.innerHTML = page2Content;
         positionShouldAppearElt1 = getPositionTop(shouldAppearElt1);
         positionShouldAppearElt2 = getPositionTop(shouldAppearElt2);
-        positionShouldNotAppearElt1 = getPositionTop(rallongerElt);
+        positionShouldNotAppearElt1 = getPositionTop(shouldNotAppearElt1);
         positionShouldNotAppearElt2 = getPositionTop(shouldNotAppearElt2);
     }
     
     // to adjust the page, before adding another if possible.
     function adjustingRightPageBefore()
     {
-        fillingRightPageBefore();
+        // fillingRightPageBefore();
         if (positionShouldAppearElt2 > window.innerHeight)
         {
             deleteSomeLinesAtBegining();
@@ -53,12 +55,13 @@
     // add another page if possible
     function leftPageBefore()
     {
+        debug('leftPageBefore');
         workOnSecondPage = false;
         // if begin is near, left page first char is post first char
-        if (charBetweenBothPages-Math.floor(0.75*numberOfCharsInPage1) <= 0)
+        if ((charBetweenBothPages-Math.floor(0.75*numberOfCharsInPage1)) <= 0)
         {
             firstCharOfPage1 = 0;
-            page1Content = postCompleteText.substr(firstCharOfPage1, charBetweenBothPages-firstCharOfPage1+1);
+            page1Content = postCompleteText.substr(firstCharOfPage1, charBetweenBothPages+1);
             page1ContentElt.innerHTML = page1Content;
             positionShouldAppearElt1 = getPositionTop(shouldAppearElt1);
             positionShouldNotAppearElt1 = getPositionTop(shouldNotAppearElt1);

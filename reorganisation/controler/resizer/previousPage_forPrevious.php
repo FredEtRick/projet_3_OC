@@ -87,10 +87,12 @@
     // To avoid pages begining with non complete words, or begining just before a <br />, this function move and of page until it's "clean".
     function cleanStarting()
     {
+        // note : faire pour workOnPage2 a true et a false !!!
         initializeGenericVars();
         if (postCompleteText.substr(firstCharOfPage_generic-16, 32).indexOf('<br') != -1) // si il y a des sauts de lignes autour non détectés, se mettre juste après le dernier d'entre eux
         {
-            firstCharOfPage_generic += -16 + postCompleteText.substr(lastCharOfPage_generic-16, 35).lastIndexOf('>') + 1;
+            console.log('postCompleteText.substr(firstCharOfPage_generic, 5) : ' + postCompleteText.substr(firstCharOfPage_generic, 5) + ' - postCompleteText.substr(lastCharOfPage_generic-16, 35) : ' + postCompleteText.substr(lastCharOfPage_generic-16, 35) + ' - postCompleteText.substr((postCompleteText.substr(lastCharOfPage_generic-16, 35).lastIndexOf(\'>\') + 1), 5) : ' + postCompleteText.substr((postCompleteText.substr(lastCharOfPage_generic-16, 35).lastIndexOf('>') + 1), 5));
+            firstCharOfPage_generic += -16 + postCompleteText.substr(firstCharOfPage_generic-16, 35).lastIndexOf('>') + 1;
             debug('decoupagePropreBrDeb');
         }
         else if (firstCharOfPage_generic - numberCharsLine <= 0)
@@ -107,12 +109,13 @@
                 console.log((lastCharOfPage_generic > firstCharOfPage_generic + 150) + ' ' + (postCompleteText.charAt(firstCharOfPage_generic) != ' '));
             } while ((lastCharOfPage_generic > firstCharOfPage_generic + 150) && (postCompleteText.charAt(firstCharOfPage_generic) != ' ')); // jusqu'à tomber sur un espace. Evite de trop réduire aussi. TODO : Vérifier accents aussi
         }
-        console.log('?????????? ' + pageContent_generic);
-        pageContent_generic = postCompleteText.substr(firstCharOfPage_generic, lastCharOfPage_generic-firstCharOfPage_generic+1);
+        console.log('cleanStarting - postCompleteText.charAt(moveAfterNewLine(firstCharOfPage_generic)) : ' + postCompleteText.charAt(moveAfterNewLine(firstCharOfPage_generic)) + ' pageContent_generic : ' + pageContent_generic);
+        pageContent_generic = postCompleteText.substr(moveAfterNewLine(firstCharOfPage_generic), moveBeforeNewLine(lastCharOfPage_generic)-moveAfterNewLine(firstCharOfPage_generic)+1);
         pageContentElt_generic.innerHTML = pageContent_generic;
         positionShouldAppearElt_generic = getPositionTop(shouldAppearElt_generic);
+        positionShouldNotAppearElt_generic = getPositionTop(positionShouldNotAppearElt_generic);
         updatingNonGenericVars();
-        console.log('?????????? ' + page1Content);
+        console.log('cleanStarting - ' + page1Content);
     }
     
 </script>

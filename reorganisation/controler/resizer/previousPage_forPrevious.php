@@ -9,13 +9,13 @@
         console.log(firstCharOfPage_generic + ' ' + lastCharOfPage_generic);
         while (getPositionTop(shouldAppearElt_generic) > window.innerHeight)
         {
-            if (postCompleteText.substr(firstCharOfPage_generic-Math.ceil(numberCharsLine*1,25), Math.ceil(numberCharsLine*1,25)).indexOf('<br') != -1)
+            if (postCompleteText.substr(firstCharOfPage_generic, Math.ceil(numberCharsLine*1,25)).indexOf('<br') != -1)
             {
-                firstCharOfPage_generic += -Math.ceil(numberCharsLine*1,25) + postCompleteText.substr(firstCharOfPage_generic-Math.ceil(numberCharsLine*1,25), Math.ceil(numberCharsLine*1,25)).lastIndexOf('<br') - 1; // S'il y a un saut de ligne, placer le "curseur" de fin juste avant. On balaie un peu plus que numberCharsLine au cas ou la ligne compte plus de caractères que numberCharsLine
+                firstCharOfPage_generic += postCompleteText.substr(firstCharOfPage_generic, (Math.ceil(numberCharsLine*1,25) + 6)).lastIndexOf('>') + 1; // S'il y a un saut de ligne, placer le "curseur" de fin juste après. On balaie un peu plus que numberCharsLine au cas ou la ligne compte plus de caractères que numberCharsLine
             }
             else
             {
-                firstCharOfPage_generic -= numberCharsLine;
+                firstCharOfPage_generic += numberCharsLine;
             }
             pageContent_generic = postCompleteText.substr(firstCharOfPage_generic, lastCharOfPage_generic-firstCharOfPage_generic+1);
             pageContentElt_generic.innerHTML = pageContent_generic;

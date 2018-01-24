@@ -1,20 +1,36 @@
 <?php
-class Rooter // mettre dans modèle puis créer objet dans index
+    require_once('model/Post.php');
+
+    class Rooter // mettre dans modèle puis créer objet dans index
     {
+        private $_arrayAllPosts;
+        private $_postManager;
+        private $_visitorControler;
+        private $_connexionContorler;
+        private $_adminControler;
+    
+        public function __construct()
+        {
+            $this->_postManager = new PostManager();
+            $this->_arrayAllPosts = $this->_postManager->getAllPostsExceptExpiry();
+            $this->_visitorControler = new VisitorControler();
+            $this->_connexionContorler = new ConnexionControler();
+            $this->_adminControler = new AdminControler();
+        }
+        
         public function root(/*$posts, $commentManager, $comments, $users, $admin*/) // vars commentManager etc, déclarer dans le controleur et manipuler la bas plutot que trimbaler
         {
-            $visitorControler = new VisitorControler();
             if (isset($_GET['action']))
             {
                 if ($_GET['action'] == 'allPosts')
                 {
-                    if (isset($_GET['page']) AND is_numeric($_GET['page']) AND $_GET['page'] <= (ceil(count($allPosts) / 5)))
+                    if (isset($_GET['page']) AND is_numeric($_GET['page']) AND $_GET['page'] <= (ceil(count($this->_arrayAllPosts) / 5)))
                     {
-                        $visitorControler->allPosts($page);
+                        $this->_visitorControler->allPosts($_GET['page']);
                     }
                     else
                     {
-                        $visitorControler->allPosts(1);
+                        $this->_visitorControler->allPosts(1);
                     }
                 }
                 elseif ($_GET['action'] == 'onePost')
@@ -22,17 +38,36 @@ class Rooter // mettre dans modèle puis créer objet dans index
                     $title = $_GET['title'];
                     if (isset($title))
                     {
-                        $visitorControler->onePost($title);
+                        $this->_visitorControler->onePost($title);
                     }
                     else
                     {
                         echo 'aucun titre';
                     }
                 }
+                elseif($_GET['action'] == 'connexion')
+                {
+                    if (isset($_POST['login']) && isset($_POST['password']))
+                    {
+                        $this->_connexionContorler->tryConnexion();
+                    }
+                    else
+                    {
+                        $this->_connexionContorler->connexionForm();
+                    }
+                }
+                elseif($_GET['action'] == 'adminHomePage')
+                {
+                    //$this->_adminControler->;
+                }
+                else
+                {
+                    echo 'action renseigné dans l\'adresse, mais valeur inconnue';
+                }
             }
             else
             {
-                $visitorControler->allPosts(1);
+                $this->_visitorControler->allPosts(1);
             }
         }
     }

@@ -19,7 +19,7 @@
             return new User($query->fetch(PDO::FETCH_ASSOC));
         }
         
-        public function getAllUser()
+        public function getAllUsers()
         {
             $users = [];
             $query = $this->_DB->query('SELECT login, password FROM User');
@@ -84,7 +84,7 @@
         {
             return $this->_login;
         }
-        public function getMdp()
+        public function getPassword()
         {
             return $this->_password;
         }
@@ -99,7 +99,7 @@
             else
                 $this->_login = $login;
         }
-        public function setMdp($password)
+        public function setPassword($password)
         {
             $this->_password = $password;
         }

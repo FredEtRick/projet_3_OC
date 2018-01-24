@@ -3,6 +3,7 @@
     {
         require_once('controler/visitorControler.php');
         require_once('controler/adminControler.php');
+        require_once('controler/connexionControler.php');
         require_once('controler/Rooter.php');
     }
     catch (Exception $e)

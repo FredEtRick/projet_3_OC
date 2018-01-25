@@ -21,6 +21,13 @@ traduire, virer les fonction, garder les while et if, donner des noms simples au
 </section>
     
 <!-- show all comments relatives to the post -->
+
+<section class="row">
+    <textarea class="tinymce"></textarea>
+    <script type="text/javascript" src="../plugins/jquery.min.js"></script>
+    <script type="text/javascript" src="../plugins/tinymce/tinymce.min.js"></script>
+    <script type="text/javascript" src="../plugins/tinymce/init-tinymce.js"></script>
+</section>
             
 <section class="row">
 <?php

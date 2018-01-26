@@ -6,6 +6,7 @@
     class VisitorControler // faire deuxième controleur pour admin
     {
         private $_visitorPostManager;
+        private $_visitorCommentManager;
         
         public function __construct()
         {
@@ -63,6 +64,39 @@
                     $postTitle = $activePost['title'];
                     $postDateTimePub = $activePost['dateTime'];
                     $pageTitle = 'Billet simple pour l\'Alaska - ' . $postTitle;
+                    $error = false;
+                    $sent = false;
+                    $message = '';
+                    $allGiven = isset($_POST['login']) && isset($_POST['email']) && isset($_POST['message']);
+                    $someGiven = isset($_POST['login']) || isset($_POST['email']) || isset($_POST['message']);
+                    if ($someGiven)
+                    {
+                        if (! $allGiven)
+                        {
+                            $error = true;
+                            $message .= 'Vous n\'avez pas renseigné tous les champs. ';
+                        }
+                        // suppr mail ? Y est pas dans BDD
+                        if ((isset($_POST['email'])) && (! filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)))
+                        {
+                            $error = true;
+                            $message .= 'E-mail invalide. ';
+                        }
+                    }
+                    if ($allGiven && ! $error)
+                    {
+                        $sent = true;
+                        
+                        $newComment = new Comment(); // initialise la date a l'actuelle si pas d'arguments
+                        // supprimer mail ? Y est pas dans BDD
+                        $newComment->setContent(strip_tags($_POST['message']));
+                        $newComment->setVisitorLogin(strip_tags($_POST['login']));
+                        $newComment->setPostTitle($postTitle);
+                        
+                        $this->_visitorCommentManager->insert($newComment);
+                        
+                        $message .= 'Le commentaire a été envoyé.';
+                    }
                     
                     ob_start();
                     require_once $_SERVER['DOCUMENT_ROOT'] . '/view/onePostView.php';

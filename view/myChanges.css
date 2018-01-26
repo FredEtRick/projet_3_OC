@@ -1,3 +1,30 @@
+h4
+{
+    font-size : 1.3em;
+    text-align : center;
+    text-decoration : underline;
+    color : gray;
+    margin-bottom : 20px;
+}
+.onePostDate
+{
+    font-style : italic;
+    color : gray;
+}
+label
+{
+    margin-right : 10px;
+}
+textarea
+{
+    width : 100%;
+}
+form
+{
+    background : #ddd;
+    padding : 15px;
+    border-radius : 15px;
+}
 .boutonSuppr, .boutonModif
 {
     margin-top : -200px !important; /* marche a peine (décale de deux trois pixels) */

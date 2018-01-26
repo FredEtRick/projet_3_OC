@@ -6,7 +6,7 @@ tinymce.init({
 		"searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
 		"save table contextmenu directionality emoticons template paste textcolor"
 	],
-    toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons",
+    toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | preview fullpage | forecolor backcolor emoticons",
     style_formats: [
 		{title: "Headers", items: [
 			{title: "Header 1", format: "h1"},

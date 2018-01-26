@@ -1,16 +1,15 @@
 <?php
     require_once 'Model.php';
 
-    // manager de la classe billet
+    // manager de la classe post
     class CommentManager extends Model
     {
         public function insert(Comment $comment)
         {
-            $query = $this->_DB->prepare('INSERT INTO Comment (dateTime, content, postTitle, visitorLogin) VALUES (:dateTime, :content, :postTitle, :visitorLogin)');
-            $query->bindValue(':title', $comment->getDateTime());
-            $query->bindValue(':content', $billet->getContent());
-            $query->bindValue(':postTitle', $billet->getPostTitle());
-            $query->bindValue(':visitorLogin', $billet->getVisitorLogin());
+            $query = $this->_DB->prepare('INSERT INTO Comment (content, postTitle, visitorLogin) VALUES (:content, :postTitle, :visitorLogin)');
+            $query->bindValue(':content', $comment->getContent());
+            $query->bindValue(':postTitle', $comment->getPostTitle());
+            $query->bindValue(':visitorLogin', $comment->getVisitorLogin());
             
             $query->execute();
         }
@@ -35,36 +34,36 @@
         
         /*public function recupererTousSaufExp()
         {
-            $billets = [];
-            $query = $this->_DB->query('SELECT title, dateTimePub, dateTimeExp, content FROM Billet ORDER BY dateTimePub');
+            $comments = [];
+            $query = $this->_DB->query('SELECT title, dateTimePub, dateTimeExp, content FROM Comment ORDER BY dateTimePub');
             while($postFromSQL = $query->fetch(PDO::FETCH_ASSOC))
             {
-                $billet = new Billet($postFromSQL);
-                if (date('d/m/Y H:i:s') < $billet->getDateTimeExp() || $billet->getDateTimeExp() == NULL)
-                    $billets[] = $billet;
+                $comment = new Comment($postFromSQL);
+                if (date('d/m/Y H:i:s') < $comment->getDateTimeExp() || $comment->getDateTimeExp() == NULL)
+                    $comments[] = $comment;
             }
-            return $billets;
+            return $comments;
         }
         
         public function modifier(Comment $comment)
         {
-            $query = $this->_DB->prepare('UPDATE Billet SET title = :title, dateTimePub = :dateTimePub, dateTimeExp = :dateTimeExp, content = :content WHERE title = :title');
+            $query = $this->_DB->prepare('UPDATE Comment SET title = :title, dateTimePub = :dateTimePub, dateTimeExp = :dateTimeExp, content = :content WHERE title = :title');
 
-            $query->bindValue(':title', $billet->getTitre());
-            $query->bindValue(':dateTimePub', $billet->getDateTimePub());
-            $query->bindValue(':dateTimeExp', $billet->getDateTimeExp());
-            $query->bindValue(':content', $billet->getContent());
+            $query->bindValue(':title', $comment->getTitre());
+            $query->bindValue(':dateTimePub', $comment->getDateTimePub());
+            $query->bindValue(':dateTimeExp', $comment->getDateTimeExp());
+            $query->bindValue(':content', $comment->getContent());
             
             $query->execute();
         }*/
         
         public function delete($ID)
         {
-            $this->_DB->exec('DELETE FROM Billet WHERE ID = "' . $ID . '"');
+            $this->_DB->exec('DELETE FROM Comment WHERE ID = "' . $ID . '"');
         }
     }
 
-    //classe billets = articles postés, morceaux de livre
+    //classe comments = articles postés, morceaux de livre
     class Comment
     {
         // attributs
@@ -85,14 +84,17 @@
             $args = func_get_args();
             $cpt = 0;
             $setters = array("setDateTime", "setContent", "setPostTitle", "setVisitorLogin");
-            if (is_array($args[0]) && $argsNumber == 1)
-                $this->hydrate($args[0]);
-            else
-                while ($cpt < $argsNumber && $cpt < count($setters))
-                {
-                    $this->$setters[$cpt]($args[$cpt]);
-                    $cpt++;
-                }
+            if ($argsNumber != 0)
+            {
+                if (is_array($args[0]) && $argsNumber == 1)
+                    $this->hydrate($args[0]);
+                else
+                    while ($cpt < $argsNumber && $cpt < count($setters))
+                    {
+                        $this->$setters[$cpt]($args[$cpt]);
+                        $cpt++;
+                    }
+            }
         }
         
         public function hydrate (array $postFromSQL)
@@ -149,20 +151,24 @@
             // verification type
             if (! is_string($title))
             {
-                trigger_error('le title du billet n\'a pu être modifié, le paramètre n\'est pas une chaîne de caractères.', E_USER_WARNING);
+                trigger_error('le title du comment n\'a pu être modifié, le paramètre n\'est pas une chaîne de caractères.', E_USER_WARNING);
                 return;
             }
             // verification taille
             if (strlen($title) > 120)
             {
-                trigger_error('le title du billet n\'a pu être modifié, le paramètre étant une chaîne de caractères trop longue.', E_USER_WARNING);
+                trigger_error('le title du comment n\'a pu être modifié, le paramètre étant une chaîne de caractères trop longue.', E_USER_WARNING);
                 return;
             }
             $this->_postTitle = $title; // juste pour m'entrainer avec self:: etc
         }
-        public function setVisitorLogin($pseudo)
+        public function setVisitorLogin($login)
         {
-            $this->_visitorLogin= $pseudo;
+            $this->_visitorLogin= $login;
+        }
+        public function nullDate()
+        {
+            return $this->_dateTime == null;
         }
     }
 ?>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:8889
--- Généré le :  mer. 24 jan. 2018 à 21:27
+-- Généré le :  lun. 29 jan. 2018 à 18:47
 -- Version du serveur :  5.6.35
 -- Version de PHP :  7.1.8
 
@@ -41,7 +41,14 @@ CREATE TABLE `Comment` (
 INSERT INTO `Comment` (`ID`, `dateTime`, `content`, `postTitle`, `visitorLogin`) VALUES
 (5, '2017-09-18 14:19:20', 'Il est nul ce chapitre, il fait que 3 lignes !\r\nPS : étrange dans titreBillet pour la clé étrangère je dois choisir dans une liste, qui présente les clés primaires de Billet de manière dédoublées avec un tiret entre chaque doublon ! (chapitre 1 - chapitre 1)', 'chapitre 1', 'anonyme'),
 (6, '2017-09-18 14:19:20', 'Perso j\'aime bien !', 'chapitre 1', 'premierMembre'),
-(7, '2017-09-18 14:21:13', 'Arrêtez de critiquer ma création ;\'(', 'chapitre 1', 'Admin');
+(7, '2017-09-18 14:21:13', 'Arrêtez de critiquer ma création ;\'(', 'chapitre 1', 'Admin'),
+(14, '2018-01-26 14:26:34', 'pieijegieg', 'chapitre 1', 'nom'),
+(15, '2018-01-29 18:29:27', 'esryeh', 'le chapitre sans intérêt', 'snhghs'),
+(16, '2018-01-29 18:32:46', 'rechargement de la page ?', 'le chapitre sans intérêt', 'test'),
+(17, '2018-01-29 18:33:12', 'que la page se réactualise bien !\r\nTest sauts\r\n\r\nde ligne', 'le chapitre sans intérêt', 'on dirait'),
+(18, '2018-01-29 18:33:54', 'ne marchent pas !', 'le chapitre sans intérêt', 'sauts de lignes'),
+(19, '2018-01-29 18:40:56', 'est-ce que je peux glisser du html dans mon commentaire ?', 'le chapitre sans intérêt', 'html'),
+(20, '2018-01-29 18:44:40', 'pour sauts de lignes\r\net pour faille XSS !!!', 'le chapitre sans intérêt', 'bon');
 
 -- --------------------------------------------------------
 
@@ -178,7 +185,7 @@ ALTER TABLE `User`
 -- AUTO_INCREMENT pour la table `Comment`
 --
 ALTER TABLE `Comment`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- Contraintes pour les tables déchargées
 --
@@ -187,7 +194,7 @@ ALTER TABLE `Comment`
 -- Contraintes pour la table `Comment`
 --
 ALTER TABLE `Comment`
-  ADD CONSTRAINT `CommentaireBillet` FOREIGN KEY (`postTitle`) REFERENCES `Billet` (`title`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `CommentaireBillet` FOREIGN KEY (`postTitle`) REFERENCES `Post` (`title`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

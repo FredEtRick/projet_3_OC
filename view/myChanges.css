@@ -1,3 +1,7 @@
+.postContentHidden
+{
+    display : none;
+}
 .greyButton
 {
     background : grey;

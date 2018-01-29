@@ -4,6 +4,23 @@
     require_once('model/User.php');
 ?>
 
+<script type="text/javascript">
+    function hideOrShow(postTitle)
+    {
+        var contentElt = document.getElementById(postTitle);
+        var displayProperty = getComputedStyle(contentElt).display;
+        console.log(displayProperty);
+        if (displayProperty == 'none')
+        {
+            contentElt.style.display = 'inline';
+        }
+        else if (displayProperty == 'inline')
+        {
+            contentElt.style.display = 'none';
+        }
+    }
+</script>
+
 <?php
     class AdminControler
     {

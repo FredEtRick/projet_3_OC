@@ -46,12 +46,13 @@
             }
             if ($activeUser != null)
             {
-                $_SESSION['login'] = $_POST['login'];
-                $_SESSION['password'] = sha1('gz' . $_POST['password']);
+                /*$_SESSION['login'] = $_POST['login'];
+                $_SESSION['password'] = sha1('gz' . $_POST['password']);*/
+                $_SESSION['action'] = 'postsManagment';
                 // gérer plus tard aussi avec des cookies si coche case "mémoriser"
 ?>
 <script type="text/javascript">
-    document.location.href="index.php?action=adminHomePage";
+    document.location.href="index.php";
 </script>
 <?php
             }

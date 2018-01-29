@@ -1,5 +1,6 @@
 <?php
-    session_start(); // this way the admin keep beeing connect on all pages when I managed to connect
+    session_start(); // this way the admin keep beeing connect on all pages when he managed to connect
+    //unset($_SESSION['action']);
 
     try
     {

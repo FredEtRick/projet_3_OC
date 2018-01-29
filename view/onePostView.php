@@ -36,7 +36,7 @@ traduire, virer les fonction, garder les while et if, donner des noms simples au
 <?php
     }
 ?>
-        <form method="post">
+        <form method="post" class="writeCommentForm">
             <h4>Ecrivez un commentaire :</h4>
             <p>
                 <label for="login">votre pseudo :  </label><input type="text" id="login" name="login" maxlength="30" /><br />

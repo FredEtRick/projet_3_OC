@@ -20,7 +20,26 @@
         
         public function root(/*$posts, $commentManager, $comments, $users, $admin*/) // vars commentManager etc, déclarer dans le controleur et manipuler la bas plutot que trimbaler
         {
-            if (isset($_GET['action']))
+            if (isset($_SESSION['action']))
+            {
+                if($_SESSION['action'] == 'postsManagment')
+                {
+                    $this->_adminControler->postsManagment();
+                }
+                elseif($_SESSION['action'] == 'commentsReported')
+                {
+                    $this->_adminControler->commentsReported();
+                }
+                elseif($_SESSION['action'] == 'createPost')
+                {
+                    $this->_adminControler->createPost();
+                }
+                else
+                {
+                    echo 'session action renseigné dans l\'adresse, mais valeur inconnue';
+                }
+            }
+            elseif (isset($_GET['action']))
             {
                 if ($_GET['action'] == 'allPosts')
                 {
@@ -56,13 +75,9 @@
                         $this->_connexionContorler->connexionForm();
                     }
                 }
-                elseif($_GET['action'] == 'adminHomePage') // juste admin, peut ajouter 'menu' ou 'choix' ensuite dans adminControler pour choix du menu
-                {
-                    //$this->_adminControler->;
-                }
                 else
                 {
-                    echo 'action renseigné dans l\'adresse, mais valeur inconnue';
+                    echo 'get action renseigné dans l\'adresse, mais valeur inconnue';
                 }
             }
             else

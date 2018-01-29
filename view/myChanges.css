@@ -1,3 +1,8 @@
+.greyButton
+{
+    background : grey;
+    color : white;
+}
 h4
 {
     font-size : 1.3em;
@@ -19,7 +24,7 @@ textarea
 {
     width : 100%;
 }
-form
+.writeCommentForm
 {
     background : #ddd;
     padding : 15px;

@@ -46,8 +46,10 @@
         public function commentsReported()
         {
             $pageTitle = 'commentaires signalés';
+            $cssClass = array('postsManagment' => '', 'commentsReported' => 'greyButton', 'createPost' => '');
+            
             ob_start();
-            require_once $_SERVER['DOVUMENT_ROOT'] . '/view/adminHeaderMenuView.php';
+            require_once $_SERVER['DOCUMENT_ROOT'] . '/view/adminHeaderMenuView.php';
             require_once $_SERVER['DOCUMENT_ROOT'] . '/view/commentsReportedView.php';
             $content = ob_get_clean();
             require_once $_SERVER['DOCUMENT_ROOT'] . '/view/template.php';
@@ -55,6 +57,8 @@
         public function createPost()
         {
             $pageTitle = 'créer un nouveau billet';
+            $cssClass = array('postsManagment' => '', 'commentsReported' => '', 'createPost' => 'greyButton');
+            
             ob_start();
             require_once $_SERVER['DOCUMENT_ROOT'] . '/view/adminHeaderMenuView.php';
             require_once $_SERVER['DOCUMENT_ROOT'] . '/view/createPostView.php';

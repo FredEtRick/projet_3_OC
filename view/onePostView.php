@@ -19,6 +19,7 @@ traduire, virer les fonction, garder les while et if, donner des noms simples au
         <hr />
     </article>
     <article class="col-xxl-12 col-xl-12 col-sm-12">
+        <!-- message si le visiteur a tenté de renseigner le formulaire de dépôt de commentaire (message d'erreur ou de confirmation d'envoie) -->
 <?php
     if ($error)
     {
@@ -39,8 +40,6 @@ traduire, virer les fonction, garder les while et if, donner des noms simples au
             <h4>Ecrivez un commentaire :</h4>
             <p>
                 <label for="login">votre pseudo :  </label><input type="text" id="login" name="login" maxlength="30" /><br />
-                <!-- suppr mail ? Y est pas dans BDD -->
-                <label for="email">votre email (pour vous prévenir en cas de modération) : </label><input type="email" id="email" name="email" />
             </p>
             <p>
                 <label for="message">Votre message :</label><br />

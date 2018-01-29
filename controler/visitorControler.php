@@ -67,21 +67,12 @@
                     $error = false;
                     $sent = false;
                     $message = '';
-                    $allGiven = isset($_POST['login']) && isset($_POST['email']) && isset($_POST['message']);
-                    $someGiven = isset($_POST['login']) || isset($_POST['email']) || isset($_POST['message']);
-                    if ($someGiven)
+                    $allGiven = isset($_POST['login']) && isset($_POST['message']);
+                    $someGiven = isset($_POST['login']) || isset($_POST['message']);
+                    if ($someGiven && ! $allGiven)
                     {
-                        if (! $allGiven)
-                        {
-                            $error = true;
-                            $message .= 'Vous n\'avez pas renseigné tous les champs. ';
-                        }
-                        // suppr mail ? Y est pas dans BDD
-                        if ((isset($_POST['email'])) && (! filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)))
-                        {
-                            $error = true;
-                            $message .= 'E-mail invalide. ';
-                        }
+                        $error = true;
+                        $message .= 'Vous n\'avez pas renseigné tous les champs. ';
                     }
                     if ($allGiven && ! $error)
                     {
@@ -94,6 +85,12 @@
                         $newComment->setPostTitle($postTitle);
                         
                         $this->_visitorCommentManager->insert($newComment);
+                        
+?>
+    <script type="text/javascript">
+        window.location.reload()
+    </script>
+<?php
                         
                         $message .= 'Le commentaire a été envoyé.';
                     }

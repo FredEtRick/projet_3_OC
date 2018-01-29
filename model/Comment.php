@@ -24,8 +24,8 @@
             {
                 $array = [];
                 $array['dateTime'] = $postFromSQL['dateTime'];
-                $array['content'] = $postFromSQL['content'];
-                $array['postTitle'] = $postFromSQL['postTitle'];
+                $array['content'] = nl2br(htmlspecialchars($postFromSQL['content']));
+                $array['postTitle'] = strip_tags($postFromSQL['postTitle']);
                 $array['visitorLogin'] = $postFromSQL['visitorLogin'];
                 $comments[] = $array;
             }

@@ -56,7 +56,7 @@
                         $this->_connexionContorler->connexionForm();
                     }
                 }
-                elseif($_GET['action'] == 'adminHomePage')
+                elseif($_GET['action'] == 'adminHomePage') // juste admin, peut ajouter 'menu' ou 'choix' ensuite dans adminControler pour choix du menu
                 {
                     //$this->_adminControler->;
                 }

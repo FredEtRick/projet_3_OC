@@ -10,7 +10,7 @@
             $query->bindValue(':content', $comment->getContent());
             $query->bindValue(':postTitle', $comment->getPostTitle());
             $query->bindValue(':visitorLogin', $comment->getVisitorLogin());
-            
+
             $query->execute();
         }
         

@@ -4,5 +4,5 @@
     $_SESSION['action'] = 'commentsReported';
 ?>
 <script>
-    document.location.href="../index.php";
+    document.location.href="../../index.php";
 </script>

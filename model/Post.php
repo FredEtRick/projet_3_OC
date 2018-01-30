@@ -26,11 +26,11 @@
         public function getAllPostsExceptExpiry() // select all posts that aren't expiry yet, create 3 tabs for allPostsView (one contening all the titles of the posts selected, one for date and time of publication, one for content) and return a table with this 3 tabs within it.
         {
             $allPosts = [];
-            $query = $this->_DB->query('SELECT title, dateTimePub, dateTimeExp, content FROM Post ORDER BY dateTimePub');
+            $query = $this->_DB->query('SELECT title, dateTimePub, dateTimeExp, content, removed FROM Post ORDER BY dateTimePub');
             $i = 0;
             while($onePostFromSQL = $query->fetch(PDO::FETCH_ASSOC))
             {
-                if (date('d/m/Y H:i:s') < $onePostFromSQL['dateTimeExp'] || $onePostFromSQL['dateTimeExp'] == NULL)
+                if ((! $onePostFromSQL['removed']) && (date('d/m/Y H:i:s') < $onePostFromSQL['dateTimeExp'] || $onePostFromSQL['dateTimeExp'] == NULL))
                 {
                     $allPosts[$i]['title'] = $onePostFromSQL['title'];
                     $allPosts[$i]['titleForLink'] = str_replace(' ', '_', $onePostFromSQL['title']);
@@ -58,6 +58,15 @@
         public function delete($title)
         {
             $this->_DB->exec('DELETE FROM Post WHERE title = "' . $title . '"');
+        }
+        
+        public function remove($title)
+        {
+            $query = $this->_DB->prepare('UPDATE Post SET removed = true WHERE title = :title');
+
+            $query->bindValue(':title', $title);
+            
+            $query->execute();
         }
     }
 
@@ -126,6 +135,10 @@
         {
             return $this->_content;
         }
+        public function getRemoved()
+        {
+            return $this->_removed;
+        }
 
         // mutateurs
         public function setTitle($title)
@@ -165,5 +178,10 @@
             }
             else
                 $this->_content = $content;
+        }
+        
+        public function setRemoved($bool)
+        {
+            $this->_removed = $bool;
         }
     }

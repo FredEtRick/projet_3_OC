@@ -19,6 +19,10 @@
             contentElt.style.display = 'none';
         }
     }
+    function deletePost(postTitle)
+    {
+        document.location.href="controler/redirection/redirectionDeletePost.php?postTitle="+postTitle;
+    }
 </script>
 
 <?php

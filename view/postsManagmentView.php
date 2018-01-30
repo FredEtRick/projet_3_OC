@@ -12,7 +12,7 @@
                     </p>
                     <p>
                         <button onclick="hideOrShow('<?= $allPosts[$indexPost]['title'] ?>')">afficher / masquer contenu complet</button>
-                        
+                        <button onclick="deletePost('<?= $allPosts[$indexPost]['title'] ?>')">retirer le billet</button>
                     </p>
                     <p class="postContentHidden" id="<?= $allPosts[$indexPost]['title'] ?>">
                         <?= $allPosts[$indexPost]['content'] ?>

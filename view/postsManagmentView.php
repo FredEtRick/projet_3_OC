@@ -12,7 +12,7 @@
                     </p>
                     <p>
                         <button onclick="hideOrShow('<?= $allPosts[$indexPost]['title'] ?>')">afficher / masquer contenu complet</button>
-                        <button onclick="deletePost('<?= $allPosts[$indexPost]['title'] ?>', <?= $page ?>)">retirer le billet</button>
+                        <button onclick="deletePost('<?= $allPosts[$indexPost]['title'] ?>', <?= $pageDeleteRedirection ?>)">retirer le billet</button>
                     </p>
                     <p class="postContentHidden" id="<?= $allPosts[$indexPost]['title'] ?>">
                         <?= $allPosts[$indexPost]['content'] ?>
@@ -29,11 +29,11 @@
         <?php
             if ($page > 1)
             {
-                echo '<a class="fa fa-chevron-left" href="index.php?action=allPosts&amp;page=' . ($page-1) . '"></a>';
+                echo '<a class="fa fa-chevron-left" href="index.php?page=' . ($page-1) . '"></a>';
             }
             if ($page > 3)
             {
-                echo '<a href="index.php?action=allPosts&amp;page=1">1</a>';
+                echo '<a href="index.php?page=1">1</a>';
             }
             if ($page > 4)
             {
@@ -47,7 +47,7 @@
                 }
                 elseif ($j>0 AND ($postsPerPages*($j-1))<count($allPosts))
                 {
-                    echo '<a href="index.php?action=allPosts&amp;page=' . $j . '">' . $j . '</a>';
+                    echo '<a href="index.php?page=' . $j . '">' . $j . '</a>';
                 }
             }
             $pageMax = ceil(count($allPosts)/$postsPerPages);
@@ -57,11 +57,11 @@
             }
             if ($page < $pageMax-2)
             {
-                echo '<a href="index.php?action=allPosts&amp;page=' . $pageMax . '">' . $pageMax . '</a>';
+                echo '<a href="index.php?page=' . $pageMax . '">' . $pageMax . '</a>';
             }
             if ($indexPost < count($allPosts))
             {
-                echo '<a href="index.php?action=allPosts&amp;page=' . ($page+1) . '" class="fa fa-chevron-right"></a>';
+                echo '<a href="index.php?page=' . ($page+1) . '" class="fa fa-chevron-right"></a>';
             }
         ?>
         </p>

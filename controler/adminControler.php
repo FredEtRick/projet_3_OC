@@ -52,6 +52,16 @@
                 $allPosts = $this->_adminPostManager->getAllPostsExceptExpiry();
                 $cssClass = array('postsManagment' => 'greyButton', 'commentsReported' => '', 'createPost' => ''); // the postsManagment button will be grey
                 $page = 1+ceil($indiceBegining / $postsPerPages);
+                $pageDeleteRedirection;
+                if ($indiceBegining >= count($allPosts)) // if deleting a post = 1 page less
+                {
+                    $pageDeleteRedirection = $page - 1;
+                    echo '<script type="text/javascript">alert("' . $indiceBegining . ' =? ' . count($allPosts) . ', pageDeleteRedirection : ' . $pageDeleteRedirection . '")</script>';
+                }
+                else
+                {
+                    $pageDeleteRedirection = $page;
+                }
                 
                 // récupération de la vue, et envoie de cette dernière au template
                 ob_start();

@@ -34,6 +34,10 @@
                 {
                     $this->_adminControler->createPost();
                 }
+                elseif($_SESSION['action'] == 'showAllDeletedPosts')
+                {
+                    $this->_adminControler->showAllDeletedPosts();
+                }
                 else
                 {
                     echo 'session action renseigné dans l\'adresse, mais valeur inconnue';

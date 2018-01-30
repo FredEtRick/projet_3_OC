@@ -43,6 +43,26 @@
             return $allPosts;
         }
         
+        public function getAllRemovedPosts()
+        {
+            $allPosts = [];
+            $query = $this->_DB->query('SELECT title, dateTimePub, dateTimeExp, content, removed FROM Post ORDER BY dateTimePub');
+            $i = 0;
+            while($onePostFromSQL = $query->fetch(PDO::FETCH_ASSOC))
+            {
+                if ($onePostFromSQL['removed'])
+                {
+                    $allPosts[$i]['title'] = $onePostFromSQL['title'];
+                    $allPosts[$i]['titleForLink'] = str_replace(' ', '_', $onePostFromSQL['title']);
+                    $allPosts[$i]['dateTime'] = str_replace(' ', ', à ', $onePostFromSQL['dateTimePub']); // correct display with str replace
+                    $allPosts[$i]['content'] = $onePostFromSQL['content'];
+                    $allPosts[$i]['contentBegin'] = mb_substr($onePostFromSQL['content'], 0, 300); // 300 firts chars
+                    $i++;
+                }
+            }
+            return $allPosts;
+        }
+        
         public function modify(Post $post)
         {
             $query = $this->_DB->prepare('UPDATE Post SET title = :title, dateTimePub = :dateTimePub, dateTimeExp = :dateTimeExp, content = :content WHERE title = :title');

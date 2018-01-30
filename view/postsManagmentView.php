@@ -12,7 +12,8 @@
                     </p>
                     <p>
                         <button onclick="hideOrShow('<?= $allPosts[$indexPost]['title'] ?>')">afficher / masquer contenu complet</button>
-                        <button onclick="deletePost('<?= $allPosts[$indexPost]['title'] ?>', <?= $page ?>)">retirer le billet</button>
+                        <button onclick="removePost('<?= $allPosts[$indexPost]['title'] ?>', <?= $page ?>)">retirer le billet</button>
+                        <button>modifier le billet</button>
                     </p>
                     <p class="postContentHidden" id="<?= $allPosts[$indexPost]['title'] ?>">
                         <?= $allPosts[$indexPost]['content'] ?>
@@ -64,6 +65,11 @@
                 echo '<a href="index.php?page=' . ($page+1) . '" class="fa fa-chevron-right"></a>';
             }
         ?>
+        </p>
+    </article>
+    <article class="col-xxl-6 col-xl-12 col-sm-12">
+        <p class="centrer">
+            <button onclick="showAllDeletedPosts()">consulter les billets retirés</button>
         </p>
     </article>
 </section>

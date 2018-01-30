@@ -9,7 +9,6 @@
     {
         var contentElt = document.getElementById(postTitle);
         var displayProperty = getComputedStyle(contentElt).display;
-        console.log(displayProperty);
         if (displayProperty == 'none')
         {
             contentElt.style.display = 'inline';
@@ -19,9 +18,34 @@
             contentElt.style.display = 'none';
         }
     }
-    function deletePost(postTitle, page)
+    function removePost(postTitle, page)
     {
         document.location.href="controler/redirection/redirectionDeletePost.php?postTitle=" + postTitle + "&page=" + page;
+    }
+    function showAllDeletedPosts()
+    {
+        document.location.href="controler/redirection/redirectionShowAllDeletedPosts.php";
+    }
+    function republishPost()
+    {
+        
+    }
+    function definitivelyDeletePost(postTitle)
+    {
+        var contentElt = document.getElementById(postTitle);
+        var displayProperty = getComputedStyle(contentElt).display;
+        if (displayProperty == 'none')
+        {
+            contentElt.style.display = 'inline';
+        }
+        else if (displayProperty == 'inline')
+        {
+            contentElt.style.display = 'none';
+        }
+    }
+    function deleteConfirmation(postTitle)
+    {
+        document.location.href="controler/redirection/redirectionDeleteConfirmation.php?deletePostTitle=" + postTitle;
     }
 </script>
 
@@ -94,6 +118,18 @@
             ob_start();
             require_once $_SERVER['DOCUMENT_ROOT'] . '/view/adminHeaderMenuView.php';
             require_once $_SERVER['DOCUMENT_ROOT'] . '/view/createPostView.php';
+            $content = ob_get_clean();
+            require_once $_SERVER['DOCUMENT_ROOT'] . '/view/template.php';
+        }
+        public function showAllDeletedPosts()
+        {
+            $pageTitle = 'billets retirés';
+            $cssClass = array('postsManagment' => '', 'commentsReported' => '', 'createPost' => '');
+            $removedPosts = $this->_adminPostManager->getAllRemovedPosts();
+            
+            ob_start();
+            require_once $_SERVER['DOCUMENT_ROOT'] . '/view/adminHeaderMenuView.php';
+            require_once $_SERVER['DOCUMENT_ROOT'] . '/view/showAllDeletedPostsView.php';
             $content = ob_get_clean();
             require_once $_SERVER['DOCUMENT_ROOT'] . '/view/template.php';
         }

@@ -26,9 +26,9 @@
     {
         document.location.href="controler/redirection/redirectionShowAllDeletedPosts.php";
     }
-    function republishPost()
+    function republishPost(postTitle)
     {
-        
+        document.location.href="controler/redirection/redirectionRepublishPost.php?postTitle=" + postTitle;
     }
     function definitivelyDeletePost(postTitle)
     {

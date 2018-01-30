@@ -88,6 +88,15 @@
             
             $query->execute();
         }
+        
+        public function republish($title)
+        {
+            $query = $this->_DB->prepare('UPDATE Post SET removed = false WHERE title = :title');
+
+            $query->bindValue(':title', $title);
+            
+            $query->execute();
+        }
     }
 
     //classe allPosts = articles postés, morceaux de livre

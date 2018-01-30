@@ -12,7 +12,7 @@
                     </p>
                     <p>
                         <button onclick="hideOrShow('<?= $allPosts[$indexPost]['title'] ?>')">afficher / masquer contenu complet</button>
-                        <button onclick="deletePost('<?= $allPosts[$indexPost]['title'] ?>')">retirer le billet</button>
+                        <button onclick="deletePost('<?= $allPosts[$indexPost]['title'] ?>', <?= $page ?>)">retirer le billet</button>
                     </p>
                     <p class="postContentHidden" id="<?= $allPosts[$indexPost]['title'] ?>">
                         <?= $allPosts[$indexPost]['content'] ?>
@@ -27,7 +27,6 @@
     <article class="col-xxl-12 col-xl-12 col-sm-12 navPages">
         <p>
         <?php
-            $page = 1+ceil($indiceBegining / $postsPerPages);
             if ($page > 1)
             {
                 echo '<a class="fa fa-chevron-left" href="index.php?action=allPosts&amp;page=' . ($page-1) . '"></a>';

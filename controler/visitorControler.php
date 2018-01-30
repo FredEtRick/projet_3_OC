@@ -27,6 +27,7 @@
                 $indexPost = $indiceBegining;
                 $postsLeft = $postsPerPages;
                 $allPosts = $this->_visitorPostManager->getAllPostsExceptExpiry();
+                $page = 1+ceil($indiceBegining / $postsPerPages);
                 
                 // récupération de la vue, et envoie de cette dernière au template
                 ob_start();

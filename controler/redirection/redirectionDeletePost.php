@@ -7,5 +7,6 @@
 ?>
 
 <script>
-    document.location.href="../../index.php";
+    console.log(<?= $_GET['page'] ?>);
+    document.location.href="../../index.php?page=<?= $_GET['page'] ?>";
 </script>

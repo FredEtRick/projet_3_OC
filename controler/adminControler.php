@@ -19,9 +19,9 @@
             contentElt.style.display = 'none';
         }
     }
-    function deletePost(postTitle)
+    function deletePost(postTitle, page)
     {
-        document.location.href="controler/redirection/redirectionDeletePost.php?postTitle="+postTitle;
+        document.location.href="controler/redirection/redirectionDeletePost.php?postTitle=" + postTitle + "&page=" + page;
     }
 </script>
 
@@ -51,6 +51,7 @@
                 $postsLeft = $postsPerPages;
                 $allPosts = $this->_adminPostManager->getAllPostsExceptExpiry();
                 $cssClass = array('postsManagment' => 'greyButton', 'commentsReported' => '', 'createPost' => ''); // the postsManagment button will be grey
+                $page = 1+ceil($indiceBegining / $postsPerPages);
                 
                 // récupération de la vue, et envoie de cette dernière au template
                 ob_start();

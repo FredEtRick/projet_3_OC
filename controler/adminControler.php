@@ -114,6 +114,10 @@
         {
             $pageTitle = 'créer un nouveau billet';
             $cssClass = array('postsManagment' => '', 'commentsReported' => '', 'createPost' => 'greyButton');
+            $someGiven = isset($_POST['newPostTitle']) || isset($_POST['tinymceNewPost']) || isset($_POST['publish']) || isset($_POST['datePublication']) || isset($_POST['expire']) || isset($_POST['dateExpiration']);
+            $allGiven = isset($_POST['newPostTitle']) && isset($_POST['tinymceNewPost']) && isset($_POST['publish']) && isset($_POST['datePublication']) && isset($_POST['expire']) && isset($_POST['dateExpiration']);
+            $error;
+            $send;
             
             ob_start();
             require_once $_SERVER['DOCUMENT_ROOT'] . '/view/adminHeaderMenuView.php';

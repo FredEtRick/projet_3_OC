@@ -20,7 +20,7 @@ h4
     font-style : italic;
     color : gray;
 }
-label
+label, [type="radio"]
 {
     margin-right : 10px;
 }

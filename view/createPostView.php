@@ -27,6 +27,8 @@
         $("#getNewPostForm").submit(function(e){
             var content = tinymce.get("tinymceNewPost").getContent();
             //$()
+            console.log(content);
+            return false;
         })
     });
 </script>

@@ -50,7 +50,6 @@
         <script type="text/javascript" src="../plugins/tinymce/tinymce.min.js"></script>
         <script type="text/javascript" src="../plugins/tinymce/init-tinymce.js"></script>
     </article>
-</section>
 <script type="text/javascript">
     $(document).ready(function(){
         $("#getNewPostForm").submit(function(e){

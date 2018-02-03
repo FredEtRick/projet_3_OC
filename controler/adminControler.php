@@ -47,6 +47,10 @@
     {
         document.location.href="controler/redirection/redirectionDeleteConfirmation.php?deletePostTitle=" + postTitle;
     }
+    function deconnexion()
+    {
+        document.location.href="controler/redirection/redirectionDeconnexion.php";
+    }
 </script>
 
 <?php
@@ -91,6 +95,7 @@
                 ob_start();
                 require_once $_SERVER['DOCUMENT_ROOT'] . '/view/adminHeaderMenuView.php';
                 require_once $_SERVER['DOCUMENT_ROOT'] . '/view/postsManagmentView.php';
+                require_once $_SERVER['DOCUMENT_ROOT'] . '/view/adminFooterDeconnexionView.php';
                 $content = ob_get_clean();
                 require_once $_SERVER['DOCUMENT_ROOT'] . '/view/template.php';
             }
@@ -107,6 +112,7 @@
             ob_start();
             require_once $_SERVER['DOCUMENT_ROOT'] . '/view/adminHeaderMenuView.php';
             require_once $_SERVER['DOCUMENT_ROOT'] . '/view/commentsReportedView.php';
+            require_once $_SERVER['DOCUMENT_ROOT'] . '/view/adminFooterDeconnexionView.php';
             $content = ob_get_clean();
             require_once $_SERVER['DOCUMENT_ROOT'] . '/view/template.php';
         }
@@ -122,6 +128,7 @@
             ob_start();
             require_once $_SERVER['DOCUMENT_ROOT'] . '/view/adminHeaderMenuView.php';
             require_once $_SERVER['DOCUMENT_ROOT'] . '/view/createPostView.php';
+            require_once $_SERVER['DOCUMENT_ROOT'] . '/view/adminFooterDeconnexionView.php';
             $content = ob_get_clean();
             require_once $_SERVER['DOCUMENT_ROOT'] . '/view/template.php';
         }
@@ -134,6 +141,7 @@
             ob_start();
             require_once $_SERVER['DOCUMENT_ROOT'] . '/view/adminHeaderMenuView.php';
             require_once $_SERVER['DOCUMENT_ROOT'] . '/view/showAllDeletedPostsView.php';
+            require_once $_SERVER['DOCUMENT_ROOT'] . '/view/adminFooterDeconnexionView.php';
             $content = ob_get_clean();
             require_once $_SERVER['DOCUMENT_ROOT'] . '/view/template.php';
         }

@@ -72,4 +72,3 @@
             <button onclick="showAllDeletedPosts()">consulter les billets retirés</button>
         </p>
     </article>
-</section>

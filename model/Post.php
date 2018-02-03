@@ -6,10 +6,23 @@
     {
         public function insert(Post $post)
         {
-            $query = $this->_DB->prepare('INSERT INTO Post (title, dateTimePub, dateTimeExp, content) VALUES (:title, :dateTimePub, :dateTimeExp, :content)');
+            $pubGiven = $post->getDateTimePub() != '';
+            $expGiven = $post->getDateTimeExp() != '';
+            
+            if ($pubGiven && $expGiven)
+                $query = $this->_DB->prepare('INSERT INTO Post (title, dateTimePub, dateTimeExp, content) VALUES (:title, :dateTimePub, :dateTimeExp, :content)');
+            elseif ($pubGiven && !$expGiven)
+                $query = $this->_DB->prepare('INSERT INTO Post (title, dateTimePub, content) VALUES (:title, :dateTimePub, :content)');
+            elseif (!$pubGiven && $expGiven)
+                $query = $this->_DB->prepare('INSERT INTO Post (title, dateTimeExp, content) VALUES (:title, :dateTimeExp, :content)');
+            else
+                $query = $this->_DB->prepare('INSERT INTO Post (title, content) VALUES (:title, :content)');
+            
             $query->bindValue(':title', $post->getTitle());
-            $query->bindValue(':dateTimePub', $post->getDateTimePub());
-            $query->bindValue(':dateTimeExp', $post->getDateTimeExp());
+            if ($pubGiven)
+                $query->bindValue(':dateTimePub', $post->getDateTimePub());
+            if ($expGiven)
+                $query->bindValue(':dateTimeExp', $post->getDateTimeExp());
             $query->bindValue(':content', $post->getContent());
             
             $query->execute();
@@ -119,7 +132,7 @@
             $args = func_get_args();
             $counter = 0;
             $setters = array("setTitle", "setDateTimePub", "setDateTimeExp", "setContent");
-            if (is_array($args[0]) && $numberOfArgs == 1)
+            if ($numberOfArgs == 1 && is_array($args[0]))
                 $this->hydrate($args[0]);
             else
                 while ($counter < $numberOfArgs && $counter < count($setters))
@@ -146,9 +159,14 @@
         }
         public function getDateTimePub()
         {
-            $date = DateTime::createFromFormat('Y-m-d H:i:s', $this->_dateTimePub);
-            $date = $date->format('d/m/Y H:i:s');
-            return $date;
+            if ($this->_dateTimePub != null)
+            {
+                $date = DateTime::createFromFormat('Y-m-d H:i:s', $this->_dateTimePub);
+                $date = $date->format('d/m/Y H:i:s');
+                return $date;
+            }
+            else
+                return null;
         }
         public function getDateTimeExp()
         {

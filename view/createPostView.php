@@ -1,5 +1,5 @@
     <article class="col-xxl-6 col-xl-12 col-sm-12">
-        <form id="getNewPostForm" method="post">
+        <form id="getNewPostForm" method="post" action="controler/redirection/redirectionValidationPost.php">
             <p>
                 <label for="newPostTitle">
                     * titre : 
@@ -40,7 +40,7 @@
                 <input type="time" name="timeExpire" id="timeExpire" />
             </p>
             <p>
-                <input type="submit" value="send" />
+                <input type="submit" value="publier" />
             </p>
             <p>
                 * : champs obligatoires

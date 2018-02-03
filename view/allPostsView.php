@@ -9,7 +9,7 @@
                         <?= $allPosts[$indexPost]['title'] ?><span class="float-right">Le <?= $allPosts[$indexPost]['dateTime'] ?></span>
                     </p>
                     <p class="dernier">
-                        <?= $allPosts[$indexPost]['contentBegin'] ?> [...]<br /><span class="float-right discret">cliquez pour afficher</span>
+                        <?= strip_tags($allPosts[$indexPost]['contentBegin']) ?> [...]<br /><span class="float-right discret">cliquez pour afficher</span>
                     </p>
                 </a>
             </article>

@@ -8,7 +8,7 @@
                         <?= $allPosts[$indexPost]['title'] ?><span class="float-right">Le <?= $allPosts[$indexPost]['dateTime'] ?></span>
                     </p>
                     <p class="dernier">
-                        <?= $allPosts[$indexPost]['contentBegin'] ?> [...]<!--<br /><span class="float-right discret">cliquez pour afficher</span>-->
+                        <?= strip_tags($allPosts[$indexPost]['contentBegin']) ?> [...]<!--<br /><span class="float-right discret">cliquez pour afficher</span>-->
                     </p>
                     <p>
                         <button onclick="hideOrShow('<?= $allPosts[$indexPost]['title'] ?>')">afficher / masquer contenu complet</button>
@@ -16,7 +16,7 @@
                         <button>modifier le billet</button>
                     </p>
                     <p class="postContentHidden" id="<?= $allPosts[$indexPost]['title'] ?>">
-                        <?= $allPosts[$indexPost]['content'] ?>
+                        <?= strip_tags($allPosts[$indexPost]['content']) ?>
                     </p>
                 </div>
             </article>

@@ -1,10 +1,10 @@
     <article class="col-xxl-6 col-xl-12 col-sm-12">
-        <form id="getNewPostForm" method="post" action="controler/redirection/redirectionValidationPost.php">
+        <form id="getNewPostForm" method="post" action="<?= $formAction ?>">
             <p>
                 <label for="newPostTitle">
                     * titre : 
                 </label>
-                <input type="text" name="newPostTitle" id="newPostTitle" />
+                <input type="text" name="newPostTitle" id="newPostTitle" value="<?= $titleValue ?>" />
             </p>
             <p>
                 <label for="tinymceNewPost">
@@ -15,29 +15,29 @@
             </p>
             <p>
                 Publier immédiatement ?<br />
-                <input type="radio" name="publish" value="oui" id="oui" checked required />
+                <input type="radio" name="publish" value="oui" id="oui" <?= $ouiChecked ?> required />
                 <label for="oui">
                     oui
                 </label><br />
-                <input type="radio" name="publish" value="non" id="non" required />
+                <input type="radio" name="publish" value="non" id="non" <?= $nonChecked ?> required />
                 <label for="non">
                     non, publier le :
                 </label><br />
-                <input type="date" name="datePublication" id="datePublication" />
-                <input type="time" name="timePublication" id="timePublication" />
+                <input type="date" name="datePublication" id="datePublication" value="<?= $datePubInput ?>" />
+                <input type="time" name="timePublication" id="timePublication" value="<?= $timePubInput ?>" />
             </p>
             <p>
                 Doit expirer...<br />
-                <input type="radio" name="expire" value="jamais" id="jamais" checked required />
+                <input type="radio" name="expire" value="jamais" id="jamais" <?= $jamaisChecked ?> required />
                 <label for="jamais">
                     jamais
                 </label><br />
-                <input type="radio" name="expire" value="dateExpire" id="dateExpireRadio" required />
+                <input type="radio" name="expire" value="dateExpire" id="dateExpireRadio" <?= $dateExpireRadioChecked ?> required />
                 <label for="dateExpireRadio">
-                    non, publier le :
+                    non, expire le :
                 </label><br />
-                <input type="date" name="dateExpire" id="dateExpire" />
-                <input type="time" name="timeExpire" id="timeExpire" />
+                <input type="date" name="dateExpire" id="dateExpire" value="<?= $dateExpireInput ?>" />
+                <input type="time" name="timeExpire" id="timeExpire" value="<?= $timeExpireInput ?>" />
             </p>
             <p>
                 <input type="submit" value="publier" />
@@ -51,6 +51,8 @@
         <script type="text/javascript" src="../plugins/tinymce/init-tinymce.js"></script>
     </article>
 <script type="text/javascript">
+    if (<?= $tinyChargedContent ?>)
+        tinymce.get("tinymceNewPost").setContent('<?= $tinyChargedContent ?>');
     $(document).ready(function(){
         $("#getNewPostForm").submit(function(e){
             var changing = false;

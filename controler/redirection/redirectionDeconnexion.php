@@ -1,11 +1,5 @@
 <?php
-    /*
-        session_destroy();
-        session_unset();
-        $_SESSION = [];
-        
-        I abandonned this lines because it gave me an error "session doesn't exist" even when I'm still connected.
-    */
+    // doesn't work with just session_destroy
     session_start();
     unset($_SESSION['action']);
     session_destroy();

@@ -6,7 +6,7 @@
         private $_arrayAllPosts;
         private $_postManager;
         private $_visitorControler;
-        private $_connexionContorler;
+        private $_connexionControler;
         private $_adminControler;
     
         public function __construct()
@@ -14,7 +14,7 @@
             $this->_postManager = new PostManager();
             $this->_arrayAllPosts = $this->_postManager->getAllPostsExceptExpiry();
             $this->_visitorControler = new VisitorControler();
-            $this->_connexionContorler = new ConnexionControler();
+            $this->_connexionControler = new ConnexionControler();
             $this->_adminControler = new AdminControler();
         }
         
@@ -72,11 +72,20 @@
                 {
                     if (isset($_POST['login']) && isset($_POST['password']))
                     {
-                        $this->_connexionContorler->tryConnexion();
+                        $this->_connexionControler->tryConnexion();
                     }
                     else
                     {
-                        $this->_connexionContorler->connexionForm();
+                        $this->_connexionControler->connexionForm();
+                    }
+                }
+                elseif ($_GET['action'] == 'signal')
+                {
+                    $commentID = $_GET['commentID'];
+                    $postTitle = $_GET['postTitle'];
+                    if (isset($commentID) && isset($postTitle))
+                    {
+                        $this->_visitorControler->reportComment($commentID, $postTitle);
                     }
                 }
                 else

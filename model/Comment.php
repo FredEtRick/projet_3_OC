@@ -2,7 +2,7 @@
     require_once 'Model.php';
 
     // manager de la classe post
-    class CommentManager extends Model
+    class CommentManager extends Model // faudra ajouter qqch pour signaler
     {
         public function insert(Comment $comment)
         {
@@ -23,6 +23,7 @@
             while($postFromSQL = $query->fetch(PDO::FETCH_ASSOC))
             {
                 $array = [];
+                $array['ID'] = $postFromSQL['ID'];
                 $array['dateTime'] = $postFromSQL['dateTime'];
                 $array['content'] = nl2br(htmlspecialchars($postFromSQL['content']));
                 $array['postTitle'] = strip_tags($postFromSQL['postTitle']);
@@ -60,6 +61,11 @@
         public function delete($ID)
         {
             $this->_DB->exec('DELETE FROM Comment WHERE ID = "' . $ID . '"');
+        }
+        
+        public function report($commentID)
+        {
+            $this->_DB->exec('UPDATE Comment SET reported = 1 WHERE ID = ' . $commentID);
         }
     }
 

@@ -51,6 +51,10 @@
     {
         document.location.href="controler/redirection/redirectionDeconnexion.php";
     }
+    function modifyPost(postTitle)
+    {
+        document.location.href="controler/redirection/redirectionCreatePost.php?modifyPostTitle=" + postTitle;
+    }
 </script>
 
 <?php
@@ -91,6 +95,7 @@
                     $pageDeleteRedirection = $page;
                 }*/
                 
+                
                 // récupération de la vue, et envoie de cette dernière au template
                 ob_start();
                 require_once $_SERVER['DOCUMENT_ROOT'] . '/view/adminHeaderMenuView.php';
@@ -116,7 +121,7 @@
             $content = ob_get_clean();
             require_once $_SERVER['DOCUMENT_ROOT'] . '/view/template.php';
         }
-        public function createPost()
+        public function createPost() // and modify if isset $_POST postitle
         {
             $pageTitle = 'créer un nouveau billet';
             $cssClass = array('postsManagment' => '', 'commentsReported' => '', 'createPost' => 'greyButton');
@@ -124,6 +129,59 @@
             $allGiven = isset($_POST['newPostTitle']) && isset($_POST['tinymceNewPost']) && isset($_POST['publish']) && isset($_POST['datePublication']) && isset($_POST['expire']) && isset($_POST['dateExpiration']);
             $error;
             $send;
+            
+            if (isset($_GET['postTitle']))
+            {
+                $post = $this->_adminPostManager->getOnePost($_GET['postTitle']);
+                
+                $dateTimePub = $post->getDateTimePub();
+                $yearPub = '' . substr($dateTimePub, 6, 4);
+                $mounthPub = '' . substr($dateTimePub, 3, 2);
+                $dayPub = '' . substr($dateTimePub, 0, 2);
+                $datePub = $yearPub . '-' . $mounthPub . '-' . $dayPub;
+                $timePub = '' . substr($dateTimePub, 11, 8);
+                
+                $dateTimeExp = $post->getDateTimeExp();
+                if ($dateTimeExp == null)
+                {
+                    $jamaisChecked = 'checked';
+                    $dateExpireRadioChecked = '';
+                    $dateExpireInput = '';
+                    $timeExpireInput = '';
+                }
+                else
+                {
+                    $jamaisChecked = '';
+                    $dateExpireRadioChecked = 'checked';
+                    $yearExp = '' . substr($dateTimeExp, 6, 4);
+                    $mounthExp = '' . substr($dateTimeExp, 3, 2);
+                    $dayExp = '' . substr($dateTimeExp, 0, 2);
+                    $dateExpireInput = $yearExp . '-' . $mounthExp . '-' . $dayExp;
+                    $timeExpireInput = '' . substr($dateTimeExp, 11, 8);
+                }
+                
+                $titleValue = $post->getTitle();
+                $tinyChargedContent = $post->getContent();
+                $ouiChecked = '';
+                $nonChecked = 'checked';
+                $datePubInput = $datePub;
+                $timePubInput = $timePub; // note : manque secondes, pas possible de mettre
+                $formAction = 'controler/redirection/redirectionValidationPost.php?modify=true';
+            }
+            else
+            {
+                $titleValue = '';
+                $tinyChargedContent = 'false';
+                $ouiChecked = 'checked';
+                $nonChecked = '';
+                $datePubInput = '';
+                $timePubInput = '';
+                $jamaisChecked = 'checked';
+                $dateExpireRadioChecked = '';
+                $dateExpireInput = '';
+                $timeExpireInput = '';
+                $formAction = 'controler/redirection/redirectionValidationPost.php?modify=false';
+            }
             
             ob_start();
             require_once $_SERVER['DOCUMENT_ROOT'] . '/view/adminHeaderMenuView.php';

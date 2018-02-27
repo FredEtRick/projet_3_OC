@@ -122,6 +122,7 @@
             $pageTitle = 'commentaires signalés';
             $cssClass = array('postsManagment' => '', 'commentsReported' => 'greyButton', 'createPost' => '');
             $commentsReported = $this->_adminCommentManager->getAllCommentsReported();
+            $nonReported = $this->_adminCommentManager->getAllCommentsNonReported();
             
             ob_start();
             require_once $_SERVER['DOCUMENT_ROOT'] . '/view/adminHeaderMenuView.php';

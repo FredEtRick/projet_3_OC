@@ -7,13 +7,18 @@
     background : grey;
     color : white;
 }
-h4
+h4, h3
 {
     font-size : 1.3em;
     text-align : center;
     text-decoration : underline;
     color : gray;
     margin-bottom : 20px;
+}
+h3
+{
+    color : #101040;
+    font-style : italic;
 }
 .onePostDate
 {

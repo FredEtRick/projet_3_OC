@@ -170,7 +170,8 @@
                 }
                 
                 $titleValue = $post->getTitle();
-                $tinyChargedContent = $post->getContent();
+                $tinyChargedContent = 'true';
+                $content = $post->getContent();
                 $ouiChecked = '';
                 $nonChecked = 'checked';
                 $datePubInput = $datePub;

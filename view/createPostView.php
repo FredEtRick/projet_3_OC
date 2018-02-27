@@ -52,7 +52,10 @@
     </article>
 <script type="text/javascript">
     if (<?= $tinyChargedContent ?>)
-        tinymce.get("tinymceNewPost").setContent('<?= $tinyChargedContent ?>');
+    {
+        console.log('<?= str_replace("'", "\'", $content) ?>');
+        tinymce.get("tinymceNewPost").setContent('<?= str_replace("'", "\'", $content) ?>');
+    }
     $(document).ready(function(){
         $("#getNewPostForm").submit(function(e){
             var changing = false;

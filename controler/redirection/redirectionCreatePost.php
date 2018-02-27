@@ -4,8 +4,8 @@
     $_SESSION['action'] = 'createPost';
 
     $URL = "../../index.php";
-    if (isset($_POST['postTitle']))
-        $URL .= '?postTitle=' . $_POST['postTitle'];
+    if (isset($_GET['modifyPostTitle']))
+        $URL .= '?modifyPostTitle=' . $_GET['modifyPostTitle'];
 ?>
 <script>
     document.location.href='<?= $URL ?>';

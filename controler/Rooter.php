@@ -81,10 +81,10 @@
                 }
                 elseif ($_GET['action'] == 'signal')
                 {
-                    $commentID = $_GET['commentID'];
-                    $postTitle = $_GET['postTitle'];
-                    if (isset($commentID) && isset($postTitle))
+                    if (isset($_GET['commentID']) && isset($_GET['postTitle']))
                     {
+                        $commentID = $_GET['commentID'];
+                        $postTitle = $_GET['postTitle'];
                         $this->_visitorControler->reportComment($commentID, $postTitle);
                     }
                 }

@@ -50,6 +50,11 @@
             return $commentsReported;
         }
         
+        public function keep($id)
+        {
+            $this->_DB->exec('UPDATE Comment SET reported = 0 WHERE ID = ' . $id);
+        }
+        
         /*public function recupererTousSaufExp()
         {
             $comments = [];

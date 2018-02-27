@@ -55,6 +55,14 @@
     {
         document.location.href="controler/redirection/redirectionCreatePost.php?modifyPostTitle=" + postTitle;
     }
+    function keepComment(ID)
+    {
+        document.location.href="controler/redirection/redirectionKeepComment.php?idComment=" + ID;
+    }
+    function removeComment(ID)
+    {
+        document.location.href="controler/redirection/redirectionRemoveComment.php?idComment=" + ID;
+    }
 </script>
 
 <?php
@@ -131,9 +139,9 @@
             $error;
             $send;
             
-            if (isset($_GET['postTitle']))
+            if (isset($_GET['modifyPostTitle']))
             {
-                $post = $this->_adminPostManager->getOnePost($_GET['postTitle']);
+                $post = $this->_adminPostManager->getOnePost($_GET['modifyPostTitle']);
                 
                 $dateTimePub = $post->getDateTimePub();
                 $yearPub = '' . substr($dateTimePub, 6, 4);

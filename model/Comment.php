@@ -33,6 +33,23 @@
             return $comments;
         }
         
+        public function getAllCommentsReported()
+        {
+            $query = $this->_DB->query('SELECT ID, dateTime, content, postTitle, visitorLogin, reported FROM Comment WHERE reported = 1');
+            $commentsReported = [];
+            while($postFromSQL = $query->fetch(PDO::FETCH_ASSOC))
+            {
+                $array = [];
+                $array['ID'] = $postFromSQL['ID'];
+                $array['dateTime'] = $postFromSQL['dateTime'];
+                $array['content'] = nl2br(htmlspecialchars($postFromSQL['content']));
+                $array['postTitle'] = strip_tags($postFromSQL['postTitle']);
+                $array['visitorLogin'] = $postFromSQL['visitorLogin'];
+                $commentsReported[] = $array;
+            }
+            return $commentsReported;
+        }
+        
         /*public function recupererTousSaufExp()
         {
             $comments = [];

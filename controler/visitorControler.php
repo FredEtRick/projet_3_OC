@@ -48,7 +48,6 @@
             $activePost = null;
             $activePostTitle = null;
             $allPosts = $this->_visitorPostManager->getAllPostsExceptExpiry();
-            echo 'dans onePost';
             //print_r($allPosts);
             foreach($allPosts as $currentPost)
             {
@@ -62,7 +61,6 @@
             {
                 try
                 {
-                    echo 'dans le try';
                     // preparing post variables
                     $postTitle = $activePost['title'];
                     $postDateTimePub = $activePost['dateTime'];
@@ -121,7 +119,7 @@
         public function reportComment($commentID, $postTitle)
         {
             $this->_visitorCommentManager->report($commentID);
-            $this->onePost($postTitle);
+            $this->onePost(str_replace(' ', '_', $postTitle));
         }
     }
 ?>

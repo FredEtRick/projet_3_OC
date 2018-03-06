@@ -45,77 +45,81 @@
             <p>
                 * : champs obligatoires
             </p>
+            <div id="contentEditor">
+                <?= str_replace("'", "\'", $content) ?>
+            </div>
         </form>
         <script type="text/javascript" src="../plugins/jquery.min.js"></script>
         <script type="text/javascript" src="../plugins/tinymce/tinymce.min.js"></script>
-        <script type="text/javascript" src="../plugins/tinymce/init-tinymce.js"></script>
+        <?php
+            require_once "plugins/tinymce/init-tinymce.php";
+        ?>
+        <script type="text/javascript">
+            function insertContent()
+            {
+                $("#getNewPostForm").submit(function(e){
+                    var changing = false;
+                    var content = tinymce.get("tinymceNewPost").getContent();
+                    if ($("#newPostTitle").val() == '')
+                    {
+                        if (!$("#warningTitle").length)
+                            $("<p style=\"color:red;margin-top:0px;\" id=\"warningTitle\">Veuillez renseigner un titre pour le billet !</p>").insertAfter($("#newPostTitle"));
+                        changing = true;
+                    }
+                    if (!$("#newPostTitle").val() == '' && $("#warningTitle").length)
+                    {
+                        $("#warningTitle").remove();
+                        changing = true;
+                    }
+                    if (content == '')
+                    {
+                        if (!$("#warningTiny").length)
+                            $("<p style=\"color:red;margin-top:0px;\" id=\"warningTiny\">Veuillez renseigner un contenu pour le billet !</p>").insertAfter($("#tinymceNewPost"));
+                        changing = true;
+                    }
+                    if (content != '' && $("#warningTiny").length)
+                    {
+                        $("#warningTiny").remove();
+                        changing = true;
+                    }
+                    if ($("#non").prop("checked") && ($("#datePublication").val() == '' || ($("#timePublication").val() == '')))
+                    {
+                        if (!$("#warningPublication").length)
+                            $("<p style=\"color:red;margin-top:0px;\" id=\"warningPublication\">Veuillez renseigner la date et l'heure de publication !</p>").insertAfter($("#timePublication"));
+                        changing = true;
+                    }
+                    if (($("#oui").prop("checked") || (!$("#datePublication").val() == '' && !$("#timePublication").val() == '')) && $("#warningPublication").length)
+                    {
+                        $("#warningPublication").remove();
+                        changing = true;
+                    }
+                    if ($("#dateExpireRadio").prop("checked") && ($("#dateExpire").val() == '' || ($("#timeExpire").val() == '')))
+                    {
+                        if (!$("#warningExpire").length)
+                            $("<p style=\"color:red;margin-top:0px;\" id=\"warningExpire\">Veuillez renseigner la date et l'heure d'expiration !</p>").insertAfter($("#timeExpire"));
+                        changing = true;
+                    }
+                    if (($("#jamais").prop("checked") || (!$("#dateExpire").val() == '' && !$("#timeExpire").val() == '')) && $("#warningExpire").length)
+                    {
+                        $("#warningExpire").remove();
+                        changing = true;
+                    }
+                    /*if ($("#datePublication").val() == '')
+                    {
+                        if (!$("#warningPublication").length)
+                            $("<p style=\"color:red;margin-top:0px;\" id=\"warningPublication\">Veuillez renseigner la date de publication !</p>").insertAfter($("#datePublication"));
+                        changing = true;
+                    }
+                    if ($("#datePublication").val() == '' && $("#warningPublication").length)
+                    {
+                        $("#warningPublication").remove();
+                        changing = true;
+                    }*/
+                    return !changing;
+                })
+            }
+            $(document).ready(function(){
+                insertContent();
+            });
+        </script>
     </article>
-<script type="text/javascript">
-    if (<?= $tinyChargedContent ?>)
-    {
-        console.log('<?= str_replace("'", "\'", $content) ?>');
-        tinymce.get("tinymceNewPost").setContent('<?= str_replace("'", "\'", $content) ?>');
-    }
-    $(document).ready(function(){
-        $("#getNewPostForm").submit(function(e){
-            var changing = false;
-            var content = tinymce.get("tinymceNewPost").getContent();
-            if ($("#newPostTitle").val() == '')
-            {
-                if (!$("#warningTitle").length)
-                    $("<p style=\"color:red;margin-top:0px;\" id=\"warningTitle\">Veuillez renseigner un titre pour le billet !</p>").insertAfter($("#newPostTitle"));
-                changing = true;
-            }
-            if (!$("#newPostTitle").val() == '' && $("#warningTitle").length)
-            {
-                $("#warningTitle").remove();
-                changing = true;
-            }
-            if (content == '')
-            {
-                if (!$("#warningTiny").length)
-                    $("<p style=\"color:red;margin-top:0px;\" id=\"warningTiny\">Veuillez renseigner un contenu pour le billet !</p>").insertAfter($("#tinymceNewPost"));
-                changing = true;
-            }
-            if (content != '' && $("#warningTiny").length)
-            {
-                $("#warningTiny").remove();
-                changing = true;
-            }
-            if ($("#non").prop("checked") && ($("#datePublication").val() == '' || ($("#timePublication").val() == '')))
-            {
-                if (!$("#warningPublication").length)
-                    $("<p style=\"color:red;margin-top:0px;\" id=\"warningPublication\">Veuillez renseigner la date et l'heure de publication !</p>").insertAfter($("#timePublication"));
-                changing = true;
-            }
-            if (($("#oui").prop("checked") || (!$("#datePublication").val() == '' && !$("#timePublication").val() == '')) && $("#warningPublication").length)
-            {
-                $("#warningPublication").remove();
-                changing = true;
-            }
-            if ($("#dateExpireRadio").prop("checked") && ($("#dateExpire").val() == '' || ($("#timeExpire").val() == '')))
-            {
-                if (!$("#warningExpire").length)
-                    $("<p style=\"color:red;margin-top:0px;\" id=\"warningExpire\">Veuillez renseigner la date et l'heure d'expiration !</p>").insertAfter($("#timeExpire"));
-                changing = true;
-            }
-            if (($("#jamais").prop("checked") || (!$("#dateExpire").val() == '' && !$("#timeExpire").val() == '')) && $("#warningExpire").length)
-            {
-                $("#warningExpire").remove();
-                changing = true;
-            }
-            /*if ($("#datePublication").val() == '')
-            {
-                if (!$("#warningPublication").length)
-                    $("<p style=\"color:red;margin-top:0px;\" id=\"warningPublication\">Veuillez renseigner la date de publication !</p>").insertAfter($("#datePublication"));
-                changing = true;
-            }
-            if ($("#datePublication").val() == '' && $("#warningPublication").length)
-            {
-                $("#warningPublication").remove();
-                changing = true;
-            }*/
-            return !changing;
-        })
-    });
-</script>

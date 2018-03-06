@@ -101,7 +101,7 @@
                     $content = ob_get_clean();
                     require_once $_SERVER['DOCUMENT_ROOT'] . '/view/template.php';
                     
-                    $textWithNewLines = htmlspecialchars($activePost['content']);
+                    $textWithNewLines = $activePost['content'];
                     $textWithNewLines = nl2br($textWithNewLines);
                     $textWithNewLines = str_replace(array("\r", "\n"), array('', ''), $textWithNewLines);
                     $textWithNewLines = str_replace('"', '\"', str_replace("'", "\'", json_encode($textWithNewLines)));

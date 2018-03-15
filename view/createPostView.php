@@ -45,9 +45,6 @@
             <p>
                 * : champs obligatoires
             </p>
-            <div id="contentEditor">
-                <?= str_replace("'", "\'", $content) ?>
-            </div>
         </form>
         <script type="text/javascript" src="../plugins/jquery.min.js"></script>
         <script type="text/javascript" src="../plugins/tinymce/tinymce.min.js"></script>

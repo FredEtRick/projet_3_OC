@@ -145,10 +145,10 @@
                 $post = $this->_adminPostManager->getOnePost($_GET['modifyPostTitle']);
                 
                 $dateTimePub = $post->getDateTimePub();
-                $yearPub = '' . substr($dateTimePub, 6, 4);
-                $mounthPub = '' . substr($dateTimePub, 3, 2);
-                $dayPub = '' . substr($dateTimePub, 0, 2);
-                $datePub = $yearPub . '-' . $mounthPub . '-' . $dayPub;
+                $yearPub = '' . substr($dateTimePub, 0, 4);
+                $mounthPub = '' . substr($dateTimePub, 5, 2);
+                $dayPub = '' . substr($dateTimePub, 8, 2);
+                $datePub = $dayPub . '/' . $mounthPub . '/' . $yearPub;
                 $timePub = '' . substr($dateTimePub, 11, 8);
                 
                 $dateTimeExp = $post->getDateTimeExp();
@@ -163,10 +163,10 @@
                 {
                     $jamaisChecked = '';
                     $dateExpireRadioChecked = 'checked';
-                    $yearExp = '' . substr($dateTimeExp, 6, 4);
-                    $mounthExp = '' . substr($dateTimeExp, 3, 2);
-                    $dayExp = '' . substr($dateTimeExp, 0, 2);
-                    $dateExpireInput = $yearExp . '-' . $mounthExp . '-' . $dayExp;
+                    $yearExp = '' . substr($dateTimeExp, 0, 4);
+                    $mounthExp = '' . substr($dateTimeExp, 5, 2);
+                    $dayExp = '' . substr($dateTimeExp, 8, 2);
+                    $dateExpireInput = $dayExp . '/' . $mounthExp . '/' . $yearExp;
                     $timeExpireInput = '' . substr($dateTimeExp, 11, 8);
                 }
                 
@@ -177,12 +177,13 @@
                 $nonChecked = 'checked';
                 $datePubInput = $datePub;
                 $timePubInput = $timePub; // note : manque secondes, pas possible de mettre
-                $formAction = 'controler/redirection/redirectionValidationPost.php?modify=true';
+                $formAction = 'controler/redirection/redirectionValidationPost.php?modify=1';
             }
             else
             {
                 $titleValue = '';
                 $tinyChargedContent = 'false';
+                $content = '';
                 $ouiChecked = 'checked';
                 $nonChecked = '';
                 $datePubInput = '';
@@ -191,7 +192,7 @@
                 $dateExpireRadioChecked = '';
                 $dateExpireInput = '';
                 $timeExpireInput = '';
-                $formAction = 'controler/redirection/redirectionValidationPost.php?modify=false';
+                $formAction = 'controler/redirection/redirectionValidationPost.php?modify=0';
             }
             
             ob_start();

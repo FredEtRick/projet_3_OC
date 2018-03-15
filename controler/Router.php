@@ -1,7 +1,7 @@
 <?php
     require_once('model/Post.php');
 
-    class Rooter // mettre dans modèle puis créer objet dans index
+    class Router // mettre dans modèle puis créer objet dans index
     {
         private $_arrayAllPosts;
         private $_postManager;
@@ -18,7 +18,7 @@
             $this->_adminControler = new AdminControler();
         }
         
-        public function root(/*$posts, $commentManager, $comments, $users, $admin*/) // vars commentManager etc, déclarer dans le controleur et manipuler la bas plutot que trimbaler
+        public function rout(/*$posts, $commentManager, $comments, $users, $admin*/) // vars commentManager etc, déclarer dans le controleur et manipuler la bas plutot que trimbaler
         {
             if (isset($_SESSION['action']))
             {

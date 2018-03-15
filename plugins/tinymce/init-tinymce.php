@@ -3,11 +3,15 @@
         selector : "textarea.tinymce",
         setup: function (editor) {
             editor.on('init', function () {
-                if (<?= $tinyChargedContent ?>)
-                {
-                    console.log('<?= str_replace("\n", "", str_replace("\r", "", str_replace("\t", "", str_replace("'", "\'", $content)))) ?>');
-                    tinymce.get("tinymceNewPost").setContent('<?= str_replace("\n", "", str_replace("\r", "", str_replace("\t", "", str_replace("'", "\'", $content)))) ?>');
-                }
+                <?php
+                    if ($tinyChargedContent)
+                    {
+                        $contentCorrectForm = str_replace("\n", "", str_replace("\r", "", str_replace("\t", "", str_replace("'", "\'", $content))));
+                ?>
+                        tinymce.get("tinymceNewPost").setContent('<?= $contentCorrectForm ?>');
+                <?php
+                    }
+                ?>
             });
         },
         statubar : true,

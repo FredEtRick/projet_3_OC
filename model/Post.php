@@ -6,6 +6,7 @@
     {
         public function insert(Post $post)
         {
+            echo 'début insert';
             $pubGiven = $post->getDateTimePub() != '';
             $expGiven = $post->getDateTimeExp() != '';
             
@@ -45,9 +46,17 @@
             {
                 if ((! $onePostFromSQL['removed']) && (date('d/m/Y H:i:s') < $onePostFromSQL['dateTimeExp'] || $onePostFromSQL['dateTimeExp'] == NULL))
                 {
+                    $dateTimePub = $onePostFromSQL['dateTimePub'];
+                    $yearPub = '' . substr($dateTimePub, 0, 4);
+                    $mounthPub = '' . substr($dateTimePub, 5, 2);
+                    $dayPub = '' . substr($dateTimePub, 8, 2);
+                    $datePub = $dayPub . '/' . $mounthPub . '/' . $yearPub;
+                    $timePub = '' . substr($dateTimePub, 11, 8);
+                    $dateTimePub = $datePub . ', à ' . $timePub;
+                    
                     $allPosts[$i]['title'] = $onePostFromSQL['title'];
                     $allPosts[$i]['titleForLink'] = str_replace(' ', '_', $onePostFromSQL['title']);
-                    $allPosts[$i]['dateTime'] = str_replace(' ', ', à ', $onePostFromSQL['dateTimePub']); // correct display with str replace
+                    $allPosts[$i]['dateTime'] = $dateTimePub;
                     $allPosts[$i]['content'] = $onePostFromSQL['content'];
                     $allPosts[$i]['contentBegin'] = mb_substr($onePostFromSQL['content'], 0, 300); // 300 firts chars
                     $i++;
@@ -78,11 +87,25 @@
         
         public function modify(Post $post)
         {
-            $query = $this->_DB->prepare('UPDATE Post SET title = :title, dateTimePub = :dateTimePub, dateTimeExp = :dateTimeExp, content = :content WHERE title = :title');
-
+            $pubGiven = $post->getDateTimePub() != '';
+            echo 'ici' ;
+            $expGiven = $post->getDateTimeExp() != '';
+            
+            
+            if ($pubGiven && $expGiven)
+                $query = $this->_DB->prepare('UPDATE Post SET title = :title, dateTimePub = :dateTimePub, dateTimeExp = :dateTimeExp, content = :content WHERE title = :title');
+            elseif ($pubGiven && !$expGiven)
+                $query = $this->_DB->prepare('UPDATE Post SET title = :title, dateTimePub = :dateTimePub, content = :content WHERE title = :title');
+            elseif (!$pubGiven && $expGiven)
+                $query = $this->_DB->prepare('UPDATE Post SET title = :title, dateTimeExp = :dateTimeExp, content = :content WHERE title = :title');
+            else
+                $query = $this->_DB->prepare('UPDATE Post SET title = :title, content = :content WHERE title = :title');
+            
             $query->bindValue(':title', $post->getTitle());
-            $query->bindValue(':dateTimePub', $post->getDateTimePub());
-            $query->bindValue(':dateTimeExp', $post->getDateTimeExp());
+            if ($pubGiven)
+                $query->bindValue(':dateTimePub', $post->getDateTimePub());
+            if ($expGiven)
+                $query->bindValue(':dateTimeExp', $post->getDateTimeExp());
             $query->bindValue(':content', $post->getContent());
             
             $query->execute();
@@ -159,6 +182,7 @@
         }
         public function getDateTimePub()
         {
+            /*echo '$this->_dateTimePub : ' . $this->_dateTimePub . '<br />';
             if ($this->_dateTimePub != null)
             {
                 $date = DateTime::createFromFormat('Y-m-d H:i:s', $this->_dateTimePub);
@@ -166,17 +190,77 @@
                 return $date;
             }
             else
+            {
                 return null;
+            }*/
+            
+            $dateFirstFormat = $this->_dateTimePub;
+            
+            if ($dateFirstFormat == null)
+                return null;
+            else
+            {
+                echo 'getdatetimepub $dateFirstFormat : ' . $dateFirstFormat;
+                if (preg_match("#[0-9]{4}-[0-9]{2}-[0-9]{2}#", $dateFirstFormat))
+                {
+                    $year = substr($dateFirstFormat, 0, 4);
+                    $mounth = substr($dateFirstFormat, 5, 2);
+                    $day = substr($dateFirstFormat, 8, 2);
+                }
+                elseif (preg_match("#[0-9]{2}/[0-9]{2}/[0-9]{4}#", $dateFirstFormat))
+                {
+                    $year = substr($dateFirstFormat, 6, 4);
+                    $mounth = substr($dateFirstFormat, 3, 2);
+                    $day = substr($dateFirstFormat, 0, 2);
+                }
+                else
+                {
+                    echo "dans getTimePub, ne match avec rien !!!" . $dateFirstFormat;
+                }
+                $time = substr($dateFirstFormat, 11, 5);
+                $dateFinalFormat = $year . '-' . $mounth . '-' . $day . ' ' . $time;
+
+                return $dateFinalFormat;
+            }
         }
         public function getDateTimeExp()
         {
-            $date = $this->_dateTimeExp;
+            $dateFirstFormat = $this->_dateTimeExp;
+            
+            if ($dateFirstFormat == null)
+                return null;
+            else
+            {
+                if (preg_match("#[0-9]{4}-[0-9]{2}-[0-9]{2}#", $dateFirstFormat))
+                {
+                    $year = substr($dateFirstFormat, 0, 4);
+                    $mounth = substr($dateFirstFormat, 5, 2);
+                    $day = substr($dateFirstFormat, 8, 2);
+                }
+                elseif (preg_match("#[0-9]{2}/[0-9]{2}/[0-9]{4}#", $dateFirstFormat))
+                {
+                    $year = substr($dateFirstFormat, 6, 4);
+                    $mounth = substr($dateFirstFormat, 3, 2);
+                    $day = substr($dateFirstFormat, 0, 2);
+                }
+                else
+                {
+                    echo "dans getTimePub, ne match avec rien !!!" . $dateFirstFormat;
+                }
+                $time = substr($dateFirstFormat, 11, 5);
+                $dateFinalFormat = $year . '-' . $mounth . '-' . $day . ' ' . $time;
+
+                return $dateFinalFormat;
+            }
+            
+            /*$date = $this->_dateTimeExp;
+            echo '$dateExp : ' . $date . '<br />';
             if ($this->_dateTimeExp != NULL)
             {
                 $date = DateTime::createFromFormat('Y-m-d H:i:s', $this->_dateTimeExp);
                 $date = $date->format('d/m/Y H:i:s');
             }
-            return $date;
+            return $date;*/
         }
         public function getContent()
         {

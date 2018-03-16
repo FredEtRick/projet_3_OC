@@ -62,7 +62,20 @@ traduire, virer les fonction, garder les while et if, donner des noms simples au
         <div class="col-xxl-6 col-xl-12 col-sm-12 bulle">
             <p><?= $comment['visitorLogin'] ?><span class="float-right">Le <?= $comment['dateTime'] ?></span></p>
             <p class="dernier"><?= $comment['content'] ?></p>
+<?php
+        if (! isset($_GET['commentID']) || $_GET['commentID'] != $comment['ID'])
+        {
+?>
             <p><a href="../index.php?action=signal&amp;commentID=<?= $comment['ID'] ?>&amp;postTitle=<?= $postTitle ?>">Signaler</a></p>
+<?php
+        }
+        else
+        {
+?>
+            <p>Commentaire signalé, en attente de modération.</p>
+<?php
+        }
+?>
         </div>
 <?php
     }

@@ -121,6 +121,7 @@ body
     font-family : "Times New Roman";
     background : #101040;
     /*background : url(../images/cuirNoir/fond-cuir-noir.jpg) repeat;*/
+    word-wrap : break-word;
 }
 .fondBleu
 {

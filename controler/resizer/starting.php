@@ -4,13 +4,21 @@
     // counting approximative number of chars by line. Use a full line this way it can approach the average.
     function countCharsLine()
     {
+        var index = 0;
         charBetweenBothPages = firstCharOfPage1;
         console.log(charBetweenBothPages + ' ' + postCompleteText.length-1);
         while ((window.innerHeight > positionShouldNotAppearElt1) && (positionShouldNotAppearElt1 == getPositionTop(shouldNotAppearElt1)) && (charBetweenBothPages < postCompleteText.length-1)) 
         {
+            console.log('charBetweenBothPages' + charBetweenBothPages);
             if (postCompleteText.substr(charBetweenBothPages, 16).indexOf('<') != -1)
             {
-                charBetweenBothPages += postCompleteText.substr(charBetweenBothPages, 22).lastIndexOf('>')+1;
+                var endTag = postCompleteText.substr(charBetweenBothPages, 22).lastIndexOf('>')+1;
+                while (endTag < 1)
+                {
+                    charBetweenBothPages += 22;
+                    endTag = postCompleteText.substr(charBetweenBothPages, 22).lastIndexOf('>')+1;
+                }
+                charBetweenBothPages += endTag;
                 numberCharsLine = 0;
                 page1Content = postCompleteText.substr(firstCharOfPage1, charBetweenBothPages-firstCharOfPage1+1);
                 page1ContentElt.innerHTML = page1Content;
@@ -29,6 +37,7 @@
             page1Content = postCompleteText.substr(firstCharOfPage1, charBetweenBothPages-firstCharOfPage1+1);
             page1ContentElt.innerHTML = page1Content;
             debug('countCharsLine');
+            index += 10;
         }
         console.log('countCharsLine' + positionShouldNotAppearElt1 + ' ' + getPositionTop(shouldNotAppearElt1));
         if (positionShouldNotAppearElt1 < getPositionTop(shouldNotAppearElt1))

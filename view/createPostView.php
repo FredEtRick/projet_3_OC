@@ -46,10 +46,10 @@
                 * : champs obligatoires
             </p>
         </form>
-        <script type="text/javascript" src="../plugins/jquery.min.js"></script>
-        <script type="text/javascript" src="../plugins/tinymce/tinymce.min.js"></script>
+        <script type="text/javascript" src="../public/plugins/jquery.min.js"></script>
+        <script type="text/javascript" src="../public/plugins/tinymce/tinymce.min.js"></script>
         <?php
-            require_once "plugins/tinymce/init-tinymce.php";
+            require_once "public/plugins/tinymce/init-tinymce.php";
         ?>
         <script type="text/javascript">
             function insertContent()

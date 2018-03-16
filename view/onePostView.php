@@ -55,7 +55,7 @@ traduire, virer les fonction, garder les while et if, donner des noms simples au
     <article class="col-xxl-12 col-xl-12 col-sm-12">
         <h4>commentaires</h4>
 <?php
-    foreach($comments as $comment) // reste à réadapter noms dessous pour tableau
+    /*foreach($comments as $comment) // reste à réadapter noms dessous pour tableau
     {
 ?>
         <div class="hidden-xl-down col-xxl-3"></div>
@@ -65,7 +65,7 @@ traduire, virer les fonction, garder les while et if, donner des noms simples au
             <p><a href="../index.php?action=signal&amp;commentID=<?= $comment['ID'] ?>&amp;postTitle=<?= $postTitle ?>">Signaler</a></p>
         </div>
 <?php
-    }
+    }*/
 ?>
     </article>
 </section>

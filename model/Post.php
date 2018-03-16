@@ -6,7 +6,6 @@
     {
         public function insert(Post $post)
         {
-            echo 'début insert';
             $pubGiven = $post->getDateTimePub() != '';
             $expGiven = $post->getDateTimeExp() != '';
             
@@ -88,7 +87,6 @@
         public function modify(Post $post)
         {
             $pubGiven = $post->getDateTimePub() != '';
-            echo 'ici' ;
             $expGiven = $post->getDateTimeExp() != '';
             
             
@@ -200,7 +198,6 @@
                 return null;
             else
             {
-                echo 'getdatetimepub $dateFirstFormat : ' . $dateFirstFormat;
                 if (preg_match("#[0-9]{4}-[0-9]{2}-[0-9]{2}#", $dateFirstFormat))
                 {
                     $year = substr($dateFirstFormat, 0, 4);

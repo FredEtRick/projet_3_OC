@@ -10,8 +10,6 @@
         $post = new Post();
         $post->setTitle($_POST['newPostTitle']);
         $post->setContent($_POST['tinymceNewPost']);
-        echo 'dateExpire : ' . $_POST['dateExpire'] . '<br />';
-        echo 'timeExpire : ' . $_POST['timeExpire'] . '<br />';
         if ($_POST['publish'] == 'non') // régler la date si on a pas dit oui a "publier maintenant" sinon laisser la date par défaut
         {
             if (preg_match("#[0-9]{4}-[0-9]{2}-[0-9]{2}#", $_POST['datePublication']))

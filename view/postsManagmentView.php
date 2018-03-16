@@ -15,9 +15,9 @@
                         <button onclick="removePost('<?= $allPosts[$indexPost]['title'] ?>', <?= $page ?>)">retirer le billet</button>
                         <button onclick="modifyPost('<?= $allPosts[$indexPost]['title'] ?>')">modifier le billet</button>
                     </p>
-                    <p class="postContentHidden" id="<?= $allPosts[$indexPost]['title'] ?>">
-                        <?= strip_tags($allPosts[$indexPost]['content']) ?>
-                    </p>
+                    <div class="postContentHidden" id="<?= $allPosts[$indexPost]['title'] ?>">
+                        <?= $allPosts[$indexPost]['content'] ?>
+                    </div>
                 </div>
             </article>
     <?php

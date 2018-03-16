@@ -105,6 +105,7 @@
                     $textWithNewLines = nl2br($textWithNewLines);
                     $textWithNewLines = str_replace(array("\r", "\n"), array('', ''), $textWithNewLines);
                     $textWithNewLines = str_replace('"', '\"', str_replace("'", "\'", json_encode($textWithNewLines)));
+                    $textWithNewLines = substr($textWithNewLines, 2, strlen($textWithNewLines) - 4); // deleting first and last chars \"
                     $textLength = mb_strlen($activePost['content']);
                     
                     require_once $_SERVER['DOCUMENT_ROOT'] . '/controler/resizePage.php';

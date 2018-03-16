@@ -18,7 +18,7 @@ traduire, virer les fonction, garder les while et if, donner des noms simples au
         </div>
         <hr />
     </article>
-    <article class="col-xxl-12 col-xl-12 col-sm-12">
+    <article class="col-xxl-6 col-xl-12 col-sm-12 comments">
         <!-- message si le visiteur a tenté de renseigner le formulaire de dépôt de commentaire (message d'erreur ou de confirmation d'envoie) -->
 <?php
     if ($error)
@@ -52,14 +52,14 @@ traduire, virer les fonction, garder les while et if, donner des noms simples au
         <hr />
     </article>
 <!-- show all comments relatives to the post -->
-    <article class="col-xxl-12 col-xl-12 col-sm-12">
+    <div class="col-xxl-12 col-xl-12 col-sm-12"></div>
+    <article class="col-xxl-6 col-xl-12 col-sm-12 comments">
         <h4>commentaires</h4>
 <?php
     foreach($comments as $comment) // reste à réadapter noms dessous pour tableau
     {
 ?>
-        <div class="hidden-xl-down col-xxl-3"></div>
-        <div class="col-xxl-6 col-xl-12 col-sm-12 bulle">
+        <div class="bulle">
             <p><?= $comment['visitorLogin'] ?><span class="float-right">Le <?= $comment['dateTime'] ?></span></p>
             <p class="dernier"><?= $comment['content'] ?></p>
 <?php

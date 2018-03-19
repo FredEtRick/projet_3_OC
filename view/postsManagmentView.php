@@ -5,7 +5,7 @@
             <article class="col-xxl-6 col-xl-12 col-sm-12">
                 <div class="bulle" href="../index.php?title=<?= $allPosts[$indexPost]['titleForLink'] ?>&amp;action=onePost">
                     <p>
-                        <?= $allPosts[$indexPost]['title'] ?><span class="float-right">Le <?= $allPosts[$indexPost]['dateTime'] ?></span>
+                        <?= str_replace("'", "\'", $allPosts[$indexPost]['title']) ?><span class="float-right">Le <?= $allPosts[$indexPost]['dateTime'] ?></span>
                     </p>
                     <p class="dernier">
                         <?= strip_tags($allPosts[$indexPost]['contentBegin']) ?> [...]<!--<br /><span class="float-right discret">cliquez pour afficher</span>-->

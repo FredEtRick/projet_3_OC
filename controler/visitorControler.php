@@ -86,10 +86,12 @@
                         $newComment->setPostTitle($postTitle);
                         
                         $this->_visitorCommentManager->insert($newComment);
+                        unset($_POST['login']);
+                        unset($_POST['message']);
                         
 ?>
     <script type="text/javascript">
-        window.location.reload()
+        window.location.href = window.location.href;
     </script>
 <?php
                         

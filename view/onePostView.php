@@ -7,8 +7,8 @@ traduire, virer les fonction, garder les while et if, donner des noms simples au
 <section class="row">
     <article class="col-xxl-12 col-xl-12 col-sm-12 post">
         <h4><?= $postTitle ?></h4>
-        <p class="float-right onePostDate">Le <?= $postDateTimePub ?></p>
-        <div class="row" id="parent">
+        <p class="rightSide onePostDate">Le <?= $postDateTimePub ?></p>
+        <div class="row clear" id="parent">
             <div class="col-xxl-6 col-xl-12 col-sm-12">
                 <p id="content"></p>
                 <!-- pagination -->

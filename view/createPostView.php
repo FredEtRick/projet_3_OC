@@ -73,16 +73,13 @@
                 document.getElementById("dateExpire").setAttribute("value", "<?= $dateExpireInputFr ?>");
                 document.getElementById("messageJs").innerHTML = 'safari ' + '<?= $datePubInputFr ?>' + '<?= $dateExpireInputFr ?>';
             }
-            else if (isChrome)
+            else
             {
                 document.getElementById("datePublication").setAttribute("value", "<?= $datePubInputEn ?>");
                 document.getElementById("dateExpire").setAttribute("value", "<?= $dateExpireInputEn ?>");
                 document.getElementById("messageJs").innerHTML = 'chrome ' + '<?= $datePubInputEn ?>';
             }
-            else
-            {
-                document.getElementById("messageJs").innerHTML = 'autre';
-            }
+            
             
             function insertContent()
             {

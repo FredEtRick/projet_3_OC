@@ -43,7 +43,7 @@
             $i = 0;
             while($onePostFromSQL = $query->fetch(PDO::FETCH_ASSOC))
             {
-                if ((! $onePostFromSQL['removed']) && (date('Y-m-d H:i:s') < $onePostFromSQL['dateTimeExp'] || $onePostFromSQL['dateTimeExp'] == NULL))
+                if ((! $onePostFromSQL['removed']) && (date('Y-m-d H:i:s') < $onePostFromSQL['dateTimeExp'] || $onePostFromSQL['dateTimeExp'] == NULL) && (date('Y-m-d H:i:s') > $onePostFromSQL['dateTimePub']))
                 {
                     $dateTimePub = $onePostFromSQL['dateTimePub'];
                     $yearPub = '' . substr($dateTimePub, 0, 4);

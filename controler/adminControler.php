@@ -148,7 +148,8 @@
                 $yearPub = '' . substr($dateTimePub, 0, 4);
                 $mounthPub = '' . substr($dateTimePub, 5, 2);
                 $dayPub = '' . substr($dateTimePub, 8, 2);
-                $datePub = $dayPub . '/' . $mounthPub . '/' . $yearPub;
+                $datePubFr = $dayPub . '/' . $mounthPub . '/' . $yearPub;
+                $datePubEn = $yearPub . '-' . $mounthPub . '-' . $dayPub;
                 $timePub = '' . substr($dateTimePub, 11, 8);
                 
                 $dateTimeExp = $post->getDateTimeExp();
@@ -156,7 +157,8 @@
                 {
                     $jamaisChecked = 'checked';
                     $dateExpireRadioChecked = '';
-                    $dateExpireInput = '';
+                    $dateExpireInputFr = '';
+                    $dateExpireInputEn = '';
                     $timeExpireInput = '';
                 }
                 else
@@ -166,7 +168,8 @@
                     $yearExp = '' . substr($dateTimeExp, 0, 4);
                     $mounthExp = '' . substr($dateTimeExp, 5, 2);
                     $dayExp = '' . substr($dateTimeExp, 8, 2);
-                    $dateExpireInput = $dayExp . '/' . $mounthExp . '/' . $yearExp;
+                    $dateExpireInputFr = $dayExp . '/' . $mounthExp . '/' . $yearExp;
+                    $dateExpireInputEn = $yearExp . '-' . $mounthExp . '-' . $dayExp;
                     $timeExpireInput = '' . substr($dateTimeExp, 11, 8);
                 }
                 
@@ -175,7 +178,8 @@
                 $content = $post->getContent();
                 $ouiChecked = '';
                 $nonChecked = 'checked';
-                $datePubInput = $datePub;
+                $datePubInputFr = $datePubFr;
+                $datePubInputEn = $datePubEn;
                 $timePubInput = $timePub; // note : manque secondes, pas possible de mettre
                 $formAction = 'controler/redirection/redirectionValidationPost.php?modify=1';
             }
@@ -186,7 +190,8 @@
                 $content = '';
                 $ouiChecked = 'checked';
                 $nonChecked = '';
-                $datePubInput = '';
+                $datePubInputFr = '';
+                $datePubInputEn = '';
                 $timePubInput = '';
                 $jamaisChecked = 'checked';
                 $dateExpireRadioChecked = '';

@@ -23,8 +23,10 @@
                 <label for="non">
                     non, publier le :
                 </label><br />
-                <input type="date" name="datePublication" id="datePublication" value="<?= $datePubInput ?>" />
-                <input type="time" name="timePublication" id="timePublication" value="<?= $timePubInput ?>" />
+                <input type="date" name="datePublication" id="datePublication" /> 
+                <input type="time" name="timePublication" id="timePublication" value="<?= $timePubInput ?>" /><br />
+                <span class="grisItalique">(date au format français : jj/mm/aaaa. Exemple : 01/01/2019)<br />
+                    (heure au format : hh:mm. Exemple : 21:30)</span>
             </p>
             <p>
                 Doit expirer...<br />
@@ -36,14 +38,19 @@
                 <label for="dateExpireRadio">
                     non, expire le :
                 </label><br />
-                <input type="date" name="dateExpire" id="dateExpire" value="<?= $dateExpireInput ?>" />
-                <input type="time" name="timeExpire" id="timeExpire" value="<?= $timeExpireInput ?>" />
+                <input type="date" name="dateExpire" id="dateExpire" />
+                <input type="time" name="timeExpire" id="timeExpire" value="<?= $timeExpireInput ?>" /><br />
+                <span class="grisItalique">(date au format français : jj/mm/aaaa. Exemple : 01/01/2019)<br />
+                    (heure au format : hh:mm. Exemple : 21:30)</span>
             </p>
             <p>
                 <input type="submit" value="publier" />
             </p>
             <p>
                 * : champs obligatoires
+            </p>
+            <p id="messageJs">
+                
             </p>
         </form>
         <script type="text/javascript" src="../public/plugins/jquery.min.js"></script>
@@ -52,6 +59,31 @@
             require_once "public/plugins/tinymce/init-tinymce.php";
         ?>
         <script type="text/javascript">
+            var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+            var isFirefox = typeof InstallTrigger !== 'undefined';
+            var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification));
+            var isIE = /*@cc_on!@*/false || !!document.documentMode;
+            var isEdge = !isIE && !!window.StyleMedia;
+            var isChrome = !!window.chrome && !!window.chrome.webstore;
+            var isBlink = (isChrome || isOpera) && !!window.CSS;
+            
+            if (isSafari)
+            {
+                document.getElementById("datePublication").setAttribute("value", "<?= $datePubInputFr ?>");
+                document.getElementById("dateExpire").setAttribute("value", "<?= $dateExpireInputFr ?>");
+                document.getElementById("messageJs").innerHTML = 'safari ' + '<?= $datePubInputFr ?>' + '<?= $dateExpireInputFr ?>';
+            }
+            else if (isChrome)
+            {
+                document.getElementById("datePublication").setAttribute("value", "<?= $datePubInputEn ?>");
+                document.getElementById("dateExpire").setAttribute("value", "<?= $dateExpireInputEn ?>");
+                document.getElementById("messageJs").innerHTML = 'chrome ' + '<?= $datePubInputEn ?>';
+            }
+            else
+            {
+                document.getElementById("messageJs").innerHTML = 'autre';
+            }
+            
             function insertContent()
             {
                 $("#getNewPostForm").submit(function(e){

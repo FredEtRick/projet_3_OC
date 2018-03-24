@@ -1,8 +1,3 @@
-<!--
-A REECRIRE !!!!!!!!!!!!!
-traduire, virer les fonction, garder les while et if, donner des noms simples aux variables.
--->
-
 <!-- show post -->
 <section class="row">
     <article class="col-xxl-12 col-xl-12 col-sm-12 post">
@@ -56,7 +51,7 @@ traduire, virer les fonction, garder les while et if, donner des noms simples au
     <article class="col-xxl-6 col-xl-12 col-sm-12 comments">
         <h4>commentaires</h4>
 <?php
-    foreach($comments as $comment) // reste à réadapter noms dessous pour tableau
+    foreach($comments as $comment)
     {
 ?>
         <div class="bulle">

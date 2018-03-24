@@ -8,7 +8,7 @@
 
     require_once('model/User.php');
 
-    class ConnexionControler // faire deuxième controleur pour admin
+    class ConnexionControler
     {
         private $_connexionUserManager;
         

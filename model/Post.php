@@ -28,8 +28,6 @@
             $query->execute();
         }
         
-        //DATE_FORMAT(dateTimePub, \'%m/%c/%Y à %H:%i:%s\') AS DHP, DATE_FORMAT(dateTimeExp, \'%m/%c/%Y à %H:%i:%s\') AS DHE
-        
         public function getOnePost($title)
         {
             $query = $this->_DB->query('SELECT title, dateTimePub, dateTimeExp, content FROM Post WHERE title = "' . $title . '"');
@@ -133,7 +131,6 @@
         }
     }
 
-    //classe allPosts = articles postés, morceaux de livre
     class Post
     {
         // attributs
@@ -141,10 +138,6 @@
         private $_dateTimePub;
         private $_dateTimeExp;
         private $_content;
-
-        // const DEBUT_TITRES = "title : "; // juste pour l'entrainement
-
-        // private static $_total = 0; // juste pour l'entrainement
 
         // constructeur
         public function __construct()
@@ -180,18 +173,6 @@
         }
         public function getDateTimePub()
         {
-            /*echo '$this->_dateTimePub : ' . $this->_dateTimePub . '<br />';
-            if ($this->_dateTimePub != null)
-            {
-                $date = DateTime::createFromFormat('Y-m-d H:i:s', $this->_dateTimePub);
-                $date = $date->format('d/m/Y H:i:s');
-                return $date;
-            }
-            else
-            {
-                return null;
-            }*/
-            
             $dateFirstFormat = $this->_dateTimePub;
             
             if ($dateFirstFormat == null)
@@ -249,15 +230,6 @@
 
                 return $dateFinalFormat;
             }
-            
-            /*$date = $this->_dateTimeExp;
-            echo '$dateExp : ' . $date . '<br />';
-            if ($this->_dateTimeExp != NULL)
-            {
-                $date = DateTime::createFromFormat('Y-m-d H:i:s', $this->_dateTimeExp);
-                $date = $date->format('d/m/Y H:i:s');
-            }
-            return $date;*/
         }
         public function getContent()
         {
@@ -284,12 +256,11 @@
                 return;
             }
 
-            $this->_title = $title; // juste pour m'entrainer avec self:: etc
+            $this->_title = $title;
         }
         
-        public function setDateTimePub($dateTimePub) // là force a prendre un stirng
+        public function setDateTimePub($dateTimePub)
         {
-            // try essayer de caster en dateTimePub
             $this->_dateTimePub = $dateTimePub;
         }
         

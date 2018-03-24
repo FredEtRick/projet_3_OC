@@ -181,14 +181,14 @@ footer
 {
     text-align : center;
 }
-@media (min-width : 1500px) /* 2 fois 8in */
+@media (min-width : 1500px)
 {
     .container
     {
         max-width : 1500px;
     }
     
-    /* création dimension xxl, dépendant elle de la taille en pouces. Elle permettra nottament de dédoubler la zone de lecture sur très grand écran pour le confort de lecture. */
+    /* création dimension xxl. Elle permettra nottament de dédoubler la zone de lecture sur très grand écran pour le confort de lecture. */
     
     .col-xxl
     {

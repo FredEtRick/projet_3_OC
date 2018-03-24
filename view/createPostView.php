@@ -130,17 +130,6 @@
                         $("#warningExpire").remove();
                         changing = true;
                     }
-                    /*if ($("#datePublication").val() == '')
-                    {
-                        if (!$("#warningPublication").length)
-                            $("<p style=\"color:red;margin-top:0px;\" id=\"warningPublication\">Veuillez renseigner la date de publication !</p>").insertAfter($("#datePublication"));
-                        changing = true;
-                    }
-                    if ($("#datePublication").val() == '' && $("#warningPublication").length)
-                    {
-                        $("#warningPublication").remove();
-                        changing = true;
-                    }*/
                     return !changing;
                 })
             }

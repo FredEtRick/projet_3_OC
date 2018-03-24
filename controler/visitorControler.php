@@ -3,7 +3,7 @@
     require_once('model/Comment.php');
     require_once('model/User.php');
 
-    class VisitorControler // faire deuxième controleur pour admin
+    class VisitorControler
     {
         private $_visitorPostManager;
         private $_visitorCommentManager;
@@ -39,8 +39,6 @@
             {
                 echo '<p>erreur : ' . $e->getMessage() ; '</p>';
             }
-            // au lieu de showPosts(), plutot des variables initialisées ici et utilisées dans allPostsView ?
-            // showPosts($admin, $allPosts, (5 * ((int) strip_tags($_GET['page']) - 1)), 5);
         }
         
         public function onePost($title)
@@ -48,7 +46,6 @@
             $activePost = null;
             $activePostTitle = null;
             $allPosts = $this->_visitorPostManager->getAllPostsExceptExpiry();
-            //print_r($allPosts);
             foreach($allPosts as $currentPost)
             {
                 if ($title == str_replace(' ', '_', $currentPost['title']))
@@ -79,8 +76,7 @@
                     {
                         $sent = true;
                         
-                        $newComment = new Comment(); // initialise la date a l'actuelle si pas d'arguments
-                        // supprimer mail ? Y est pas dans BDD
+                        $newComment = new Comment();
                         $newComment->setContent(strip_tags($_POST['message']));
                         $newComment->setVisitorLogin(strip_tags($_POST['login']));
                         $newComment->setPostTitle($postTitle);

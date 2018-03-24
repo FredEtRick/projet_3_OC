@@ -2,7 +2,7 @@
     require_once 'Model.php';
 
     // manager de la classe post
-    class CommentManager extends Model // faudra ajouter qqch pour signaler
+    class CommentManager extends Model
     {
         public function insert(Comment $comment)
         {
@@ -13,8 +13,6 @@
 
             $query->execute();
         }
-        
-        //DATE_FORMAT(dateTimePub, \'%m/%c/%Y à %H:%i:%s\') AS DHP, DATE_FORMAT(dateTimeExp, \'%m/%c/%Y à %H:%i:%s\') AS DHE
         
         public function getAllCommentsOnPost($title)
         {
@@ -72,31 +70,6 @@
             $this->_DB->exec('UPDATE Comment SET reported = 0 WHERE ID = ' . $id);
         }
         
-        /*public function recupererTousSaufExp()
-        {
-            $comments = [];
-            $query = $this->_DB->query('SELECT title, dateTimePub, dateTimeExp, content FROM Comment ORDER BY dateTimePub');
-            while($postFromSQL = $query->fetch(PDO::FETCH_ASSOC))
-            {
-                $comment = new Comment($postFromSQL);
-                if (date('d/m/Y H:i:s') < $comment->getDateTimeExp() || $comment->getDateTimeExp() == NULL)
-                    $comments[] = $comment;
-            }
-            return $comments;
-        }
-        
-        public function modifier(Comment $comment)
-        {
-            $query = $this->_DB->prepare('UPDATE Comment SET title = :title, dateTimePub = :dateTimePub, dateTimeExp = :dateTimeExp, content = :content WHERE title = :title');
-
-            $query->bindValue(':title', $comment->getTitre());
-            $query->bindValue(':dateTimePub', $comment->getDateTimePub());
-            $query->bindValue(':dateTimeExp', $comment->getDateTimeExp());
-            $query->bindValue(':content', $comment->getContent());
-            
-            $query->execute();
-        }*/
-        
         public function delete($ID)
         {
             $this->_DB->exec('DELETE FROM Comment WHERE ID = "' . $ID . '"');
@@ -117,10 +90,6 @@
         private $_content;
         private $_postTitle;
         private $_visitorLogin;
-
-        // const DEBUT_TITRES = "title : "; // juste pour l'entrainement
-
-        // private static $_total = 0; // juste pour l'entrainement
 
         // constructeur
         public function __construct()
@@ -179,7 +148,6 @@
         // mutateurs
         public function setDateTime($dateTime) // là force a prendre un stirng
         {
-            // try essayer de caster en dateTimePub
             $this->_dateTime = $dateTime;
         }
         public function setContent($content)
@@ -205,7 +173,7 @@
                 trigger_error('le title du comment n\'a pu être modifié, le paramètre étant une chaîne de caractères trop longue.', E_USER_WARNING);
                 return;
             }
-            $this->_postTitle = $title; // juste pour m'entrainer avec self:: etc
+            $this->_postTitle = $title;
         }
         public function setVisitorLogin($login)
         {

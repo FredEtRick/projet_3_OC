@@ -1,4 +1,4 @@
-<!DOCTYPE html> <!-- obstart etc sera dans chaque vue -->
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf8" />

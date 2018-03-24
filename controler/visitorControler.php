@@ -2,7 +2,7 @@
     require_once('model/Post.php');
     require_once('model/Comment.php');
     require_once('model/User.php');
-
+ 
     class VisitorControler
     {
         private $_visitorPostManager;

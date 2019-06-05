@@ -1,7 +1,11 @@
 <?php
     session_start(); // this way the admin keep beeing connect on all pages when he managed to connect
 
+    echo "avant config";
+
     require_once('dbConfig.php');
+
+    echo " - après config, avant controlers";
 
     try
     {
@@ -14,6 +18,8 @@
     {
         echo '<p>erreur : ' . $e->getMessage() ; '</p>';
     }
+
+    echo " - après controleurs, avant routeur";
 
     $router = new Router();
 

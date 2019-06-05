@@ -1,29 +1,3 @@
-<!--
-    A REECRIRE !!!!!!!!!!!!!
-    - passer en anglais
-    - corriger noms variables en fonction des autres fichiers (ex : $avecSauts n'existe plus)
-    - subdiviser le code et le rendre plus digeste
-    - passer en objet ?
-    - peut être lui même divisé en MVC ??? Je vois mal la vue, mais en objet quasi tout passe dans le modèle, et les exécutions dans le controleur
-    - ou alors, la vue est onePostView !!! visitorControler devient allPostsControler, et resizePage devient onePostControler !!!
-    - ou alors, passer tout le fichier en modèle en le transformant en classe, puis inclure le modèle dans visitorControler, puis appeler les methodes dans visitorControler.
-    - problème : c'est un script JS, pas une classe PHP !
-
-    Verdict : ce serait trop compliqué de me mettre aux classes en JS, donc je vais laisser comme ça.
--->
-
-
-
-<!--
-    TODO :
-    - écrire un read me ou autre dans ce fichier pour expliquer le fonctionnement global du resizer ?
-    - ajouter un schéma qui indique l'ordre d'appel des fonctions ? : non
-    - afficher erreurs dans localhost:8888 et corriger
-    - m'occuper de l'administration
-    - mettre les fichiers appelés dans un sous dossier "resizePage" qui se situerait dans controler
-    - marche pas en conception administrative sur deux pages, tout relire et corriger, vérif traduction etc !!!
--->
-
 <?php
     require_once "controler/resizer/preparing.php";
     require_once "controler/resizer/vars.php";
@@ -48,8 +22,3 @@
     nextButtonElt.setAttribute('onclick', 'nextPage()'); // Functions in "Resizer_nextPage.php" and "Resizer_forStartAndNextPage.php". Those functions themselves use functions in "Resizer_preparing.php".
 
 </script>
-
-<!--
-    How does the resizer works ?
-    - When the visitor open a post clicking on it, visitorControler
--->

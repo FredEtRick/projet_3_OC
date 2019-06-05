@@ -1,6 +1,8 @@
 <?php
     session_start(); // this way the admin keep beeing connect on all pages when he managed to connect
 
+    require_once('dbConfig.php');
+
     try
     {
         require_once('controler/visitorControler.php');

@@ -106,7 +106,7 @@
                     $textWithNewLines = substr($textWithNewLines, 2, strlen($textWithNewLines) - 4); // deleting first and last chars \"
                     $textLength = mb_strlen($activePost['content']);
                     
-                    require_once $_SERVER['DOCUMENT_ROOT'] . '/controler/resizePage.php';
+                    require_once $_SERVER['DOCUMENT_ROOT'] . '/controler/ResizePage.php';
                 }
                 catch (Exception $e)
                 {

@@ -17,17 +17,17 @@
                 <div class="bg-dark row navperso">
                     <ul class="col-12 row ulnav">
                         <li class="col-sm col-12">
-                            <a href="http://frederic-malard.com">
+                            <a href="https://frederic-malard.com">
                                 portfolio
                             </a>
                         </li>
                         <li class="col-sm col-12">
-                            <a href="http://louvre.frederic-malard.com">
+                            <a href="https://louvre.frederic-malard.com">
                                 louvre
                             </a>
                         </li>
                         <li class="col-sm col-12">
-                            <a href="http://blog.frederic-malard.com">
+                            <a href="https://blog.frederic-malard.com">
                                 blog personnel
                             </a>
                         </li>
@@ -41,10 +41,11 @@
                 </header>
                 <?= $content ?>
                 <footer class="row">
-                    <ul class="list-unstyled centrer col-xxl-12 col-xl-12 col-sm-12 ulfooter">
+                    <ul class="list-unstyled centrer col-xxl-12 col-xl-12 col-sm-12 ulfooter" style="margin-bottom : 0em !important;">
                         <li>l'auteur : Jean Forteroche</li>
                         <li>mail : jean.forteroche@gmail.com</li>
                     </ul>
+                    <a href="connexion.php" class="btn btn-secondary m-auto" style="margin-bottom : 2em !important; margin-top : 0em !important;">Connexion a l'interface administrateur</a>
                 </footer>
             </div>
         </div>
